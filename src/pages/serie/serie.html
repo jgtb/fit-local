@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar hideBackButton color="secondary">
+    <ion-buttons left>
+      <div class="logo" (click)="goToDashboard()">
+        <img src="assets/img/profile/logo-1.png">
+      </div>
+    </ion-buttons>
+    <ion-title>Séries</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<ion-item *ngFor="let item of data;" (click)="create(item)">
+			{{ item?.descricao }}
+		</ion-item>
+	</ion-list>
+</ion-content>

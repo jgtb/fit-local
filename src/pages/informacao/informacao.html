@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar hideBackButton color="secondary">
+    <ion-buttons left>
+      <div class="logo" (click)="goToDashboard()">
+        <img src="assets/img/profile/logo-1.png">
+      </div>
+    </ion-buttons>
+    <ion-title>Informações</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-toolbar color="dark">
+    <ion-segment [(ngModel)]="tab" color="secondary">
+      <ion-segment-button value="informacao">
+        Informações
+      </ion-segment-button>
+      <ion-segment-button value="mensagem">
+        Mensagens
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <div [ngSwitch]="tab">
+    <div class="data-bodily "*ngSwitchCase="'informacao'">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12 *ngFor="let item of dataInformacao;">
+            <ion-card>
+              <ion-card-content>
+                <h2>{{ item.resumo }}</h2>
+              </ion-card-content>
+              <ion-card-header>
+                <h2>{{ item.email }}</h2>
+              </ion-card-header>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <div class="data-bodily" *ngSwitchCase="'mensagem'">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12 *ngFor="let item of dataMensagem;">
+            <ion-card>
+              <ion-card-header>
+                <h2>{{ item.titulo }}</h2>
+              </ion-card-header>
+              <ion-card-content>
+                <h2>{{ item.texto }}</h2>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>

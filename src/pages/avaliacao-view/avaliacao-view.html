@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar color="secondary">
+    <ion-title>{{ data.descricao }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let data of dataSessoes;">
+      <h2>{{ data.sessao }}</h2>
+      <div class="item-data" *ngFor="let item of selectPerguntas(data);">
+        <div *ngIf="show(item)">
+          <h4>{{ item.pergunta }}</h4>
+          <p>{{ item.resposta }}</p>
+        </div>
+        <div *ngIf="!show(item)">
+          <h4>{{ item.pergunta }}: {{ item.resposta }}</h4>
+        </div>
+        <div *ngIf="item.id_tipo_pergunta == 5">
+          <h4>{{ item.pergunta }}</h4>
+          <p>{{ item.resposta }}</p>
+        </div>
+        <div *ngIf="item.id_tipo_pergunta == 4">
+          <h4>{{ item.pergunta }}</h4>
+          <img src="{{ util.baseUrl }}/imgs-avaliacao/{{ item.resposta }}" alt="">
+          <button ion-button color="danger" block round (click)="link(item)"><ion-icon name="shared"></ion-icon></button>
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
