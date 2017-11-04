@@ -17,4 +17,11 @@ export class SerieProvider {
     return this.http.get(url).map(res => res.json());
   }
 
+  update(data) {
+  	const indexURL = "";
+    const url = this.util.baseUrl + indexURL;
+
+    return this.http.post(url, data).map(res => res.json());
+  }
+
 }

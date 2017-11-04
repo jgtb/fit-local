@@ -6,11 +6,17 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { SerieProvider } from '../../providers/serie/serie';
 import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
+import { GraficoProvider } from '../../providers/grafico/grafico';
+import { TreinoProvider } from '../../providers/treino/treino';
+import { ReservaProvider } from '../../providers/reserva/reserva';
 import { InformacaoProvider } from '../../providers/informacao/informacao';
 
 import { UsuarioSQLite } from '../../sqlite/usuario/usuario';
 import { SerieSQLite } from '../../sqlite/serie/serie';
 import { AvaliacaoSQLite } from '../../sqlite/avaliacao/avaliacao';
+import { GraficoSQLite } from '../../sqlite/grafico/grafico';
+import { TreinoSQLite } from '../../sqlite/treino/treino';
+import { ReservaSQLite } from '../../sqlite/reserva/reserva';
 import { InformacaoSQLite } from '../../sqlite/informacao/informacao';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
@@ -26,7 +32,7 @@ export class LoginPage {
 
   private data: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public authProvider: AuthProvider, public serieProvider: SerieProvider, public avaliacaoProvider: AvaliacaoProvider, public informacaoProvider: InformacaoProvider, public usuarioSQLite: UsuarioSQLite, public serieSQLite: SerieSQLite, public avaliacaoSQLite: AvaliacaoSQLite, public informacaoSQLite: InformacaoSQLite, public util: Util) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public authProvider: AuthProvider, public serieProvider: SerieProvider, public avaliacaoProvider: AvaliacaoProvider, public informacaoProvider: InformacaoProvider, public treinoProvider: TreinoProvider, public reservaProvider: ReservaProvider, public graficoProvider: GraficoProvider, public usuarioSQLite: UsuarioSQLite, public serieSQLite: SerieSQLite, public avaliacaoSQLite: AvaliacaoSQLite, public treinoSQLite: TreinoSQLite, public reservaSQLite: ReservaSQLite, public graficoSQLite: GraficoSQLite, public informacaoSQLite: InformacaoSQLite, public util: Util) {
     this.initForm();
   }
 
@@ -66,8 +72,8 @@ export class LoginPage {
     const id_aluno = data[0];
     const id_professor = data[1];
     const id_tipo_professor = data[2];
-    this.util._showReserva  = id_tipo_professor == 4 ? true : false;
     this.util.setLogged();
+    this.util.setShowReserva(id_tipo_professor);
     this.usuarioSQLite.insert(data);
     this.serieProvider.index(id_aluno).subscribe(
       data => {
@@ -77,6 +83,18 @@ export class LoginPage {
       data => {
         this.avaliacaoSQLite.insertAll(data);
     });
+    this.graficoProvider.index(id_aluno).subscribe(
+      data => {
+        this.graficoSQLite.insertAll(data);
+    });
+    this.treinoProvider.index(id_aluno).subscribe(
+      data => {
+        this.treinoSQLite.insertAll(data);
+    });
+    this.reservaProvider.index(id_aluno).subscribe(
+      data => {
+        this.reservaSQLite.insertAll(data);
+    });
     this.informacaoProvider.indexInformacao(id_professor).subscribe(
       data => {
         this.informacaoSQLite.insertInformacao(data);
@@ -85,11 +103,12 @@ export class LoginPage {
       data => {
         this.informacaoSQLite.insertAllMensagem(data);
     });
-    this.navCtrl.push(DashboardPage, {id_tipo_professor: id_tipo_professor});
+    this.navCtrl.push(DashboardPage);
   }
 
   forgotPassword() {
     const title = 'Esqueceu a senha?';
+    const message = '';
     const inputs = [
       {
         name: 'login',
@@ -100,11 +119,7 @@ export class LoginPage {
       {
         text: 'Confirmar',
         handler: data => {
-          if (this.util.checkNetwork()) {
-            this.doForgotPassword(data);
-          } else {
-            this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
-          }
+          this.doForgotPassword(data);
         }
       },
       {
@@ -112,18 +127,22 @@ export class LoginPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, inputs, buttons);
+    this.util.showConfirmationAlert(title, message, inputs, buttons);
   }
 
   doForgotPassword(data) {
-    this.authProvider.forgotPassword(data).subscribe(
+    if (this.util.checkNetwork()) {
+      this.authProvider.forgotPassword(data).subscribe(
       data => {
         if (data == 1) {
           this.util.showAlert('Atenção', 'E-mail enviado com sucesso', 'Ok');
         } else {
           this.util.showAlert('Atenção', 'Não foi possível enviar o e-mail', 'Ok');
         }
-    });
+      });
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
+    }
   }
 
 }

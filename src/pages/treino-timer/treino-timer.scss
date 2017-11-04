@@ -1,82 +1,48 @@
 .ios, .md {
 	page-treino-timer {
 		.back-button {
-            color:  map-get($colors,light);
-        }
-        .fixed-content, .scroll-content {
-            margin-top: 0 !important;
-        }
-	    ion-content {
+			color:  map-get($colors, light);
+		}
+		.fixed-content, .scroll-content {
+			margin-top: 0 !important;
+		}
+		ion-content {
 			background-color: transparent;
 			color: map-get($colors, light);
 			text-align: center;
-	        .bg-wrapper {
-	        	background-position: 50% 50%;
-	        	background-size: cover;
-	        	height: 100%;
-	        	position: absolute;
-	        	width: 100%;
-	        	.backdrop {
-				    background-color: rgba(map-get($colors, dark), 0.9);
-				    height: 100%;
-		    	    position: absolute;
-				    width: 100%;
-			    }
-			    .progress-wrapper {
-			    	margin-top: 44px;
-			    	padding: 30px 0;
-			    	position: relative;
-			    	.current {
-		    		    position: absolute;
-					    color: map-get($colors, secondary);
-					    font-weight: 100;
-					    line-height: 1;
-			    	}
-			    	round-progress {
-			    		margin: auto;
-			    		path {
-			    			stroke-linecap: round;
-			    		}
-			    	}
-			    }
-			    ion-grid {
-			    	ion-row {
-			    		ion-col {
-			    			padding: 0;
-			    			ion-card {
-			    				background-color: map-get($custom-colors, dark-light);
-			    				box-shadow: none;
-			    				ion-card-content {
-			    					padding-left: 10px;
-			    					padding-right: 10px;
-					    			i {
-					    				color: map-get($colors, secondary);
-					    				font-size: 4rem;
-					    			}
-					    			p {
-					    				color: lighten(map-get($custom-colors, dark-light), 20%);
-					    				margin: 10px 0;
-					    			}
-			    				}
-			    			}
-			    		}
-			    	}
-			    }
-			    .controls-wrapper {
-			    	padding: 30px 0;
-			    	button {
-			    		ion-icon {
-			    			font-size: 5rem;
-			    		}
-			    		&.prev {
-			    			color: lighten(map-get($custom-colors, dark-light), 10%);
-			    		}
-			    		&.pause, &.next {
-			    			color: map-get($colors, secondary);
-			    		}
-			    	}
-			    }
-	        }
-		}
+			.bg-wrapper {
+				background-position: 50% 50%;
+				background-size: cover;
+				height: 100%;
+				position: absolute;
+				width: 100%;
+			}
+			.backdrop {
+				background-color: rgba(map-get($colors, dark), 0.9);
+				height: 100%;
+		   	position: absolute;
+				width: 100%;
+			}
+			.progress-wrapper {
+				margin-top: 44px;
+				padding: 30px 0;
+				position: relative;
+				.current {
+					position: absolute;
+					color: map-get($colors, secondary);
+					font-weight: 100;
+					line-height: 1;
+				}
+				round-progress {
+					margin: auto;
+					path {
+						stroke-linecap: round;
+					}
+				}
+			}
+			.controls-wrapper {
+				text-align: center;
+			}
+ 		}
 	}
 }

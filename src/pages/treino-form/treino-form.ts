@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer';
+
+import { TreinoProvider } from '../../providers/treino/treino';
+import { SerieProvider } from '../../providers/serie/serie';
 
 import { Observable } from 'rxjs/Rx';
 
@@ -10,6 +15,7 @@ import { SQLiteObject } from '@ionic-native/sqlite';
 import { SerieSQLite } from '../../sqlite/serie/serie';
 
 import { Util } from '../../util';
+import { Layout } from '../../layout';
 
 @IonicPage()
 @Component({
@@ -20,6 +26,7 @@ export class TreinoFormPage {
 
   data: any = [];
   dataExercicios: any = [];
+  _done: any = [];
 
   _toggle: boolean = true;
 
@@ -27,7 +34,7 @@ export class TreinoFormPage {
   _timer = 0;
   running = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public serieSQLite: SerieSQLite, public util: Util) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public serieSQLite: SerieSQLite, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
     this.data = this.navParams.get('item');
@@ -37,22 +44,34 @@ export class TreinoFormPage {
   ionViewDidLoad() {}
 
   create() {
-    const title = 'Finalizar Treino';
-    const inputs = [
-      {
-        name: 'comentario',
-        placeholder: ''
-      }
-    ];
+    const title = 'Finalizar Treino ?';
+    const message = 'Tempo: ' + this.time();
+    const inputs = this.getInputs();
     const buttons = [
       {
         text: 'Confirmar',
-        handler: data => {
-          if (this.util.checkNetwork()) {
-
-          } else {
-            this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
-          }
+        handler: dataResultado => {
+          const _title = 'Algum Comentário ?';
+          const _message = message + '<br>' + this.getResultado(dataResultado);
+          const _inputs = [
+            {
+              name: 'comentario',
+              placeholder: 'Comentário'
+            }
+          ];
+          const _buttons = [
+            {
+              text: 'Confirmar',
+              handler: dataComentario => {
+                this.doCreate(dataResultado, dataComentario);
+              }
+            },
+            {
+              text: 'Cancelar',
+              role: 'cancel',
+            }
+          ];
+          this.util.showConfirmationAlert(_title, _message, _inputs, _buttons);
         }
       },
       {
@@ -60,11 +79,29 @@ export class TreinoFormPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, inputs, buttons);
+    this.util.showConfirmationAlert(title, message, inputs, buttons);
+  }
+
+  doCreate(dataResultado, dataComentario) {
+    if (this.util.checkNetwork()) {
+      const data = JSON.stringify({id_serie: this.data.id_serie, mensagem: dataComentario.comentario, borg: dataResultado, tempo: this.time(), datahora: this.getDateTime()});
+
+      this.treinoProvider.create(data).subscribe(
+        data => {
+          this.util.showAlert('Atenção', 'Treino Registrado', 'Ok');
+        },
+        err => {
+          console.log(err);
+          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente');
+      });
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
+    }
   }
 
   update(item) {
     const title = item.descricao_ex;
+    const message = 'Alterar Carga';
     const inputs = [
       {
         name: 'carga',
@@ -76,11 +113,7 @@ export class TreinoFormPage {
       {
         text: 'Confirmar',
         handler: data => {
-          if (this.util.checkNetwork()) {
-
-          } else {
-            this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
-          }
+          this.doUpdate(item, data);
         }
       },
       {
@@ -88,7 +121,21 @@ export class TreinoFormPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, inputs, buttons);
+    this.util.showConfirmationAlert(title, message, inputs, buttons);
+  }
+
+  doUpdate(item, data) {
+    if (this.util.checkNetwork()) {
+      this.serieProvider.update(data).subscribe(
+        data => {
+          this.util.showAlert('Atenção', 'Carga Alterada', 'Ok');
+        },
+        err => {
+          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente');
+      });
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
+    }
   }
 
   start() {
@@ -105,14 +152,14 @@ export class TreinoFormPage {
   }
 
   time() {
-    var totalSeconds = this._timer;
-    var hours   = Math.floor(totalSeconds / 3600);
-    var minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
-    var seconds = totalSeconds - (hours * 3600) - (minutes * 60);
+    let totalSeconds = this._timer;
+    let hours   = Math.floor(totalSeconds / 3600);
+    let minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
+    let seconds = totalSeconds - (hours * 3600) - (minutes * 60);
 
-    seconds = Math.round(seconds * 100) / 100
+    seconds = Math.round(seconds * 100) / 100;
 
-    var result = (hours < 10 ? "0" + hours : hours);
+    let result = (hours < 10 ? "0" + hours : hours);
     result += ":" + (minutes < 10 ? "0" + minutes : minutes);
     result += ":" + (seconds  < 10 ? "0" + seconds : seconds);
 
@@ -121,6 +168,18 @@ export class TreinoFormPage {
 
   timer(item) {
     this.navCtrl.push(TreinoTimerPage, { item: item });
+  }
+
+  done(index) {
+    if (index in this._done) {
+      this._done[index].value = !this._done[index].value;
+    } else {
+      this._done.push({index: index, value: true});
+    }
+  }
+
+  video(item) {
+    this.iab.create(item.video).show();
   }
 
   select() {
@@ -135,6 +194,66 @@ export class TreinoFormPage {
 
   toggle() {
     this._toggle = !this._toggle;
+  }
+
+  getInputs() {
+    const inputs = [
+      {
+        name: 'resultado',
+        type: 'radio',
+        label: 'Muito Bom',
+        value: 0,
+      },
+      {
+        name: 'resultado',
+        type: 'radio',
+        label: 'Bom',
+        value: "1",
+      },
+      {
+        name: 'resultado',
+        type: 'radio',
+        label: 'Mediano',
+        value: "2",
+      },
+      {
+        name: 'resultado',
+        type: 'radio',
+        label: 'Regular',
+        value: "3",
+      },
+      {
+        name: 'resultado',
+        type: 'radio',
+        label: 'Ruim',
+        value: "4",
+      },
+      {
+        name: 'resultado',
+        type: 'radio',
+        label: 'Muito Ruim',
+        value: "5",
+      }
+    ];
+
+    return inputs;
+  }
+
+  getResultado(index) {
+    let data = ['Muito Bom', 'Bom', 'Mediano', 'Regular', 'Ruim', 'Muito Ruim'];
+
+    return data[index];
+  }
+
+  getDateTime() {
+    let date = new Date();
+
+    return date.getFullYear() + "-" +
+      ("00" + (date.getMonth() + 1)).slice(-2) + "-" +
+      ("00" + date.getDate()).slice(-2) + " " +
+      ("00" + date.getHours()).slice(-2) + ":" +
+      ("00" + date.getMinutes()).slice(-2) + ":" +
+      ("00" + date.getSeconds()).slice(-2);
   }
 
 }

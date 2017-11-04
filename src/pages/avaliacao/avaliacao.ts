@@ -9,6 +9,7 @@ import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { AvaliacaoViewPage } from '../../pages/avaliacao-view/avaliacao-view';
 
 import { Util } from '../../util';
+import { Layout } from '../../layout';
 
 @IonicPage()
 @Component({
@@ -17,9 +18,9 @@ import { Util } from '../../util';
 })
 export class AvaliacaoPage {
 
-  dataAvaliacao: any = [];
+  data: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public avaliacaoSQLite: AvaliacaoSQLite, public util: Util) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public avaliacaoSQLite: AvaliacaoSQLite, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
     this.select();
@@ -30,7 +31,7 @@ export class AvaliacaoPage {
   select() {
     this.avaliacaoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM avaliacao', []).then(
       result => {
-        this.dataAvaliacao = this.util.toArray(result)
+        this.data = this.util.toArray(result)
           .filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
       });
     });

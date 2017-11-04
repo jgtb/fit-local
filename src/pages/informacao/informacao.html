@@ -1,52 +1,54 @@
 <ion-header>
-  <ion-navbar hideBackButton color="secondary">
+  <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-buttons left>
-      <div class="logo" (click)="goToDashboard()">
-        <img src="assets/img/profile/logo-1.png">
+      <div (click)="goToDashboard()">
+        <img class="logo" src="assets/img/profile/logo-1.png">
       </div>
     </ion-buttons>
-    <ion-title>Informações</ion-title>
+    <ion-title>{{ title }}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-toolbar color="dark">
+<ion-content [ngStyle]="layout.setBackgroundColor('dark')">
+  <ion-toolbar [ngStyle]="layout.setToolbarColor('ion-toolbar', 'dark', 'light')">
     <ion-segment [(ngModel)]="tab" color="secondary">
-      <ion-segment-button value="informacao">
+      <ion-segment-button [ngStyle]="layout.setSegmentButtonColor()" value="informacao">
         Informações
       </ion-segment-button>
-      <ion-segment-button value="mensagem">
+      <ion-segment-button [ngStyle]="layout.setSegmentButtonColor()" value="mensagem">
         Mensagens
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
   <div [ngSwitch]="tab">
-    <div class="data-bodily "*ngSwitchCase="'informacao'">
+    <div *ngSwitchCase="'informacao'">
       <ion-grid>
         <ion-row>
-          <ion-col col-12 *ngFor="let item of dataInformacao;">
-            <ion-card>
+          <ion-col col-12 *ngFor="let item of dataInformacao; let i = index;">
+            <ion-card [ngStyle]="layout.setBackgroundColor('darklight')">
+              <img class="img-informacao" src="{{ util.baseUrl }}/logos/18.png"/>
               <ion-card-content>
-                <h2>{{ item.resumo }}</h2>
+                <p [ngStyle]="layout.setColor('light')">
+                  {{ item.resumo }} <br>
+                  <span class="email" [ngStyle]="layout.setColor('secondary')">{{ item.email }}</span>
+                </p>
               </ion-card-content>
-              <ion-card-header>
-                <h2>{{ item.email }}</h2>
-              </ion-card-header>
             </ion-card>
           </ion-col>
         </ion-row>
       </ion-grid>
     </div>
-    <div class="data-bodily" *ngSwitchCase="'mensagem'">
+    <div *ngSwitchCase="'mensagem'">
       <ion-grid>
         <ion-row>
-          <ion-col col-12 *ngFor="let item of dataMensagem;">
-            <ion-card>
-              <ion-card-header>
-                <h2>{{ item.titulo }}</h2>
-              </ion-card-header>
-              <ion-card-content>
-                <h2>{{ item.texto }}</h2>
+          <ion-col col-12 *ngFor="let item of dataMensagem; let i = index;">    
+            <ion-card [ngStyle]="layout.setBackgroundColor('darklight')">
+              <ion-card-header [ngStyle]="layout.setColor('secondary')">{{ item.titulo }}</ion-card-header>
+              <div padding *ngIf="showImg(item)">
+                <img class="img-mensagem" src="{{ util.baseUrl }}/imgs-mensagem/{{ item.id_mensagem }}.png"/>
+              </div>
+              <ion-card-content [ngStyle]="layout.setColor('light')">
+                {{ item.texto }} 
               </ion-card-content>
             </ion-card>
           </ion-col>

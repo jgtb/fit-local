@@ -8,6 +8,7 @@ import { InformacaoSQLite } from '../../sqlite/informacao/informacao';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 
 import { Util } from '../../util';
+import { Layout } from '../../layout';
 
 @IonicPage()
 @Component({
@@ -16,12 +17,14 @@ import { Util } from '../../util';
 })
 export class InformacaoPage {
 
+  title: string = '';
+
   tab: string = 'informacao';
 
   dataInformacao: any = [];
   dataMensagem: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public informacaoSQLite: InformacaoSQLite) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public informacaoSQLite: InformacaoSQLite, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
     this.selectInformacao();
@@ -33,9 +36,8 @@ export class InformacaoPage {
   selectInformacao() {
     this.informacaoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM informacao', []).then(
       result => {
-        for (var i = 0; i < result.rows.length; i++) {
-          this.dataInformacao.push(result.rows.item(i));
-        }
+        this.title = result.rows.item(0).nome;
+        this.dataInformacao = this.util.toArray(result);
       });
     });
   }
@@ -43,11 +45,16 @@ export class InformacaoPage {
   selectMensagem() {
     this.informacaoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM mensagem', []).then(
       result => {
-        for (var i = 0; i < result.rows.length; i++) {
-          this.dataMensagem.push(result.rows.item(i));
-        }
+        this.dataMensagem = this.util.toArray(result);
       });
     });
+  }
+
+  showImg(item) {
+    if (item.largura != "" && item.altura != "")
+       return true;
+
+     return false;
   }
 
   goToDashboard() {

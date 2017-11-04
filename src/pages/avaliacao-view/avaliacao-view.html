@@ -1,29 +1,34 @@
 <ion-header>
-  <ion-navbar color="secondary">
-    <ion-title>{{ data.descricao }}</ion-title>
+  <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
+    <ion-title>{{ data?.descricao }}</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content [ngStyle]="layout.setBackgroundColor('dark')">
   <ion-list>
-    <ion-item *ngFor="let data of dataSessoes;">
-      <h2>{{ data.sessao }}</h2>
-      <div class="item-data" *ngFor="let item of selectPerguntas(data);">
+    <ion-item *ngFor="let data of dataSessoes; let i = index" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+      <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>
+      <div class="item-sessao" *ngFor="let item of selectPerguntas(data);">
+        <h4 [ngStyle]="layout.setColor('light')">{{ item?.pergunta }}</h4>
         <div *ngIf="show(item)">
-          <h4>{{ item.pergunta }}</h4>
-          <p>{{ item.resposta }}</p>
+          <p [ngStyle]="layout.setColor('light')">{{ item?.resposta }}</p>
         </div>
-        <div *ngIf="!show(item)">
-          <h4>{{ item.pergunta }}: {{ item.resposta }}</h4>
+        <div *ngIf="isMultiplaEscolha(item)">
+          <p [ngStyle]="layout.setColor('light')">{{ unserializeToText(item) }}</p>
         </div>
-        <div *ngIf="item.id_tipo_pergunta == 5">
-          <h4>{{ item.pergunta }}</h4>
-          <p>{{ item.resposta }}</p>
-        </div>
-        <div *ngIf="item.id_tipo_pergunta == 4">
-          <h4>{{ item.pergunta }}</h4>
-          <img src="{{ util.baseUrl }}/imgs-avaliacao/{{ item.resposta }}" alt="">
-          <button ion-button color="danger" block round (click)="link(item)"><ion-icon name="shared"></ion-icon></button>
+        <div *ngIf="isUpload(item)" class="centered">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-12>
+                <img class="img-sessao" *ngIf="!isPDF(item)" src="{{ util.baseUrl }}/imgs-avaliacao/{{ unserializeToUpload(item) }}" alt="">
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-6 offset-3>
+                <button *ngIf="isPDF(item)" ion-button [ngStyle]="layout.setBackgroundColor('danger')" block round (click)="link(item)"><ion-icon name="link" [ngStyle]="layout.setColor('light')"></ion-icon></button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </div>
       </div>
     </ion-item>

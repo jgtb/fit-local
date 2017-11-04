@@ -1,18 +1,18 @@
 <ion-header>
-  <ion-navbar hideBackButton color="secondary">
+  <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-buttons left>
-      <div class="bar-logo" (click)="goToDashboard()">
-        <img src="assets/img/profile/logo-1.png">
+      <div (click)="goToDashboard()">
+        <img class="logo" src="assets/img/profile/logo-1.png">
       </div>
     </ion-buttons>
     <ion-title>Avaliações</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content [ngStyle]="layout.setBackgroundColor('dark')">
   <ion-list>
-    <ion-item *ngFor="let data of dataAvaliacao;" (click)="view(data)">
-      {{ data.descricao }}
+    <ion-item *ngFor="let item of data; let i = index;" (click)="view(item)" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+      {{ item?.descricao }}
     </ion-item>
   </ion-list>
 </ion-content>

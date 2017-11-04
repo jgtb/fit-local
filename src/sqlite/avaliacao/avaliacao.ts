@@ -17,7 +17,7 @@ export class AvaliacaoSQLite {
 
   insertAll(data) {
     for (var i = 0; i < data.length; i++) {
-      let values = this.getValues(data);
+      let values = this.getValues(data, i);
 
       this.insert(values);
     }

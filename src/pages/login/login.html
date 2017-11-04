@@ -3,10 +3,10 @@
 	<ion-content padding>
 		<div class="aligner-wrapper">
 			<div class="aligner-item">
-        <div class="logo">
-			    <img src="assets/img/login/logo.png" alt="Company">
-			  </div>
-        <form [formGroup]="data" (ngSubmit)="login(data.value)">
+        		<div class="logo">
+			    	<img src="assets/img/login/logo.png" alt="Company">
+			  	</div>
+        		<form [formGroup]="data" (ngSubmit)="login(data.value)">
 				  <ion-list padding>
 			      <ion-item>
 			        <ion-icon item-left name="person"></ion-icon>
@@ -18,7 +18,7 @@
 					  </ion-item>
 					  <button ion-button color="secondary" block round [disabled]="!data.valid">ENTRAR</button>
 				  </ion-list>
-        </form>
+        		</form>
 				<p text-right>
 					<small (click)="forgotPassword()">esqueceu a senha?</small>
 				</p>

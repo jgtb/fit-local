@@ -1,28 +1,15 @@
 ion-alert {
 	.alert-wrapper {
-		background-color: map-get($custom-colors, dark-light) !important;
-		.alert-title {
-			color: map-get($colors, light);
-		}
-		.alert-sub-title {
-			color: lighten(map-get($custom-colors, dark-light), 30%);
-		}
+		display: none;
 		.alert-button {
-			background-color: map-get($colors, secondary);
 			border-top: 0;
-			color: map-get($colors, light);
-			&.activated {
-				background-color: darken(map-get($colors, secondary), 5%);
-			}
 		}
-    .alert-input-wrapper {
-      border-bottom: 1px solid map-get($colors, secondary);
-      input {
-				color: map-get($colors, secondary);
-        background-color: transparent;
-        border: none;
-        font-size: 16px;
-      }
-    }
+  	.alert-input-wrapper {
+    		input {
+      		background-color: transparent;
+      		border: none;
+      		font-size: 16px;
+    		}
+  	}
 	}
 }

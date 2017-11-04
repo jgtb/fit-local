@@ -3,9 +3,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { SQLiteObject } from '@ionic-native/sqlite';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 import { AvaliacaoSQLite } from '../../sqlite/avaliacao/avaliacao';
 
 import { Util } from '../../util';
+import { Layout } from '../../layout';
 
 @IonicPage()
 @Component({
@@ -18,7 +21,7 @@ export class AvaliacaoViewPage {
   dataSessoes: any = [];
   dataAvaliacoes: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public avaliacaoSQLite: AvaliacaoSQLite, public util: Util) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public avaliacaoSQLite: AvaliacaoSQLite, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
     this.data = this.navParams.get('item');
@@ -38,14 +41,52 @@ export class AvaliacaoViewPage {
   }
 
   selectPerguntas(item) {
-    return this.dataAvaliacoes.filter((elem) => elem.id_sessao == item.id_sessao);
+    return this.dataAvaliacoes.filter((elem) => elem.id_sessao == item.id_sessao && elem.resposta != "");
   }
 
   show(item) {
-    if(item.id_sessao != 1 && item.id_sessao != 2 && item.id_sessao != 3 && item.id_tipo_pergunta != 5 && item.id_tipo_pergunta != 4)
+    if(item.id_tipo_pergunta != 3 && item.id_tipo_pergunta != 4)
       return true;
 
     return false;
+  }
+
+  isMultiplaEscolha(item) {
+    if (item.id_tipo_pergunta == 3)
+      return true;
+
+    return false;
+  }
+
+  isUpload(item) {
+    if (item.id_tipo_pergunta == 4)
+      return true;
+
+    return false;
+  }
+
+  unserializeToText(item) {
+    var arr = this.util.unserialize(item.resposta);
+    var str = arr.reduce(function(prevVal, elem) {
+      return prevVal + elem + ', ';
+    }, '');
+       
+    return str.slice(0, -2);
+  }
+
+  unserializeToUpload(item) {
+    return this.util.unserialize(item.resposta)[0];
+  }
+
+  isPDF(item) {
+    if(item.resposta.indexOf('pdf') != -1)
+      return true;
+
+    return false;
+  }
+
+  link(item) {
+    this.iab.create(this.util.baseUrl + '/imgs-avaliacao/' + this.unserializeToUpload(item)).show();
   }
 
 }

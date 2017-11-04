@@ -13,7 +13,7 @@ export class TreinoTimerPage {
   data;
 
   current: number;
-  max: number = 300;
+  max: number;
   stroke: number = 7;
   radius: number = 70;
   semicircle: boolean = false;
@@ -38,7 +38,7 @@ export class TreinoTimerPage {
 
   ionViewDidEnter() {
     this.current = this.data.intervalo;
-    this.start();
+    this.max = this.data.intervalo;
   }
 
   ionViewDidLoad() {}
@@ -46,13 +46,18 @@ export class TreinoTimerPage {
   start() {
     this.running = true;
     this.subscription = Observable.interval(1000).subscribe(data => {
-      this.current--;
+      if (this.current != 0) {
+        this.current--;
+      } else {
+        this.stop();
+        this.current = this.data.intervalo;
+      }
     });
   }
 
   stop() {
     this.running = false;
-    this.subscription.unsubscribe ();
+    this.subscription.unsubscribe();
   }
 
   getOverlayStyle() {

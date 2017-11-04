@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActionSheetController, AlertController, LoadingController } from 'ionic-angular';
+import { AlertController, LoadingController } from 'ionic-angular';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
@@ -11,11 +11,9 @@ export class Util {
   baseUrl = 'http://fit.nexur.com.br';
   //baseUrl = 'http://localhost/personal/web';
 
-  _showReserva = false;
-
   loading;
 
-  constructor(public network: Network, public sqlite: SQLite, public actionSheetCtrl: ActionSheetController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {}
+  constructor(public network: Network, public sqlite: SQLite, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {}
 
   setLogged() {
     localStorage.setItem('isLogged', 'true');
@@ -33,13 +31,12 @@ export class Util {
     return false;
   }
 
-  showActionSheet(title, buttons) {
-    const actionSheet = this.actionSheetCtrl.create({
-      title: title,
-      buttons: buttons
-    });
+  setShowReserva(id_tipo_professor) {
+    localStorage.setItem('showReserva', id_tipo_professor == 4 ? 'true' : 'false');
+  }
 
-    actionSheet.present();
+  getShowReserva() {
+    return localStorage.getItem('showReserva');
   }
 
   showLoading() {
@@ -61,9 +58,10 @@ export class Util {
     alert.present();
   }
 
-  showConfirmationAlert(title, inputs, buttons) {
+  showConfirmationAlert(title, message, inputs, buttons) {
     const alert = this.alertCtrl.create({
       title: title,
+      message: message,
       inputs: inputs,
       buttons: buttons,
     });
@@ -92,6 +90,15 @@ export class Util {
         db.executeSql('DELETE FROM avaliacao', {})
         .then(() => console.log('Truncated Avaliacao'));
 
+        db.executeSql('DELETE FROM grafico', {})
+        .then(() => console.log('Truncated Grafico'));
+
+        db.executeSql('DELETE FROM treino', {})
+        .then(() => console.log('Truncated Treino'));
+
+        db.executeSql('DELETE FROM reserva', {})
+        .then(() => console.log('Truncated Reserva'));
+
         db.executeSql('DELETE FROM informacao', {})
         .then(() => console.log('Truncated Informacao'));
 
@@ -104,10 +111,18 @@ export class Util {
   toArray(data) {
     let arr = [];
 
-    for (var i = 0; i < data.rows.length; i++)
+    for (let i = 0; i < data.rows.length; i++)
       arr.push(data.rows.item(i));
 
     return arr;
+  }
+
+  unserialize(data) {
+    let unserialize = data.split(';')
+      .filter((elem, i) => !(i%2 === 0))
+      .map(elem => elem.split(':').reverse()[0].replace(/"/g, ""));
+
+    return unserialize;
   }
 
 }

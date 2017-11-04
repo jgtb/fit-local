@@ -18,7 +18,7 @@ export class TreinoProvider {
   }
 
   create(data) {
-    const createURL = "";
+    const createURL = "/serie/mensagem";
     const url = this.util.baseUrl + createURL;
 
     return this.http.post(url, data).map(res => res.json());

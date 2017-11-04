@@ -25,7 +25,10 @@
 		    </round-progress>
 		</div>
 
-		<button ion-button color="danger" round>STOP</button>
-    <button ion-button color="secondary" round>START</button>
+    <div class="controls-wrapper">
+      <button ion-button color="secondary" round *ngIf="!running" (click)="start()">START</button>
+      <button ion-button color="danger" round *ngIf="running" (click)="stop()">STOP</button>
+    </div>
+
 	</div>
 </ion-content>

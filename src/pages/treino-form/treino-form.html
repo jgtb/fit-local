@@ -1,32 +1,92 @@
 <ion-header>
-  <ion-navbar color="secondary">
+  <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-title>{{ data.descricao }}</ion-title>
     <ion-buttons right>
-      <button ion-button icon-only *ngIf="_toggle" (click)="toggle()"><ion-icon name="list-box-outline"></ion-icon></button>
-      <button ion-button icon-only *ngIf="!_toggle" (click)="toggle()"><ion-icon name="ios-grid-outline"></ion-icon></button>
+      <button ion-button icon-only *ngIf="_toggle" (click)="toggle()"><ion-icon [ngStyle]="layout.setColor('light')" name="list-box-outline"></ion-icon></button>
+      <button ion-button icon-only *ngIf="!_toggle" (click)="toggle()"><ion-icon [ngStyle]="layout.setColor('light')" name="ios-grid-outline"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
+<ion-content [ngStyle]="layout.setBackgroundColor('dark')">
 
-<ion-content>
   <ion-grid>
     <ion-row>
       <ion-col col-3>
-        <button ion-button color="primary" block round (click)="create(); stop();"><ion-icon name="stopwatch"></ion-icon></button>
+        <button ion-button [ngStyle]="layout.setBackgroundColor('primary')" block round (click)="create(); stop();"><ion-icon [ngStyle]="layout.setColor('light')" name="stopwatch"></ion-icon></button>
       </ion-col>
       <ion-col col-6>
-        <h3 class="timer-clock">{{ time() }}</h3>
+        <h3 class="timer-clock" [ngStyle]="layout.setColor('light')">{{ time() }}</h3>
       </ion-col>
       <ion-col col-3>
-        <button ion-button color="secondary" block round *ngIf="!running" (click)="start()"><ion-icon name="arrow-forward"></ion-icon></button>
-        <button ion-button color="danger" block round *ngIf="running" (click)="stop()"><ion-icon name="square"></ion-icon></button>
+        <button ion-button [ngStyle]="layout.setBackgroundColor('secondary')" block round *ngIf="!running" (click)="start()"><ion-icon [ngStyle]="layout.setColor('light')" name="arrow-forward"></ion-icon></button>
+        <button ion-button [ngStyle]="layout.setBackgroundColor('danger')" block round *ngIf="running" (click)="stop()"><ion-icon [ngStyle]="layout.setColor('light')" name="square"></ion-icon></button>
       </ion-col>
     </ion-row>
   </ion-grid>
+
   <div *ngIf="_toggle">
     <ion-list>
-      <ion-item *ngFor="let item of dataExercicios">
+      <ion-item *ngFor="let item of dataExercicios; let i = index;" [ngStyle]="layout.setStripedColor(i, 'darklight', 'dark')">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <img class="img" src="{{ util.baseUrl }}/exercicios/{{ item.id_exercicio }}-0.gif">
+            </ion-col>
+            <ion-col col-8>
+              <ion-grid>
+                <ion-row>
+                  <ion-col col-6>
+                    <h2 [ngStyle]="layout.setColor('secondary')">{{ item.descricao_ex }}</h2>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-6>
+                    <p [ngStyle]="layout.setColor('light')">Repetição: {{ item.tipo_repeticao }}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-6>
+                    <p [ngStyle]="layout.setColor('light')">Intervalo: {{ item.intervalo }}s</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col col-6>
+                    <p [ngStyle]="layout.setColor('light')">Carga: {{ item.carga }}</p>
+                   </ion-col>
+                </ion-row>
+                <ion-row *ngIf="item.nota">
+                  <ion-col col-6>
+                    <p [ngStyle]="layout.setColor('light')">Nota: {{ item.nota }}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')" block round (click)="timer(item)"><ion-icon [ngStyle]="layout.setColor('light')" name="stopwatch"></ion-icon></button>
+            </ion-col>
+            <ion-col>
+              <button ion-button [ngStyle]="layout.setBackgroundColor('primary')" block round (click)="update(item)"><ion-icon [ngStyle]="layout.setColor('light')" name="refresh"></ion-icon></button>
+            </ion-col>
+            <ion-col *ngIf="item.video">
+              <button ion-button [ngStyle]="layout.setBackgroundColor('danger')" block round (click)="video(item)"><ion-icon [ngStyle]="layout.setColor('light')" name="videocam"></ion-icon></button>
+            </ion-col>
+            <ion-col>
+              <button ion-button [ngStyle]="layout.setBackgroundColor('secondary')" block round (click)="done()"><ion-icon [ngStyle]="layout.setColor('light')" name="checkmark-circle"></ion-icon></button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div *ngIf="!_toggle">
+    <ion-list>
+      <ion-item *ngFor="let item of dataExercicios; let i = index;" [ngStyle]="layout.setStripedColor(i, 'darklight', 'dark')">
         <ion-grid>
           <ion-row>
             <ion-col col-12>
@@ -37,49 +97,52 @@
             <ion-col col-12>
               <ion-grid>
                 <ion-row>
-                  <ion-col col-12>
-                    <h2 class="descricao-ex">{{ item.descricao_ex }}</h2>
+                  <ion-col col-6>
+                    <h2 [ngStyle]="layout.setColor('secondary')">{{ item.descricao_ex }}</h2>
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col col-12>
-                    <p>Repetição: {{ item.tipo_repeticao }}</p>
+                  <ion-col col-6>
+                    <p [ngStyle]="layout.setColor('light')">Repetição: {{ item.tipo_repeticao }}</p>
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col col-12>
-                    <p>Intervalo: {{ item.intervalo }}</p>
+                  <ion-col col-6>
+                    <p [ngStyle]="layout.setColor('light')">Intervalo: {{ item.intervalo }}s</p>
                   </ion-col>
                 </ion-row>
                 <ion-row>
-                  <ion-col col-12>
-                    <p>Carga: {{ item.carga }}</p>
+                  <ion-col col-6>
+                    <p [ngStyle]="layout.setColor('light')">Carga: {{ item.carga }}</p>
                   </ion-col>
                 </ion-row>
                 <ion-row *ngIf="item.nota">
-                  <ion-col col-12>
-                    <p>Nota: {{ item.nota }}</p>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col col-3>
-                    <button ion-button color="light" block round (click)="timer(item); stop();"><ion-icon name="clock"></ion-icon></button>
-                  </ion-col>
-                  <ion-col col-3>
-                    <button ion-button color="primary" block round (click)="update(item);"><ion-icon name="refresh"></ion-icon></button>
-                  </ion-col>
-                  <ion-col col-3>
-                    <button ion-button color="danger" block round><ion-icon name="videocam"></ion-icon></button>
-                  </ion-col>
-                  <ion-col col-3>
-                    <button ion-button color="secondary" block round><ion-icon name="checkmark-circle"></ion-icon></button>
+                  <ion-col col-6>
+                    <p [ngStyle]="layout.setColor('light')">Nota: {{ item.nota }}</p>
                   </ion-col>
                 </ion-row>
               </ion-grid>
             </ion-col>
           </ion-row>
         </ion-grid>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')" block round (click)="timer(item)"><ion-icon [ngStyle]="layout.setColor('light')" name="stopwatch"></ion-icon></button>
+            </ion-col>
+            <ion-col>
+              <button ion-button [ngStyle]="layout.setBackgroundColor('primary')" block round (click)="update(item)"><ion-icon [ngStyle]="layout.setColor('light')" name="refresh"></ion-icon></button>
+            </ion-col>
+            <ion-col *ngIf="item.video">
+              <button ion-button [ngStyle]="layout.setBackgroundColor('danger')" block round (click)="video(item)"><ion-icon [ngStyle]="layout.setColor('light')" name="videocam"></ion-icon></button>
+            </ion-col>
+            <ion-col>
+              <button ion-button [ngStyle]="layout.setBackgroundColor('secondary')" block round (click)="done()"><ion-icon [ngStyle]="layout.setColor('light')" name="checkmark-circle"></ion-icon></button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
     </ion-list>
   </div>
+
 </ion-content>

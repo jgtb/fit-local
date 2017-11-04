@@ -9,6 +9,7 @@ import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { TreinoFormPage } from '../../pages/treino-form/treino-form';
 
 import { Util } from '../../util';
+import { Layout } from '../../layout';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,7 @@ export class SeriePage {
 
   data: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public serieSQLite: SerieSQLite, public util: Util) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public serieSQLite: SerieSQLite, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
     this.select();
@@ -30,16 +31,9 @@ export class SeriePage {
   select() {
     this.serieSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM serie', []).then(
       result => {
-        let arr = [];
-
-        for (var i = 0; i < result.rows.length; i++) {
-          arr.push(result.rows.item(i));
-        }
-
-        this.data = arr.filter((elem, index, arr) => {
+        this.data = this.util.toArray(result).filter((elem, index, arr) => {
           return arr.map(obj => obj['id']).indexOf(elem['id']) === index;
         });
-
       });
     });
   }

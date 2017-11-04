@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { SQLite } from '@ionic-native/sqlite';
 import { Network } from '@ionic-native/network';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { OneSignal } from "@ionic-native/onesignal";
 
 import { MyApp } from './app.component';
 
@@ -16,6 +18,7 @@ import { SQLiteModule } from '../sqlite/sqlite.module';
 import { HttpModule } from '@angular/http';
 
 import { Util } from '../util';
+import { Layout } from '../layout';
 
 @NgModule({
   declarations: [
@@ -37,8 +40,11 @@ import { Util } from '../util';
     StatusBar,
     SplashScreen,
     Util,
+    Layout,
     SQLite,
     Network,
+    InAppBrowser,
+    OneSignal,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

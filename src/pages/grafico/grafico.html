@@ -1,15 +1,21 @@
 <ion-header>
-  <ion-navbar hideBackButton color="secondary">
+  <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-buttons left>
-      <div class="logo" (click)="goToDashboard()">
-        <img src="assets/img/profile/logo-1.png">
+      <div (click)="goToDashboard()">
+        <img class="logo" src="assets/img/profile/logo-1.png">
       </div>
     </ion-buttons>
     <ion-title>Gráficos</ion-title>
   </ion-navbar>
 </ion-header>
 
-
-<ion-content>
-
+<ion-content [ngStyle]="layout.setBackgroundColor('dark')">
+  <ion-list>
+    <ion-item *ngFor="let data of dataGrafico; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+      <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>
+      <div class="item-sessao" *ngFor="let item of selectPerguntas(data)">
+        <p (click)="modal(item)" [ngStyle]="layout.setColor('light')">{{ item?.pergunta }}</p>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -17,16 +17,6 @@ export class UsuarioSQLite {
     return this.sqlite.create({ name: 'data.db', location: 'default' });
   }
 
-  select() {
-    this.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM usuario', []).then(
-      (data) => {
-        this.data = data;
-      })
-    });
-
-    return this.data;
-  }
-
   insert(res) {
     const id_aluno: string = res[0];
     const id_professor: string = res[1];
