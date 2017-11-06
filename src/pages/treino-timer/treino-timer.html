@@ -1,5 +1,5 @@
 <ion-header no-border>
-  <ion-navbar transparent>
+  <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-title></ion-title>
   </ion-navbar>
 </ion-header>
@@ -26,8 +26,8 @@
 		</div>
 
     <div class="controls-wrapper">
-      <button ion-button color="secondary" round *ngIf="!running" (click)="start()">START</button>
-      <button ion-button color="danger" round *ngIf="running" (click)="stop()">STOP</button>
+      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'primary')" round *ngIf="!running" (click)="start()">START</button>
+      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'danger')" round *ngIf="running" (click)="stop()">STOP</button>
     </div>
 
 	</div>

@@ -5,15 +5,19 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
 import { Network } from  "@ionic-native/network";
 
+import { Layout } from './layout';
+
 @Injectable()
 export class Util {
 
   baseUrl = 'http://fit.nexur.com.br';
   //baseUrl = 'http://localhost/personal/web';
 
+  logo;
+
   loading;
 
-  constructor(public network: Network, public sqlite: SQLite, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {}
+  constructor(public network: Network, public sqlite: SQLite, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public layout: Layout) {}
 
   setLogged() {
     localStorage.setItem('isLogged', 'true');
@@ -48,17 +52,17 @@ export class Util {
     this.loading.dismiss();
   }
 
-  showAlert(title, subTitle, button) {
+  showAlert(title, subTitle, buttons, changeBackground) {
     const alert = this.alertCtrl.create({
       title: title,
       subTitle: subTitle,
-      buttons: [button]
+      buttons: [buttons]
     });
 
-    alert.present();
+    alert.present().then(data => changeBackground ? this.layout.setAlertColor() : '');
   }
 
-  showConfirmationAlert(title, message, inputs, buttons) {
+  showConfirmationAlert(title, message, inputs, buttons, changeBackground) {
     const alert = this.alertCtrl.create({
       title: title,
       message: message,
@@ -66,7 +70,7 @@ export class Util {
       buttons: buttons,
     });
 
-    alert.present();
+    alert.present().then(data => changeBackground ? this.layout.setAlertColor() : '');
   }
 
   checkNetwork() {

@@ -1,5 +1,10 @@
 .ios, .md {
 	page-login {
+		ion-alert {
+			.alert-wrapper {
+				display: block !important;
+			}
+		}
 		.bg-wrapper {
 		    background-position: 50% 50%;
 		    background-repeat: no-repeat;

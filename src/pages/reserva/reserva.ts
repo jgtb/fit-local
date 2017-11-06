@@ -78,7 +78,7 @@ export class ReservaPage {
     let arr = [];
 
     for (let i = 0; i < this.data.length; i++) {
-
+      
       let title = this.data[i]['title'];
       let startTime = new Date(this.data[i]['start']);
       let endTime = new Date(this.data[i]['end']);

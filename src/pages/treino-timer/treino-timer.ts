@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Observable } from 'rxjs/Rx';
 
+import { Layout } from '../../layout';
+
 @IonicPage()
 @Component({
   selector: 'page-treino-timer',
@@ -20,8 +22,8 @@ export class TreinoTimerPage {
   rounded: boolean = false;
   responsive: boolean = false;
   clockwise: boolean = true;
-  color: string = '#4dc27b';
-  background: string = '#333333';
+  color: string = this.layout.colors.light;
+  background: string = this.layout.colors.secondary;
   duration: number = 3000;
   animation: string = 'easeOutCubic';
   animationDelay: number = 0;
@@ -32,7 +34,7 @@ export class TreinoTimerPage {
   subscription;
   running = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public layout: Layout) {
     this.data = this.navParams.get('item');
   }
 

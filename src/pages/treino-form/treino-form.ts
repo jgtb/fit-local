@@ -71,7 +71,7 @@ export class TreinoFormPage {
               role: 'cancel',
             }
           ];
-          this.util.showConfirmationAlert(_title, _message, _inputs, _buttons);
+          this.util.showConfirmationAlert(_title, _message, _inputs, _buttons, true);
         }
       },
       {
@@ -79,7 +79,7 @@ export class TreinoFormPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, message, inputs, buttons);
+    this.util.showConfirmationAlert(title, message, inputs, buttons, true);
   }
 
   doCreate(dataResultado, dataComentario) {
@@ -88,14 +88,14 @@ export class TreinoFormPage {
 
       this.treinoProvider.create(data).subscribe(
         data => {
-          this.util.showAlert('Atenção', 'Treino Registrado', 'Ok');
+          this.util.showAlert('Atenção', 'Treino Registrado', 'Ok', true);
         },
         err => {
           console.log(err);
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente');
+          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', true);
       });
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
   }
 
@@ -121,20 +121,20 @@ export class TreinoFormPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, message, inputs, buttons);
+    this.util.showConfirmationAlert(title, message, inputs, buttons, true);
   }
 
   doUpdate(item, data) {
     if (this.util.checkNetwork()) {
       this.serieProvider.update(data).subscribe(
         data => {
-          this.util.showAlert('Atenção', 'Carga Alterada', 'Ok');
+          this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true);
         },
         err => {
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente');
+          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', true);
       });
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
   }
 

@@ -4,12 +4,13 @@ import { Injectable } from '@angular/core';
 export class Layout {
 
   colors = {
-    primary:    '#488aff',
-    secondary:  '#ff3d00',
-    danger:     '#f53d3d',
+    primary:    '#9e9e9e',
+    secondary:  '#263238',
+    danger:     '#424242',
     light:      '#ffffff',
-    dark:       '#ff9e80',
-    darklight:  '#212121'
+    dark:       '#b0bec5',
+    darklight:  '#546e7a',
+    transparent: 'transparent'
   };
 
   constructor() {}
@@ -143,13 +144,13 @@ export class Layout {
 
     [].forEach.call(alertButtons, function(elem, i) {
       elem.style.backgroundColor = secondary;
-      elem.style.color = darklight;
+      elem.style.color = light;
     });
 
     const alertActivatedButton = document.querySelectorAll('.alert-button .activated');
 
     [].forEach.call(alertActivatedButton, function(elem, i) {
-      elem.style.backgroundColor = secondary;
+      elem.style.backgroundColor = light;
     });
 
     const alertInputWrapper = document.querySelectorAll('.alert-input-wrapper');
@@ -161,13 +162,13 @@ export class Layout {
     const alertInputWrapperInput = document.querySelectorAll('.alert-input-wrapper input');
 
     [].forEach.call(alertInputWrapperInput, function(elem, i) {
-      elem.style.color = secondary;
+      elem.style.color = light;
     });
 
     const alertRadioInner = document.querySelectorAll('.alert-radio-inner');
 
     [].forEach.call(alertRadioInner, function(elem, i) {
-      elem.style.color = secondary;
+      elem.style.color = light;
     });
 
   }

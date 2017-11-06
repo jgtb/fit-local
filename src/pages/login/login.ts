@@ -54,17 +54,17 @@ export class LoginPage {
           if (data) {
             this.doLogin(data);
           } else if (data == 0) {
-            this.util.showAlert('Atenção', 'Usuário ou Senha estão Incorretos', 'Ok');
+            this.util.showAlert('Atenção', 'Usuário ou Senha estão Incorretos', 'Ok', false);
           } else if (data == -1) {
-            this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok');
+            this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok', false);
           }
         },
         err => {
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente');
+          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', false);
         }
       );
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
     }
   }
 
@@ -74,6 +74,7 @@ export class LoginPage {
     const id_tipo_professor = data[2];
     this.util.setLogged();
     this.util.setShowReserva(id_tipo_professor);
+    this.util.logo = id_professor;
     this.usuarioSQLite.insert(data);
     this.serieProvider.index(id_aluno).subscribe(
       data => {
@@ -127,7 +128,7 @@ export class LoginPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, message, inputs, buttons);
+    this.util.showConfirmationAlert(title, message, inputs, buttons, false);
   }
 
   doForgotPassword(data) {
@@ -135,13 +136,13 @@ export class LoginPage {
       this.authProvider.forgotPassword(data).subscribe(
       data => {
         if (data == 1) {
-          this.util.showAlert('Atenção', 'E-mail enviado com sucesso', 'Ok');
+          this.util.showAlert('Atenção', 'E-mail enviado com sucesso', 'Ok', false);
         } else {
-          this.util.showAlert('Atenção', 'Não foi possível enviar o e-mail', 'Ok');
+          this.util.showAlert('Atenção', 'Não foi possível enviar o e-mail', 'Ok', false);
         }
       });
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok');
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
     }
   }
 
