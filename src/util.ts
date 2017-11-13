@@ -43,6 +43,14 @@ export class Util {
     return localStorage.getItem('showReserva');
   }
 
+  setLogo(id_professor) {
+    localStorage.setItem('logo', id_professor);
+  }
+
+  getLogo() {
+    return localStorage.getItem('logo');
+  }
+
   showLoading() {
     this.loading = this.loadingCtrl.create();
     this.loading.present();
@@ -52,17 +60,17 @@ export class Util {
     this.loading.dismiss();
   }
 
-  showAlert(title, subTitle, buttons, changeBackground) {
+  showAlert(title, subTitle, buttons, colorsType) {
     const alert = this.alertCtrl.create({
       title: title,
       subTitle: subTitle,
       buttons: [buttons]
     });
 
-    alert.present().then(data => changeBackground ? this.layout.setAlertColor() : '');
+    alert.present().then(data => this.layout.setAlertColor(colorsType));
   }
 
-  showConfirmationAlert(title, message, inputs, buttons, changeBackground) {
+  showConfirmationAlert(title, message, inputs, buttons, colorsType) {
     const alert = this.alertCtrl.create({
       title: title,
       message: message,
@@ -70,7 +78,7 @@ export class Util {
       buttons: buttons,
     });
 
-    alert.present().then(data => changeBackground ? this.layout.setAlertColor() : '');
+    alert.present().then(data => this.layout.setAlertColor(colorsType));
   }
 
   checkNetwork() {
@@ -122,7 +130,7 @@ export class Util {
   }
 
   unserialize(data) {
-    let unserialize = data.split(';')
+    const unserialize = data.split(';')
       .filter((elem, i) => !(i%2 === 0))
       .map(elem => elem.split(':').reverse()[0].replace(/"/g, ""));
 

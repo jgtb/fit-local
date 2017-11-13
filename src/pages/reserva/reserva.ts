@@ -29,32 +29,6 @@ export class ReservaPage {
     locale: 'pt-BR',
     noEventsLabel: 'Nenhuma Reserva',
     currentDate: new Date(),
-    dateFormatter: {
-        formatMonthViewDay: function(date) {
-          return date.getDate().toString();
-        },
-        formatMonthViewDayHeader: function(date) {
-          return 'MonMH';
-        },
-        formatMonthViewTitle: function(date) {
-          return 'testMT';
-        },
-        formatWeekViewDayHeader: function(date) {
-          return 'MonWH';
-        },
-        formatWeekViewTitle: function(date) {
-          return 'testWT';
-        },
-        formatWeekViewHourColumn: function(date) {
-          return 'testWH';
-        },
-        formatDayViewHourColumn: function(date) {
-          return 'testDH';
-        },
-        formatDayViewTitle: function(date) {
-          return 'testDT';
-        }
-    }
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public reservaSQLite: ReservaSQLite, public util: Util, public layout: Layout) {}
@@ -69,7 +43,7 @@ export class ReservaPage {
     this.reservaSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM reserva', []).then(
       result => {
         this.data = this.util.toArray(result);
-        this.loadReservas();
+        this.eventSource = this.loadReservas();
       });
     });
   }
@@ -78,15 +52,9 @@ export class ReservaPage {
     let arr = [];
 
     for (let i = 0; i < this.data.length; i++) {
-      
-      let title = this.data[i]['title'];
-      let startTime = new Date(this.data[i]['start']);
-      let endTime = new Date(this.data[i]['end']);
 
       arr.push({
-          title: title,
-          startTime: startTime,
-          endTime: endTime,
+          title: this.data[i].title,
           allDay: false
       });
     }

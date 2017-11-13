@@ -148,7 +148,7 @@ export class TreinoFormPage {
 
   stop() {
     this.running = false;
-    this.subscription.unsubscribe ();
+    this.subscription.unsubscribe();
   }
 
   time() {
@@ -185,9 +185,7 @@ export class TreinoFormPage {
   select() {
     this.serieSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM serie WHERE id = ' + this.data.id + '', []).then(
       result => {
-        for (var i = 0; i < result.rows.length; i++) {
-          this.dataExercicios.push(result.rows.item(i));
-        }
+        this.dataExercicios = this.util.toArray(result);
       });
     });
   }

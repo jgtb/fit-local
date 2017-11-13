@@ -17,7 +17,7 @@ export class TreinoSQLite {
 
   insertAll(data) {
     for (var i = 0; i < data.length; i++) {
-      let values = this.getValues(data, i);
+      let values = this.getValues(data[i]);
 
       this.insert(values);
     }
@@ -27,15 +27,15 @@ export class TreinoSQLite {
     this.startDatabase().then((db: SQLiteObject) => { db.executeSql('INSERT INTO treino (id, title, start, end, color, description, tempo, borg) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', values) }).then(() => console.log('Inserted Treino'));
   }
 
-  getValues(data, i) {
-    let id = data[i]['id'];
-    let title = data[i]['title'];
-    let start = data[i]['start'];
-    let end = data[i]['end'];
-    let color = data[i]['color'];
-    let description = data[i]['description'];
-    let tempo = data[i]['tempo'];
-    let borg = data[i]['borg'];
+  getValues(data) {
+    let id = data['id'];
+    let title = data['title'];
+    let start = data['start'];
+    let end = data['end'];
+    let color = data['color'];
+    let description = data['description'];
+    let tempo = data['tempo'];
+    let borg = data['borg'];
 
     let values = [ id, title, start, end, color, description, tempo, borg ];
 

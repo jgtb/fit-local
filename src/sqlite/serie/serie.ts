@@ -17,7 +17,7 @@ export class SerieSQLite {
 
   insertAll(data) {
     for (var i = 0; i < data.length; i++) {
-      let values = this.getValues(data, i);
+      let values = this.getValues(data[i]);
 
       this.insert(values);
     }
@@ -27,25 +27,25 @@ export class SerieSQLite {
     this.startDatabase().then((db: SQLiteObject) => { db.executeSql('INSERT INTO serie (altura, ativo, carga, data, descricao, descricao_ex, id, id_exercicio, id_exercicio_serie, id_serie, id_tipo_exercicio, intervalo, largura, nota, num_repeticao, ordem, tipo_repeticao, video) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', values) }).then(() => console.log('Inserted Serie'));
   }
 
-  getValues(data, i) {
-    let altura = data[i]['altura'];
-    let ativo = data[i]['ativo'];
-    let carga = data[i]['carga'];
-    let _data = data[i]['data'];
-    let descricao = data[i]['descricao'];
-    let descricao_ex = data[i]['descricao_ex'];
-    let id = data[i]['id'];
-    let id_exercicio = data[i]['id_exercicio'];
-    let id_exercicio_serie = data[i]['id_exercicio_serie'];
-    let id_serie = data[i]['id_serie'];
-    let id_tipo_exercicio = data[i]['id_tipo_exercicio'];
-    let intervalo = data[i]['intervalo'];
-    let largura = data[i]['largura'];
-    let nota = data[i]['nota'];
-    let num_repeticao = data[i]['num_repeticao'];
-    let ordem = data[i]['ordem'];
-    let tipo_repeticao = data[i]['tipo_repeticao'];
-    let video = data[i]['video'];
+  getValues(data) {
+    let altura = data['altura'];
+    let ativo = data['ativo'];
+    let carga = data['carga'];
+    let _data = data['data'];
+    let descricao = data['descricao'];
+    let descricao_ex = data['descricao_ex'];
+    let id = data['id'];
+    let id_exercicio = data['id_exercicio'];
+    let id_exercicio_serie = data['id_exercicio_serie'];
+    let id_serie = data['id_serie'];
+    let id_tipo_exercicio = data['id_tipo_exercicio'];
+    let intervalo = data['intervalo'];
+    let largura = data['largura'];
+    let nota = data['nota'];
+    let num_repeticao = data['num_repeticao'];
+    let ordem = data['ordem'];
+    let tipo_repeticao = data['tipo_repeticao'];
+    let video = data['video'];
 
     let values = [ altura, ativo, carga, _data, descricao, descricao_ex, id, id_exercicio, id_exercicio_serie, id_serie, id_tipo_exercicio, intervalo, largura, nota, num_repeticao, ordem, tipo_repeticao, video ];
 

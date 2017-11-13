@@ -31,7 +31,7 @@ export class InformacaoSQLite {
 
   insertAllMensagem(data) {
     for (var i = 0; i < data.length; i++) {
-      let values = this.getMensagemValues(data, i);
+      let values = this.getMensagemValues(data[i]);
 
       this.insertMensagem(values);
     }
@@ -41,14 +41,14 @@ export class InformacaoSQLite {
     this.startDatabase().then((db: SQLiteObject) => { db.executeSql('INSERT INTO mensagem (id_mensagem, titulo, texto, imagem, largura, altura, data) VALUES (?, ?, ?, ?, ?, ?, ?)', values) }).then(() => console.log('Inserted Mensagem'));
   }
 
-  getMensagemValues(data, i) {
-    let id_mensagem = data[i]['id_mensagem'];
-    let titulo = data[i]['titulo'];
-    let texto = data[i]['texto'];
-    let imagem = data[i]['imagem'];
-    let largura = data[i]['largura'];
-    let altura = data[i]['altura'];
-    let _data = data[i]['data'];
+  getMensagemValues(data) {
+    let id_mensagem = data['id_mensagem'];
+    let titulo = data['titulo'];
+    let texto = data['texto'];
+    let imagem = data['imagem'];
+    let largura = data['largura'];
+    let altura = data['altura'];
+    let _data = data['data'];
 
     let values = [ id_mensagem, titulo, texto, imagem, largura, altura, _data ];
 

@@ -45,7 +45,7 @@ export class GraficoPage {
   }
 
   modal(item) {
-    let modal = this.modalCtrl.create(GraficoModalPage, {item : item, countAvaliacoes: 1});
+    let modal = this.modalCtrl.create(GraficoModalPage, {item : item});
     modal.present();
   }
 

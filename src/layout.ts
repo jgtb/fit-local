@@ -3,6 +3,16 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class Layout {
 
+  alertColors = {
+    primary:    '#488aff',
+    secondary:  '#4dc27b',
+    danger:     '#f53d3d',
+    light:      '#f4f4f4',
+    dark:       '#1f2025',
+    darklight:  '#2b2b2b',
+    transparent: 'transparent'
+  };
+
   colors = {
     primary:    '#9e9e9e',
     secondary:  '#263238',
@@ -116,10 +126,10 @@ export class Layout {
     });
   }
 
-  setAlertColor() {
-    const secondary = this.colors.secondary;
-    const darklight = this.colors.darklight;
-    const light = this.colors.light;
+  setAlertColor(colorsType) {
+    const secondary = colorsType ? this.colors.secondary : this.alertColors.secondary;
+    const darklight = colorsType ? this.colors.darklight : this.alertColors.darklight;
+    const light = colorsType ? this.colors.light : this.alertColors.light;
 
     const alertWrapper = document.querySelectorAll('.alert-wrapper');
 

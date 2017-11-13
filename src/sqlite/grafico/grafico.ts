@@ -17,7 +17,7 @@ export class GraficoSQLite {
 
   insertAll(data) {
     for (var i = 0; i < data.length; i++) {
-      let values = this.getValues(data, i);
+      let values = this.getValues(data[i]);
 
       this.insert(values);
     }
@@ -27,16 +27,16 @@ export class GraficoSQLite {
     this.startDatabase().then((db: SQLiteObject) => { db.executeSql('INSERT INTO grafico (id, descricao, data, sessao, id_sessao, pergunta, id_pergunta, id_tipo_pergunta, resposta) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', values) }).then(() => console.log('Inserted Gráfico'));
   }
 
-  getValues(data, i) {
-    let id = data[i]['id'];
-    let descricao = data[i]['descricao'];
-    let _data = data[i]['data'];
-    let sessao = data[i]['sessao'];
-    let id_sessao = data[i]['id_sessao'];
-    let pergunta = data[i]['pergunta'];
-    let id_pergunta = data[i]['id_pergunta'];
-    let id_tipo_pergunta = data[i]['id_tipo_pergunta'];
-    let resposta = data[i]['resposta'];
+  getValues(data) {
+    let id = data['id'];
+    let descricao = data['descricao'];
+    let _data = data['data'];
+    let sessao = data['sessao'];
+    let id_sessao = data['id_sessao'];
+    let pergunta = data['pergunta'];
+    let id_pergunta = data['id_pergunta'];
+    let id_tipo_pergunta = data['id_tipo_pergunta'];
+    let resposta = data['resposta'];
 
     let values = [ id, descricao, _data, sessao, id_sessao, pergunta, id_pergunta, id_tipo_pergunta, resposta ];
 
