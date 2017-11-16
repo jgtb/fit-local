@@ -23,7 +23,7 @@ import { Util } from '../util';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage;
+  rootPage: any = LoginPage;
 
   oneSignalID: string = 'aa67fa9c-474b-42ef-b968-75e451d8cb9b';
   fireBaseID: string = '937666658160';

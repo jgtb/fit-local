@@ -8,6 +8,8 @@ import { GraficoSQLite } from '../../sqlite/grafico/grafico';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { GraficoModalPage } from '../../pages/grafico-modal/grafico-modal';
 
+import { GraficoProvider } from '../../providers/grafico/grafico';
+
 import { Util } from '../../util';
 import { Layout } from '../../layout';
 
@@ -21,7 +23,7 @@ export class GraficoPage {
   data: any = [];
   dataGrafico: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public graficoSQLite: GraficoSQLite, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public graficoProvider: GraficoProvider, public graficoSQLite: GraficoSQLite, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
   	this.select();
@@ -45,8 +47,26 @@ export class GraficoPage {
   }
 
   modal(item) {
-    let modal = this.modalCtrl.create(GraficoModalPage, {item : item});
+    const modal = this.modalCtrl.create(GraficoModalPage, {item : item});
     modal.present();
+  }
+
+   doRefresh(event) {
+    if (this.util.checkNetwork()) {
+      this.graficoProvider.index(this.util.getStorage('id_aluno')).subscribe(
+        data => {
+          this.graficoSQLite.startDatabase().then((db: SQLiteObject) => {
+            db.executeSql('DELETE FROM grafico', {}).then(
+              () => {
+                this.graficoSQLite.insertAll(data);
+                this.select();
+                setTimeout(() => { event.complete() }, 2000)
+            })
+          })
+        })
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+    }
   }
 
   goToDashboard() {

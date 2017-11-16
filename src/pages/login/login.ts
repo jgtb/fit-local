@@ -53,12 +53,12 @@ export class LoginPage {
     if (this.util.checkNetwork()) {
       this.authProvider.login(data).subscribe(
         data => {
-          if (data) {
+          if (data !== '0' && data !== '-1' && data !== 0 && data !== -1) {
             this.doLogin(data);
             this.sendOneSignalID();
-          } else if (data == 0) {
+          } else if (data === '0' || data === 0) {
             this.util.showAlert('Atenção', 'Usuário ou Senha estão Incorretos', 'Ok', false);
-          } else if (data == -1) {
+          } else if (data === '-1' || data === -1) {
             this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok', false);
           }
         },
@@ -75,9 +75,11 @@ export class LoginPage {
     const id_aluno = data[0];
     const id_professor = data[1];
     const id_tipo_professor = data[2];
-    this.util.setLogged();
-    this.util.setShowReserva(id_tipo_professor);
-    this.util.setLogo(id_professor);
+    this.util.setStorage('isLogged', 'true');
+    this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'fase');
+    this.util.setStorage('logo', id_professor);
+    this.util.setStorage('id_aluno', id_aluno);
+    this.util.setStorage('id_professor', id_professor);
     this.usuarioSQLite.insert(data);
     this.serieProvider.index(id_aluno).subscribe(
       data => {

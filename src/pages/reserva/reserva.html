@@ -2,7 +2,7 @@
   <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-buttons left>
       <div (click)="goToDashboard()">
-        <img class="logo" src="{{ util.baseUrl }}/logos/{{ util.getLogo() }}.png" alt="">
+        <img class="logo" src="{{ util.baseUrl }}/logos/{{ util.getStorage('logo') }}.png" alt="">
       </div>
     </ion-buttons>
     <ion-title>Reservas</ion-title>
@@ -10,6 +10,10 @@
 </ion-header>
 
 <ion-content padding [ngStyle]="layout.setBackgroundColor('dark')">
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <h2 [ngStyle]="layout.setColor('secondary')" class="calendar-title">{{ title }}</h2>
 

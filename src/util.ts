@@ -19,38 +19,30 @@ export class Util {
 
   constructor(public network: Network, public sqlite: SQLite, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public layout: Layout) {}
 
+  setStorage(key, value) {
+    localStorage.setItem(key, value)
+  }
+
+  getStorage(key) {
+    return localStorage.getItem(key)
+  }
+
   setLogged() {
     localStorage.setItem('isLogged', 'true');
   }
 
   setLogout() {
-    localStorage.setItem('isLogged', 'false');
+    this.setStorage('isLogged', 'false')
     this.cleanDatabase();
   }
 
   isLogged() {
-    if (localStorage.getItem('isLogged') === 'true')
+    if (this.getStorage('isLogged') === 'true')
       return true;
 
     return false;
   }
-
-  setShowReserva(id_tipo_professor) {
-    localStorage.setItem('showReserva', id_tipo_professor == 4 ? 'true' : 'false');
-  }
-
-  getShowReserva() {
-    return localStorage.getItem('showReserva');
-  }
-
-  setLogo(id_professor) {
-    localStorage.setItem('logo', id_professor);
-  }
-
-  getLogo() {
-    return localStorage.getItem('logo');
-  }
-
+  
   showLoading() {
     this.loading = this.loadingCtrl.create();
     this.loading.present();

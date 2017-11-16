@@ -31,6 +31,10 @@
 						.logo {
 		    				margin-bottom: 40px;
 						    text-align: center;
+						    img {
+						    	width: 150px;
+								height: 150px;
+						    }
 						}
 						ion-list {
 							background-color: rgba(map-get($colors, dark), 0.9);

@@ -8,6 +8,8 @@ import { AvaliacaoSQLite } from '../../sqlite/avaliacao/avaliacao';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { AvaliacaoViewPage } from '../../pages/avaliacao-view/avaliacao-view';
 
+import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
+
 import { Util } from '../../util';
 import { Layout } from '../../layout';
 
@@ -20,7 +22,7 @@ export class AvaliacaoPage {
 
   data: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public avaliacaoSQLite: AvaliacaoSQLite, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public avaliacaoProvider: AvaliacaoProvider, public avaliacaoSQLite: AvaliacaoSQLite, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
     this.select();
@@ -39,6 +41,24 @@ export class AvaliacaoPage {
 
   view(item) {
     this.navCtrl.push(AvaliacaoViewPage, { item: item });
+  }
+
+  doRefresh(event) {
+    if (this.util.checkNetwork()) {
+      this.avaliacaoProvider.index(this.util.getStorage('id_aluno')).subscribe(
+        data => {
+          this.avaliacaoSQLite.startDatabase().then((db: SQLiteObject) => {
+            db.executeSql('DELETE FROM avaliacao', {}).then(
+              () => {
+                this.avaliacaoSQLite.insertAll(data);
+                this.select();
+                setTimeout(() => { event.complete() }, 2000)
+            })
+          })
+        })
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+    }
   }
 
   goToDashboard() {

@@ -5,7 +5,7 @@ export class Layout {
 
   alertColors = {
     primary:    '#488aff',
-    secondary:  '#4dc27b',
+    secondary:  '#ffd400',
     danger:     '#f53d3d',
     light:      '#f4f4f4',
     dark:       '#1f2025',
@@ -147,7 +147,7 @@ export class Layout {
     const alertSubFields = document.querySelectorAll('.alert-sub-title');
 
     [].forEach.call(alertSubFields, function(elem, i) {
-      elem.style.color = darklight;
+      elem.style.color = light;
     });
 
     const alertButtons = document.querySelectorAll('.alert-button');

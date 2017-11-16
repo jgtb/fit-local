@@ -2,7 +2,7 @@
   <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-buttons left>
       <div (click)="goToDashboard()">
-        <img class="logo" src="{{ util.baseUrl }}/logos/{{ util.getLogo() }}.png" alt="">
+        <img class="logo" src="{{ util.baseUrl }}/logos/{{ util.getStorage('logo') }}.png" alt="">
       </div>
     </ion-buttons>
     <ion-title>Gráficos</ion-title>
@@ -10,6 +10,9 @@
 </ion-header>
 
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <ion-item *ngFor="let data of dataGrafico; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
       <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>

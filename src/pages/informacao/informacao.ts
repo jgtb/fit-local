@@ -7,6 +7,8 @@ import { InformacaoSQLite } from '../../sqlite/informacao/informacao';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 
+import { InformacaoProvider } from '../../providers/informacao/informacao';
+
 import { Util } from '../../util';
 import { Layout } from '../../layout';
 
@@ -24,7 +26,7 @@ export class InformacaoPage {
   dataInformacao: any = [];
   dataMensagem: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public informacaoSQLite: InformacaoSQLite, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public informacaoProvider: InformacaoProvider, public informacaoSQLite: InformacaoSQLite, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
     this.selectInformacao();
@@ -55,6 +57,34 @@ export class InformacaoPage {
        return true;
 
      return false;
+  }
+
+  doRefresh(event) {
+    if (this.util.checkNetwork()) {
+      this.informacaoProvider.indexInformacao(this.util.getStorage('id_professor')).subscribe(
+        data => {
+          this.informacaoSQLite.startDatabase().then((db: SQLiteObject) => {
+            db.executeSql('DELETE FROM informacao', {}).then(
+              () => {
+                this.informacaoSQLite.insertInformacao(data);
+                this.selectInformacao();
+            })
+          })
+        })
+      this.informacaoProvider.indexMensagem(this.util.getStorage('id_aluno')).subscribe(
+        data => {
+          this.informacaoSQLite.startDatabase().then((db: SQLiteObject) => {
+            db.executeSql('DELETE FROM mensagem', {}).then(
+              () => {
+                this.informacaoSQLite.insertAllMensagem(data);
+                this.selectMensagem();
+            })
+          })
+        })
+      setTimeout(() => { event.complete() }, 2000)
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+    }
   }
 
   goToDashboard() {

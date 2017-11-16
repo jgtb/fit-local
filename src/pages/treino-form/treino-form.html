@@ -10,6 +10,10 @@
 
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
 
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-grid>
     <ion-row>
       <ion-col col-3>

@@ -5,6 +5,9 @@
 </ion-header>
 
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <ion-item *ngFor="let data of dataSessoes; let i = index" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
       <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>

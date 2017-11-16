@@ -7,6 +7,8 @@ import { TreinoSQLite } from '../../sqlite/treino/treino';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 
+import { TreinoProvider } from '../../providers/treino/treino';
+
 import { Util } from '../../util';
 import { Layout } from '../../layout';
 
@@ -28,36 +30,10 @@ export class TreinoPage {
     mode: 'month',
     locale: 'pt-BR',
     noEventsLabel: 'Nenhum Treino',
-    currentDate: new Date(),
-    dateFormatter: {
-        formatMonthViewDay: function(date) {
-            return date.getDate().toString();
-        },
-        formatMonthViewDayHeader: function(date) {
-            return 'MonMH';
-        },
-        formatMonthViewTitle: function(date) {
-            return 'testMT';
-        },
-        formatWeekViewDayHeader: function(date) {
-            return 'MonWH';
-        },
-        formatWeekViewTitle: function(date) {
-            return 'testWT';
-        },
-        formatWeekViewHourColumn: function(date) {
-            return 'testWH';
-        },
-        formatDayViewHourColumn: function(date) {
-            return 'testDH';
-        },
-        formatDayViewTitle: function(date) {
-            return 'testDT';
-        }
-    }
+    currentDate: new Date()
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoSQLite: TreinoSQLite, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public treinoSQLite: TreinoSQLite, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {}
 
@@ -67,7 +43,7 @@ export class TreinoPage {
     this.treinoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM treino', []).then(
       result => {
         this.data = this.util.toArray(result);
-        this.loadTreinos();
+        this.eventSource = this.loadTreinos();
       });
     });
   }
@@ -78,22 +54,16 @@ export class TreinoPage {
     for (let i = 0; i < this.data.length; i++) {
 
       let title = this.data[i]['title'];
-      let startTime = new Date(this.data[i]['start']);
-      let endTime = new Date(this.data[i]['end']);
 
       arr.push({
           title: title,
-          startTime: startTime,
-          endTime: endTime,
+          //startTime: startTime,
+          //endTime: endTime,
           allDay: false
       });
     }
 
     return arr;
-  }
-
-  goToDashboard() {
-      this.navCtrl.push(DashboardPage);
   }
 
   onViewTitleChanged(title) {
@@ -104,9 +74,7 @@ export class TreinoPage {
     }
   }
 
-  onEventSelected(event) {
-
-  }
+  onEventSelected(event) {}
 
   toggle() {
     this._toggle++;
@@ -124,6 +92,28 @@ export class TreinoPage {
             this.calendar.mode = 'day';
         break;
     }
+  }
+
+  doRefresh(event) {
+    if (this.util.checkNetwork()) {
+      this.treinoProvider.index(this.util.getStorage('id_aluno')).subscribe(
+        data => {
+          this.treinoSQLite.startDatabase().then((db: SQLiteObject) => {
+            db.executeSql('DELETE FROM treino', {}).then(
+              () => {
+                this.treinoSQLite.insertAll(data);
+                this.select();
+                setTimeout(() => { event.complete() }, 2000)
+            })
+          })
+        })
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+    }
+  }
+
+  goToDashboard() {
+    this.navCtrl.push(DashboardPage);
   }
 
 }

@@ -185,9 +185,9 @@ export class TreinoFormPage {
   select() {
     this.serieSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM serie WHERE id = ' + this.data.id + '', []).then(
       result => {
-        this.dataExercicios = this.util.toArray(result);
-      });
-    });
+        this.dataExercicios = this.util.toArray(result)
+      })
+    })
   }
 
   toggle() {
@@ -238,13 +238,13 @@ export class TreinoFormPage {
   }
 
   getResultado(index) {
-    let data = ['Muito Bom', 'Bom', 'Mediano', 'Regular', 'Ruim', 'Muito Ruim'];
+    const data = ['Muito Bom', 'Bom', 'Mediano', 'Regular', 'Ruim', 'Muito Ruim'];
 
     return data[index];
   }
 
   getDateTime() {
-    let date = new Date();
+    const date = new Date();
 
     return date.getFullYear() + "-" +
       ("00" + (date.getMonth() + 1)).slice(-2) + "-" +
@@ -252,6 +252,24 @@ export class TreinoFormPage {
       ("00" + date.getHours()).slice(-2) + ":" +
       ("00" + date.getMinutes()).slice(-2) + ":" +
       ("00" + date.getSeconds()).slice(-2);
+  }
+
+  doRefresh(event) {
+    if (this.util.checkNetwork()) {
+      this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
+        data => {
+          this.serieSQLite.startDatabase().then((db: SQLiteObject) => {
+            db.executeSql('DELETE FROM serie', {}).then(
+              () => {
+                this.serieSQLite.insertAll(data);
+                this.select();
+                setTimeout(() => { event.complete() }, 2000)
+            })
+          })
+        })
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+    }
   }
 
 }

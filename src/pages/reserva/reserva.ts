@@ -7,6 +7,8 @@ import { ReservaSQLite } from '../../sqlite/reserva/reserva';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 
+import { ReservaProvider } from '../../providers/reserva/reserva';
+
 import { Util } from '../../util';
 import { Layout } from '../../layout';
 
@@ -31,7 +33,7 @@ export class ReservaPage {
     currentDate: new Date(),
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public reservaSQLite: ReservaSQLite, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public reservaProvider: ReservaProvider, public reservaSQLite: ReservaSQLite, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {
     this.select();
@@ -62,10 +64,6 @@ export class ReservaPage {
     return arr;
   }
 
-  goToDashboard() {
-    this.navCtrl.push(DashboardPage);
-  }
-
   onViewTitleChanged(title) {
     if (this.calendar.mode == 'week') {
       this.title = title.split(',')[0];
@@ -74,9 +72,7 @@ export class ReservaPage {
     }
   }
 
-  onEventSelected(event) {
-
-  }
+  onEventSelected(event) {}
 
   toggle() {
     this._toggle++;
@@ -94,6 +90,28 @@ export class ReservaPage {
             this.calendar.mode = 'day';
         break;
     }
+  }
+
+  doRefresh(event) {
+    if (this.util.checkNetwork()) {
+      this.reservaProvider.index(this.util.getStorage('id_professor')).subscribe(
+        data => {
+          this.reservaSQLite.startDatabase().then((db: SQLiteObject) => {
+            db.executeSql('DELETE FROM reserva', {}).then(
+              () => {
+                this.reservaSQLite.insertAll(data);
+                this.select();
+                setTimeout(() => { event.complete() }, 2000)
+            })
+          })
+        })
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+    }
+  }
+
+  goToDashboard() {
+    this.navCtrl.push(DashboardPage);
   }
 
 }
