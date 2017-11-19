@@ -60,13 +60,13 @@ export class GraficoPage {
               () => {
                 this.graficoSQLite.insertAll(data);
                 this.select();
-                setTimeout(() => { event.complete() }, 2000)
             })
           })
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
+    setTimeout(() => { event.complete() }, 2000)
   }
 
   goToDashboard() {

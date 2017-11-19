@@ -12,7 +12,7 @@ import { Layout } from '../../layout';
 })
 export class TreinoTimerPage {
 
-  data;
+  data: any = [];
 
   current: number;
   max: number;

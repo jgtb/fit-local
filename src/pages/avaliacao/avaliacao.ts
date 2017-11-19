@@ -29,7 +29,7 @@ export class AvaliacaoPage {
   }
 
   ionViewDidLoad() {}
-
+  
   select() {
     this.avaliacaoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM avaliacao', []).then(
       result => {
@@ -52,13 +52,13 @@ export class AvaliacaoPage {
               () => {
                 this.avaliacaoSQLite.insertAll(data);
                 this.select();
-                setTimeout(() => { event.complete() }, 2000)
             })
           })
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
+    setTimeout(() => { event.complete() }, 2000)
   }
 
   goToDashboard() {

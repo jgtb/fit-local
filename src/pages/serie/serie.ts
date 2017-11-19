@@ -53,13 +53,13 @@ export class SeriePage {
               () => {
                 this.serieSQLite.insertAll(data);
                 this.select();
-                setTimeout(() => { event.complete() }, 2000)
             })
           })
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
+    setTimeout(() => { event.complete() }, 2000)
   }
 
   goToDashboard() {

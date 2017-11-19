@@ -200,7 +200,7 @@ export class TreinoFormPage {
         name: 'resultado',
         type: 'radio',
         label: 'Muito Bom',
-        value: 0,
+        value: "0",
       },
       {
         name: 'resultado',
@@ -263,13 +263,13 @@ export class TreinoFormPage {
               () => {
                 this.serieSQLite.insertAll(data);
                 this.select();
-                setTimeout(() => { event.complete() }, 2000)
             })
           })
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
+    setTimeout(() => { event.complete() }, 2000)
   }
 
 }

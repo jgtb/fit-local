@@ -101,13 +101,13 @@ export class ReservaPage {
               () => {
                 this.reservaSQLite.insertAll(data);
                 this.select();
-                setTimeout(() => { event.complete() }, 2000)
             })
           })
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
     }
+    setTimeout(() => { event.complete() }, 2000)
   }
 
   goToDashboard() {
