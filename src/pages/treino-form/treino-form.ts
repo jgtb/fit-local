@@ -126,7 +126,7 @@ export class TreinoFormPage {
 
   doUpdate(item, data) {
     if (this.util.checkNetwork()) {
-      this.serieProvider.update(data).subscribe(
+      this.serieProvider.updateCarga(data).subscribe(
         data => {
           this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true);
         },
