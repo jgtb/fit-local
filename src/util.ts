@@ -26,11 +26,7 @@ export class Util {
   getStorage(key) {
     return localStorage.getItem(key)
   }
-
-  setLogged() {
-    localStorage.setItem('isLogged', 'true');
-  }
-
+  
   setLogout() {
     this.setStorage('isLogged', 'false')
     this.cleanDatabase();

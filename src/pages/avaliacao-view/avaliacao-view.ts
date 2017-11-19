@@ -73,8 +73,6 @@ export class AvaliacaoViewPage {
     var str = arr.reduce(function(prevVal, elem) {
       return prevVal + elem + ', ';
     }, '');
-
-    alert(str);
        
     return str.slice(0, -2);
   }

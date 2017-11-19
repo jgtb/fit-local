@@ -51,19 +51,23 @@ export class LoginPage {
 
   login(data) {
     if (this.util.checkNetwork()) {
+      this.util.showLoading();
       this.authProvider.login(data).subscribe(
         data => {
-          if (data !== '0' && data !== '-1' && data !== 0 && data !== -1) {
+          if (data != 0 && data != -1) {
             this.doLogin(data);
             this.sendOneSignalID();
-          } else if (data === '0' || data === 0) {
+          } else if (data === 0) {
             this.util.showAlert('Atenção', 'Usuário ou Senha estão Incorretos', 'Ok', false);
-          } else if (data === '-1' || data === -1) {
+          } else if (data === -1) {
             this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok', false);
           }
         },
         err => {
           this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', false);
+        },
+        () => {
+          this.util.endLoading();
         }
       );
     } else {
