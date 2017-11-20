@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite'
 
-import { Util } from '../../util';
+import { Util } from '../../util'
 
 @Injectable()
 export class AvaliacaoSQLite {
 
-  createTable: string = 'CREATE TABLE IF NOT EXISTS avaliacao(id VARCHAR(225), descricao VARCHAR(225), data VARCHAR(225), sessao VARCHAR(225), id_sessao VARCHAR(225), pergunta VARCHAR(225), id_tipo_pergunta VARCHAR(225), resposta VARCHAR(225))';
+  createTable: string = 'CREATE TABLE IF NOT EXISTS avaliacao(id VARCHAR(225), descricao VARCHAR(225), data VARCHAR(225), sessao VARCHAR(225), id_sessao VARCHAR(225), pergunta VARCHAR(225), id_tipo_pergunta VARCHAR(225), resposta VARCHAR(225))'
 
   constructor(public sqlite: SQLite, public util: Util) {}
 
@@ -16,30 +16,31 @@ export class AvaliacaoSQLite {
   }
 
   insertAll(data) {
-    for (var i = 0; i < data.length; i++) {
-      let values = this.getValues(data[i]);
+    let query = 'INSERT INTO avaliacao (id, descricao, data, sessao, id_sessao, pergunta, id_tipo_pergunta, resposta) VALUES '
+    let values = []
+    let arrArgs = []
 
-      this.insert(values);
+    for (let i = 0; i < data.length; i++) {
+
+      arrArgs.push('(?, ?, ?, ?, ?, ?, ?, ?)')
+
+      values.push(data[i]['id'])
+      values.push(data[i]['descricao'])
+      values.push(data[i]['data'])
+      values.push(data[i]['sessao'])
+      values.push(data[i]['id_sessao'])
+      values.push(data[i]['pergunta'])
+      values.push(data[i]['id_tipo_pergunta'])
+      values.push(data[i]['resposta'])
     }
+
+    query += arrArgs.join(', ')
+
+    this.insert(query, values)
   }
 
-  insert(values) {
-    this.startDatabase().then((db: SQLiteObject) => { db.executeSql('INSERT INTO avaliacao (id, descricao, data, sessao, id_sessao, pergunta, id_tipo_pergunta, resposta) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', values) }).then(() => console.log('Inserted Avaliação'));
-  }
-
-  getValues(data) {
-    let id = data['id'];
-    let descricao = data['descricao'];
-    let _data = data['data'];
-    let sessao = data['sessao'];
-    let id_sessao = data['id_sessao'];
-    let pergunta = data['pergunta'];
-    let id_tipo_pergunta = data['id_tipo_pergunta'];
-    let resposta = data['resposta'];
-
-    let values = [ id, descricao, _data, sessao, id_sessao, pergunta, id_tipo_pergunta, resposta ];
-
-    return values;
+  insert(query, values) {
+    this.startDatabase().then((db: SQLiteObject) => { db.executeSql(query, values) }).then(() => console.log('Inserted All Avaliação'))
   }
 
 }

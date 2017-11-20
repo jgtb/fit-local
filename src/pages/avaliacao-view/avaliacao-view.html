@@ -9,7 +9,7 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-item *ngFor="let data of dataSessoes; let i = index" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+    <ion-item *ngFor="let data of dataSessoes; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
       <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>
       <div class="item-sessao" *ngFor="let item of selectPerguntas(data);">
         <h4 [ngStyle]="layout.setColor('light')">{{ item?.pergunta }}</h4>

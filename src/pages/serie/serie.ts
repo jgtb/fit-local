@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core'
+import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
-import { SQLiteObject } from '@ionic-native/sqlite';
+import { SQLiteObject } from '@ionic-native/sqlite'
 
-import { SerieSQLite } from '../../sqlite/serie/serie';
+import { SerieSQLite } from '../../sqlite/serie/serie'
 
-import { DashboardPage } from '../../pages/dashboard/dashboard';
-import { TreinoFormPage } from '../../pages/treino-form/treino-form';
+import { DashboardPage } from '../../pages/dashboard/dashboard'
+import { TreinoFormPage } from '../../pages/treino-form/treino-form'
 
-import { SerieProvider } from '../../providers/serie/serie';
+import { SerieProvider } from '../../providers/serie/serie'
 
-import { Util } from '../../util';
-import { Layout } from '../../layout';
+import { Util } from '../../util'
+import { Layout } from '../../layout'
 
 @IonicPage()
 @Component({
@@ -20,28 +20,36 @@ import { Layout } from '../../layout';
 })
 export class SeriePage {
 
-  data: any = [];
+  data: any = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public serieProvider: SerieProvider, public serieSQLite: SerieSQLite, public util: Util, public layout: Layout) {}
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public serieProvider: SerieProvider, 
+    public serieSQLite: SerieSQLite, 
+    public util: Util, 
+    public layout: Layout) {}
 
   ionViewDidEnter() {
-    this.select();
+    this.select()
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    this.select()
+  }
 
   select() {
     this.serieSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM serie', []).then(
       result => {
         this.data = this.util.toArray(result).filter((elem, index, arr) => {
-          return arr.map(obj => obj['id']).indexOf(elem['id']) === index;
-        });
-      });
-    });
+          return arr.map(obj => obj['id']).indexOf(elem['id']) === index
+        })
+      })
+    })
   }
 
   create(item) {
-    this.navCtrl.push(TreinoFormPage, {item: item});
+    this.navCtrl.push(TreinoFormPage, {item: item})
   }
 
   doRefresh(event) {
@@ -51,19 +59,19 @@ export class SeriePage {
           this.serieSQLite.startDatabase().then((db: SQLiteObject) => {
             db.executeSql('DELETE FROM serie', {}).then(
               () => {
-                this.serieSQLite.insertAll(data);
-                this.select();
+                this.serieSQLite.insertAll(data)
+                this.select()
             })
           })
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
     setTimeout(() => { event.complete() }, 2000)
   }
 
   goToDashboard() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.push(DashboardPage)
   }
 
 }

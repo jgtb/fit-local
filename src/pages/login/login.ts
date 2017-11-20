@@ -1,29 +1,29 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core'
+import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
-import { OneSignal } from '@ionic-native/onesignal';
+import { OneSignal } from '@ionic-native/onesignal'
 
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms'
 
-import { AuthProvider } from '../../providers/auth/auth';
-import { SerieProvider } from '../../providers/serie/serie';
-import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
-import { GraficoProvider } from '../../providers/grafico/grafico';
-import { TreinoProvider } from '../../providers/treino/treino';
-import { ReservaProvider } from '../../providers/reserva/reserva';
-import { InformacaoProvider } from '../../providers/informacao/informacao';
+import { AuthProvider } from '../../providers/auth/auth'
+import { SerieProvider } from '../../providers/serie/serie'
+import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao'
+import { GraficoProvider } from '../../providers/grafico/grafico'
+import { TreinoProvider } from '../../providers/treino/treino'
+import { ReservaProvider } from '../../providers/reserva/reserva'
+import { InformacaoProvider } from '../../providers/informacao/informacao'
 
-import { UsuarioSQLite } from '../../sqlite/usuario/usuario';
-import { SerieSQLite } from '../../sqlite/serie/serie';
-import { AvaliacaoSQLite } from '../../sqlite/avaliacao/avaliacao';
-import { GraficoSQLite } from '../../sqlite/grafico/grafico';
-import { TreinoSQLite } from '../../sqlite/treino/treino';
-import { ReservaSQLite } from '../../sqlite/reserva/reserva';
-import { InformacaoSQLite } from '../../sqlite/informacao/informacao';
+import { UsuarioSQLite } from '../../sqlite/usuario/usuario'
+import { SerieSQLite } from '../../sqlite/serie/serie'
+import { AvaliacaoSQLite } from '../../sqlite/avaliacao/avaliacao'
+import { GraficoSQLite } from '../../sqlite/grafico/grafico'
+import { TreinoSQLite } from '../../sqlite/treino/treino'
+import { ReservaSQLite } from '../../sqlite/reserva/reserva'
+import { InformacaoSQLite } from '../../sqlite/informacao/informacao'
 
-import { DashboardPage } from '../../pages/dashboard/dashboard';
+import { DashboardPage } from '../../pages/dashboard/dashboard'
 
-import { Util } from '../../util';
+import { Util } from '../../util'
 
 @IonicPage()
 @Component({
@@ -46,88 +46,90 @@ export class LoginPage {
     this.data = this.formBuilder.group({
       usuario: ['aluno', Validators.required],
       senha: ['aluno', Validators.required]
-    });
+    })
   }
 
   login(data) {
     if (this.util.checkNetwork()) {
-      this.util.showLoading();
+      this.util.showLoading()
       this.authProvider.login(data).subscribe(
         data => {
           if (data != 0 && data != -1) {
-            this.doLogin(data);
-            this.sendOneSignalID();
+            this.doLogin(data)
+            this.sendOneSignalID()
           } else if (data === 0) {
-            this.util.showAlert('Atenção', 'Usuário ou Senha estão Incorretos', 'Ok', false);
+            this.util.showAlert('Atenção', 'Usuário ou Senha estão Incorretos', 'Ok', false)
           } else if (data === -1) {
-            this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok', false);
+            this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok', false)
           }
         },
         err => {
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', false);
+          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', false)
         },
         () => {
-          this.util.endLoading();
+          this.util.endLoading()
         }
       );
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false)
     }
   }
 
   doLogin(data) {
-    const id_aluno = data[0];
-    const id_professor = data[1];
-    const id_tipo_professor = data[2];
+    const id_aluno = data[0]
+    const id_professor = data[1]
+    const id_tipo_professor = data[2]
+    
     this.util.setStorage('isLogged', 'true');
-    this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'fase');
-    this.util.setStorage('logo', id_professor);
-    this.util.setStorage('id_aluno', id_aluno);
-    this.util.setStorage('id_professor', id_professor);
-    this.usuarioSQLite.insert(data);
+    this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'fase')
+    this.util.setStorage('logo', id_professor)
+    this.util.setStorage('id_aluno', id_aluno)
+    this.util.setStorage('id_professor', id_professor)
+
+    this.usuarioSQLite.insert(data)
     this.serieProvider.index(id_aluno).subscribe(
       data => {
-        this.serieSQLite.insertAll(data);
-    });
+        this.serieSQLite.insertAll(data)
+    })
     this.avaliacaoProvider.index(id_aluno).subscribe(
       data => {
-        this.avaliacaoSQLite.insertAll(data);
-    });
+        this.avaliacaoSQLite.insertAll(data)
+    })
     this.graficoProvider.index(id_aluno).subscribe(
       data => {
-        this.graficoSQLite.insertAll(data);
-    });
+        this.graficoSQLite.insertAll(data)
+    })
     this.treinoProvider.index(id_aluno).subscribe(
       data => {
-        this.treinoSQLite.insertAll(data);
-    });
+        this.treinoSQLite.insertAll(data)
+    })
     this.reservaProvider.index(id_aluno).subscribe(
       data => {
-        this.reservaSQLite.insertAll(data);
-    });
+        this.reservaSQLite.insertAll(data)
+    })
     this.informacaoProvider.indexInformacao(id_professor).subscribe(
       data => {
-        this.informacaoSQLite.insertInformacao(data);
-    });
+        this.informacaoSQLite.insertInformacao(data)
+    })
     this.informacaoProvider.indexMensagem(id_aluno).subscribe(
       data => {
-        this.informacaoSQLite.insertAllMensagem(data);
-    });
-    this.navCtrl.push(DashboardPage);
+        this.informacaoSQLite.insertAllMensagem(data)
+    })
+    this.navCtrl.push(DashboardPage)
   }
 
   sendOneSignalID() {
-    let oneSignalID;
+    let oneSignalID
     
-    this.oneSignal.getIds().then((data) => { oneSignalID = data.userId; });
+    this.oneSignal.getIds().then((data) => { oneSignalID = data.userId; })
 
-    const data = JSON.stringify({oneSignalID: oneSignalID});
+    const data = JSON.stringify({oneSignalID: oneSignalID})
 
-    this.authProvider.sendOneSignalID(data);
+    this.authProvider.sendOneSignalID(data)
   }
 
   forgotPassword() {
-    const title = 'Esqueceu a senha?';
+    const title = 'Esqueceu a senha?'
     const message = '';
     const inputs = [
       {
@@ -139,7 +141,7 @@ export class LoginPage {
       {
         text: 'Confirmar',
         handler: data => {
-          this.doForgotPassword(data);
+          this.doForgotPassword(data)
         }
       },
       {
@@ -147,7 +149,7 @@ export class LoginPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, message, inputs, buttons, false);
+    this.util.showConfirmationAlert(title, message, inputs, buttons, false)
   }
 
   doForgotPassword(data) {
@@ -155,13 +157,13 @@ export class LoginPage {
       this.authProvider.forgotPassword(data).subscribe(
       data => {
         if (data == 1) {
-          this.util.showAlert('Atenção', 'E-mail enviado com sucesso', 'Ok', false);
+          this.util.showAlert('Atenção', 'E-mail enviado com sucesso', 'Ok', false)
         } else {
-          this.util.showAlert('Atenção', 'Não foi possível enviar o e-mail', 'Ok', false);
+          this.util.showAlert('Atenção', 'Não foi possível enviar o e-mail', 'Ok', false)
         }
       });
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false)
     }
   }
 

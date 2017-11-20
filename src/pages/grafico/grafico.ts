@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { Component } from '@angular/core'
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular'
 
-import { SQLiteObject } from '@ionic-native/sqlite';
+import { SQLiteObject } from '@ionic-native/sqlite'
 
-import { GraficoSQLite } from '../../sqlite/grafico/grafico';
+import { GraficoSQLite } from '../../sqlite/grafico/grafico'
 
-import { DashboardPage } from '../../pages/dashboard/dashboard';
-import { GraficoModalPage } from '../../pages/grafico-modal/grafico-modal';
+import { DashboardPage } from '../../pages/dashboard/dashboard'
+import { GraficoModalPage } from '../../pages/grafico-modal/grafico-modal'
 
-import { GraficoProvider } from '../../providers/grafico/grafico';
+import { GraficoProvider } from '../../providers/grafico/grafico'
 
-import { Util } from '../../util';
-import { Layout } from '../../layout';
+import { Util } from '../../util'
+import { Layout } from '../../layout'
 
 @IonicPage()
 @Component({
@@ -20,35 +20,35 @@ import { Layout } from '../../layout';
 })
 export class GraficoPage {
 
-  data: any = [];
-  dataGrafico: any = [];
+  data: any = []
+  dataGrafico: any = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public graficoProvider: GraficoProvider, public graficoSQLite: GraficoSQLite, public util: Util, public layout: Layout) {}
 
-  ionViewDidEnter() {
-  	this.select();
-  }
+  ionViewDidEnter() {}
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    this.select()
+  }
 
   select() {
     this.graficoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM grafico', []).then(
       result => {
-      	this.data = this.util.toArray(result);
+      	this.data = this.util.toArray(result)
         this.dataGrafico = this.util.toArray(result)
-          .filter((elem, index, arr) => arr.map(obj => obj['id_sessao']).indexOf(elem['id_sessao']) === index);
-      });
-    });
+          .filter((elem, index, arr) => arr.map(obj => obj['id_sessao']).indexOf(elem['id_sessao']) === index)
+      })
+    })
   }
 
   selectPerguntas(item) {
     return this.data.filter((elem, index, arr) => 
-      arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index && elem.id_sessao === item.id_sessao);
+      arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index && elem.id_sessao === item.id_sessao)
   }
 
   modal(item) {
-    const modal = this.modalCtrl.create(GraficoModalPage, {item : item});
-    modal.present();
+    const modal = this.modalCtrl.create(GraficoModalPage, {item : item})
+    modal.present()
   }
 
    doRefresh(event) {
@@ -58,19 +58,19 @@ export class GraficoPage {
           this.graficoSQLite.startDatabase().then((db: SQLiteObject) => {
             db.executeSql('DELETE FROM grafico', {}).then(
               () => {
-                this.graficoSQLite.insertAll(data);
-                this.select();
+                this.graficoSQLite.insertAll(data)
+                this.select()
             })
           })
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
     setTimeout(() => { event.complete() }, 2000)
   }
 
   goToDashboard() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.push(DashboardPage)
   }
 
 }

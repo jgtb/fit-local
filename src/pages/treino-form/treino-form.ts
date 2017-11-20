@@ -1,21 +1,21 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core'
+import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { InAppBrowser } from '@ionic-native/in-app-browser'
 
-import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer';
+import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer'
 
-import { TreinoProvider } from '../../providers/treino/treino';
-import { SerieProvider } from '../../providers/serie/serie';
+import { TreinoProvider } from '../../providers/treino/treino'
+import { SerieProvider } from '../../providers/serie/serie'
 
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx'
 
-import { SQLiteObject } from '@ionic-native/sqlite';
+import { SQLiteObject } from '@ionic-native/sqlite'
 
-import { SerieSQLite } from '../../sqlite/serie/serie';
+import { SerieSQLite } from '../../sqlite/serie/serie'
 
-import { Util } from '../../util';
-import { Layout } from '../../layout';
+import { Util } from '../../util'
+import { Layout } from '../../layout'
 
 @IonicPage()
 @Component({
@@ -24,35 +24,44 @@ import { Layout } from '../../layout';
 })
 export class TreinoFormPage {
 
-  data: any = [];
-  dataExercicios: any = [];
-  _done: any = [];
+  data: any = []
+  dataExercicios: any = []
 
-  _toggle: boolean = true;
+  _done: any = []
+  _toggle: boolean = true
 
-  subscription;
-  _timer = 0;
-  running = false;
+  subscription: any
+  _timer = 0
+  running = false
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public serieSQLite: SerieSQLite, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
 
-  ionViewDidEnter() {
-    this.data = this.navParams.get('item');
-    this.select();
+  ionViewDidEnter() {}
+
+  ionViewDidLoad() {
+    this.data = this.navParams.get('item')
+    this.select()
   }
 
-  ionViewDidLoad() {}
+  select() {
+    this.serieSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM serie WHERE id = ' + this.data.id + '', []).then(
+      result => {
+        this.data = result.rows.item(0)
+        this.dataExercicios = this.util.toArray(result)
+      })
+    })
+  }
 
   create() {
-    const title = 'Finalizar Treino ?';
-    const message = 'Tempo: ' + this.time();
-    const inputs = this.getInputs();
+    const title = 'Finalizar Treino ?'
+    const message = 'Tempo: ' + this.time()
+    const inputs = this.getInputs()
     const buttons = [
       {
         text: 'Confirmar',
         handler: dataResultado => {
           const _title = 'Algum Comentário ?';
-          const _message = message + '<br>' + this.getResultado(dataResultado);
+          const _message = message + '<br>' + this.getResultado(dataResultado)
           const _inputs = [
             {
               name: 'comentario',
@@ -63,7 +72,7 @@ export class TreinoFormPage {
             {
               text: 'Confirmar',
               handler: dataComentario => {
-                this.doCreate(dataResultado, dataComentario);
+                this.doCreate(dataResultado, dataComentario)
               }
             },
             {
@@ -71,7 +80,7 @@ export class TreinoFormPage {
               role: 'cancel',
             }
           ];
-          this.util.showConfirmationAlert(_title, _message, _inputs, _buttons, true);
+          this.util.showConfirmationAlert(_title, _message, _inputs, _buttons, true)
         }
       },
       {
@@ -79,29 +88,28 @@ export class TreinoFormPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, message, inputs, buttons, true);
+    this.util.showConfirmationAlert(title, message, inputs, buttons, true)
   }
 
   doCreate(dataResultado, dataComentario) {
     if (this.util.checkNetwork()) {
-      const data = JSON.stringify({id_serie: this.data.id_serie, mensagem: dataComentario.comentario, borg: dataResultado, tempo: this.time(), datahora: this.getDateTime()});
+      const data = JSON.stringify({id_serie: this.data.id_serie, mensagem: dataComentario.comentario, borg: dataResultado, tempo: this.time(), datahora: this.getDateTime()})
 
       this.treinoProvider.create(data).subscribe(
         data => {
-          this.util.showAlert('Atenção', 'Treino Registrado', 'Ok', true);
+          this.util.showAlert('Atenção', 'Treino Registrado', 'Ok', true)
         },
         err => {
-          console.log(err);
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', true);
+          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', true)
       });
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
   }
 
   update(item) {
-    const title = item.descricao_ex;
-    const message = 'Alterar Carga';
+    const title = item.descricao_ex
+    const message = 'Alterar Carga'
     const inputs = [
       {
         name: 'carga',
@@ -113,7 +121,7 @@ export class TreinoFormPage {
       {
         text: 'Confirmar',
         handler: data => {
-          this.doUpdate(item, data);
+          this.doUpdate(item, data)
         }
       },
       {
@@ -121,77 +129,69 @@ export class TreinoFormPage {
         role: 'cancel',
       },
      ];
-    this.util.showConfirmationAlert(title, message, inputs, buttons, true);
+    this.util.showConfirmationAlert(title, message, inputs, buttons, true)
   }
 
   doUpdate(item, data) {
     if (this.util.checkNetwork()) {
       this.serieProvider.updateCarga(data).subscribe(
         data => {
-          this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true);
+          this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true)
         },
         err => {
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', true);
+          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', true)
       });
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
   }
 
   start() {
-    this.running = true;
+    this.running = true
     this.subscription = Observable.interval(1000).subscribe(data => {
-      this._timer++;
-      this.time();
+      this._timer++
+      this.time()
     });
   }
 
   stop() {
-    this.running = false;
-    this.subscription.unsubscribe();
+    this.running = false
+    this.subscription.unsubscribe()
   }
 
   time() {
-    let totalSeconds = this._timer;
-    let hours   = Math.floor(totalSeconds / 3600);
-    let minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
-    let seconds = totalSeconds - (hours * 3600) - (minutes * 60);
+    const totalSeconds = this._timer
+    const hours   = Math.floor(totalSeconds / 3600)
+    const minutes = Math.floor((totalSeconds - (hours * 3600)) / 60)
+    let seconds = totalSeconds - (hours * 3600) - (minutes * 60)
 
-    seconds = Math.round(seconds * 100) / 100;
+    seconds = Math.round(seconds * 100) / 100
 
-    let result = (hours < 10 ? "0" + hours : hours);
-    result += ":" + (minutes < 10 ? "0" + minutes : minutes);
-    result += ":" + (seconds  < 10 ? "0" + seconds : seconds);
+    let result = (hours < 10 ? "0" + hours : hours)
+    result += ":" + (minutes < 10 ? "0" + minutes : minutes)
+    result += ":" + (seconds  < 10 ? "0" + seconds : seconds)
 
-    return result;
+    return result
   }
 
   timer(item) {
-    this.navCtrl.push(TreinoTimerPage, { item: item });
+    this.navCtrl.push(TreinoTimerPage, { item: item })
   }
 
   done(index) {
     if (index in this._done) {
-      this._done[index].value = !this._done[index].value;
+      this._done[index].value = !this._done[index].value
     } else {
-      this._done.push({index: index, value: true});
+      this._done.push({index: index, value: true})
     }
   }
 
   video(item) {
-    this.iab.create(item.video).show();
-  }
-
-  select() {
-    this.serieSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM serie WHERE id = ' + this.data.id + '', []).then(
-      result => {
-        this.dataExercicios = this.util.toArray(result)
-      })
-    })
+    this.iab.create(item.video).show()
   }
 
   toggle() {
-    this._toggle = !this._toggle;
+    this._toggle = !this._toggle
   }
 
   getInputs() {
@@ -234,24 +234,24 @@ export class TreinoFormPage {
       }
     ];
 
-    return inputs;
+    return inputs
   }
 
   getResultado(index) {
-    const data = ['Muito Bom', 'Bom', 'Mediano', 'Regular', 'Ruim', 'Muito Ruim'];
+    const result = ['Muito Bom', 'Bom', 'Mediano', 'Regular', 'Ruim', 'Muito Ruim']
 
-    return data[index];
+    return result[index]
   }
 
   getDateTime() {
-    const date = new Date();
+    const date = new Date()
 
     return date.getFullYear() + "-" +
       ("00" + (date.getMonth() + 1)).slice(-2) + "-" +
       ("00" + date.getDate()).slice(-2) + " " +
       ("00" + date.getHours()).slice(-2) + ":" +
       ("00" + date.getMinutes()).slice(-2) + ":" +
-      ("00" + date.getSeconds()).slice(-2);
+      ("00" + date.getSeconds()).slice(-2)
   }
 
   doRefresh(event) {
@@ -261,13 +261,13 @@ export class TreinoFormPage {
           this.serieSQLite.startDatabase().then((db: SQLiteObject) => {
             db.executeSql('DELETE FROM serie', {}).then(
               () => {
-                this.serieSQLite.insertAll(data);
-                this.select();
+                this.serieSQLite.insertAll(data)
+                this.select()
             })
           })
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
     setTimeout(() => { event.complete() }, 2000)
   }

@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component } from '@angular/core'
+import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
-import { SQLiteObject } from '@ionic-native/sqlite';
+import { SQLiteObject } from '@ionic-native/sqlite'
 
-import { InformacaoSQLite } from '../../sqlite/informacao/informacao';
+import { InformacaoSQLite } from '../../sqlite/informacao/informacao'
 
-import { DashboardPage } from '../../pages/dashboard/dashboard';
+import { DashboardPage } from '../../pages/dashboard/dashboard'
 
-import { InformacaoProvider } from '../../providers/informacao/informacao';
+import { InformacaoProvider } from '../../providers/informacao/informacao'
 
-import { Util } from '../../util';
-import { Layout } from '../../layout';
+import { Util } from '../../util'
+import { Layout } from '../../layout'
 
 @IonicPage()
 @Component({
@@ -19,27 +19,27 @@ import { Layout } from '../../layout';
 })
 export class InformacaoPage {
 
-  title: string = '';
+  title: string = ''
 
-  tab: string = 'informacao';
+  tab: string = 'informacao'
 
-  dataInformacao: any = [];
-  dataMensagem: any = [];
+  dataInformacao: any = []
+  dataMensagem: any = []
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public informacaoProvider: InformacaoProvider, public informacaoSQLite: InformacaoSQLite, public util: Util, public layout: Layout) {}
 
-  ionViewDidEnter() {
-    this.selectInformacao();
-    this.selectMensagem();
-  }
+  ionViewDidEnter() {}
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    this.selectInformacao()
+    this.selectMensagem()
+  }
 
   selectInformacao() {
     this.informacaoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM informacao', []).then(
       result => {
-        this.title = result.rows.item(0).nome;
-        this.dataInformacao = this.util.toArray(result);
+        this.title = result.rows.item(0).nome
+        this.dataInformacao = this.util.toArray(result)
       });
     });
   }
@@ -47,16 +47,16 @@ export class InformacaoPage {
   selectMensagem() {
     this.informacaoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM mensagem', []).then(
       result => {
-        this.dataMensagem = this.util.toArray(result);
+        this.dataMensagem = this.util.toArray(result)
       });
     });
   }
 
   showImg(item) {
     if (item.largura != "" && item.altura != "")
-       return true;
+       return true
 
-     return false;
+     return false
   }
 
   doRefresh(event) {
@@ -66,8 +66,8 @@ export class InformacaoPage {
           this.informacaoSQLite.startDatabase().then((db: SQLiteObject) => {
             db.executeSql('DELETE FROM informacao', {}).then(
               () => {
-                this.informacaoSQLite.insertInformacao(data);
-                this.selectInformacao();
+                this.informacaoSQLite.insertInformacao(data)
+                this.selectInformacao()
             })
           })
         })
@@ -76,19 +76,19 @@ export class InformacaoPage {
           this.informacaoSQLite.startDatabase().then((db: SQLiteObject) => {
             db.executeSql('DELETE FROM mensagem', {}).then(
               () => {
-                this.informacaoSQLite.insertAllMensagem(data);
-                this.selectMensagem();
+                this.informacaoSQLite.insertAllMensagem(data)
+                this.selectMensagem()
             })
           })
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
     setTimeout(() => { event.complete() }, 2000)
   }
 
   goToDashboard() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.push(DashboardPage)
   }
 
 }
