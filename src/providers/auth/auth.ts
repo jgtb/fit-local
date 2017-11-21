@@ -17,13 +17,6 @@ export class AuthProvider {
     return this.http.post(url, data).map(res => res.json())
   }
 
-  sendOneSignalID(data) {
-    const oneSignalURL = ""
-    const url = this.util.baseUrl + oneSignalURL
-
-    return this.http.post(url, data).map(res => res.json())
-  }
-
   forgotPassword(data) {
     const forgotPasswordURL = "/usuario/senha-app"
     const url = this.util.baseUrl + forgotPasswordURL

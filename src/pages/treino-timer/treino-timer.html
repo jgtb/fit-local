@@ -25,10 +25,10 @@
 		    </round-progress>
 		</div>
 
-    <div class="controls-wrapper">
-      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'primary')" round *ngIf="!running" (click)="start()">START</button>
-      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'danger')" round *ngIf="running" (click)="stop()">STOP</button>
-    </div>
+	    <div class="controls-wrapper">
+	      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'primary')" round *ngIf="!running" (click)="start()">START</button>
+	      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'danger')" round *ngIf="running" (click)="stop()">STOP</button>
+	    </div>
 
 	</div>
 </ion-content>

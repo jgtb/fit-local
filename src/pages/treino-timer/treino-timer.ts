@@ -15,7 +15,7 @@ export class TreinoTimerPage {
   data: any = []
 
   current: number
-  max: number
+  max: number 
   stroke: number = 7
   radius: number = 70
   semicircle: boolean = false
@@ -38,12 +38,12 @@ export class TreinoTimerPage {
     this.data = this.navParams.get('item')
   }
 
-  ionViewDidEnter() {
+  ionViewDidEnter() {}
+
+  ionViewDidLoad() {
     this.current = this.data.intervalo
     this.max = this.data.intervalo
   }
-
-  ionViewDidLoad() {}
 
   start() {
     this.running = true

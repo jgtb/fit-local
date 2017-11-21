@@ -1,10 +1,6 @@
 import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular'
 
-import { SQLiteObject } from '@ionic-native/sqlite'
-
-import { GraficoSQLite } from '../../sqlite/grafico/grafico'
-
 import { DashboardPage } from '../../pages/dashboard/dashboard'
 import { GraficoModalPage } from '../../pages/grafico-modal/grafico-modal'
 
@@ -23,7 +19,7 @@ export class GraficoPage {
   data: any = []
   dataGrafico: any = []
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public graficoProvider: GraficoProvider, public graficoSQLite: GraficoSQLite, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public graficoProvider: GraficoProvider, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {}
 
@@ -32,13 +28,9 @@ export class GraficoPage {
   }
 
   select() {
-    this.graficoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM grafico', []).then(
-      result => {
-      	this.data = this.util.toArray(result)
-        this.dataGrafico = this.util.toArray(result)
-          .filter((elem, index, arr) => arr.map(obj => obj['id_sessao']).indexOf(elem['id_sessao']) === index)
-      })
-    })
+    this.data = this.util.getStorage('dataGrafico')
+    this.dataGrafico = this.util.getStorage('dataGrafico')
+      .filter((elem, index, arr) => arr.map(obj => obj['id_sessao']).indexOf(elem['id_sessao']) === index)
   }
 
   selectPerguntas(item) {
@@ -55,13 +47,7 @@ export class GraficoPage {
     if (this.util.checkNetwork()) {
       this.graficoProvider.index(this.util.getStorage('id_aluno')).subscribe(
         data => {
-          this.graficoSQLite.startDatabase().then((db: SQLiteObject) => {
-            db.executeSql('DELETE FROM grafico', {}).then(
-              () => {
-                this.graficoSQLite.insertAll(data)
-                this.select()
-            })
-          })
+          this.select()
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)

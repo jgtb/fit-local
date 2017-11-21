@@ -1,10 +1,6 @@
 import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
-import { SQLiteObject } from '@ionic-native/sqlite'
-
-import { TreinoSQLite } from '../../sqlite/treino/treino'
-
 import { DashboardPage } from '../../pages/dashboard/dashboard'
 
 import { TreinoProvider } from '../../providers/treino/treino'
@@ -33,7 +29,7 @@ export class TreinoPage {
     currentDate: new Date()
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public treinoSQLite: TreinoSQLite, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {}
 
@@ -42,12 +38,7 @@ export class TreinoPage {
   }
 
   select() {
-    this.treinoSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM treino', []).then(
-      result => {
-        this.data = this.util.toArray(result)
-        this.eventSource = this.loadTreinos()
-      });
-    });
+    this.data = this.util.getStorage('dataTreino')
   }
 
   loadTreinos() {
@@ -102,13 +93,7 @@ export class TreinoPage {
     if (this.util.checkNetwork()) {
       this.treinoProvider.index(this.util.getStorage('id_aluno')).subscribe(
         data => {
-          this.treinoSQLite.startDatabase().then((db: SQLiteObject) => {
-            db.executeSql('DELETE FROM treino', {}).then(
-              () => {
-                this.treinoSQLite.insertAll(data)
-                this.select()
-            })
-          })
+          this.select()
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)

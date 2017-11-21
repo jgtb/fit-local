@@ -1,10 +1,6 @@
 import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
-import { SQLiteObject } from '@ionic-native/sqlite'
-
-import { ReservaSQLite } from '../../sqlite/reserva/reserva'
-
 import { DashboardPage } from '../../pages/dashboard/dashboard'
 
 import { ReservaProvider } from '../../providers/reserva/reserva'
@@ -33,7 +29,7 @@ export class ReservaPage {
     currentDate: new Date(),
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public reservaProvider: ReservaProvider, public reservaSQLite: ReservaSQLite, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public reservaProvider: ReservaProvider, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {}
 
@@ -42,12 +38,7 @@ export class ReservaPage {
   }
 
   select() {
-    this.reservaSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM reserva', []).then(
-      result => {
-        this.data = this.util.toArray(result)
-        this.eventSource = this.loadReservas()
-      })
-    })
+    this.data = this.util.getStorage('dataReserva')
   }
 
   loadReservas() {
@@ -102,13 +93,7 @@ export class ReservaPage {
     if (this.util.checkNetwork()) {
       this.reservaProvider.index(this.util.getStorage('id_professor')).subscribe(
         data => {
-          this.reservaSQLite.startDatabase().then((db: SQLiteObject) => {
-            db.executeSql('DELETE FROM reserva', {}).then(
-              () => {
-                this.reservaSQLite.insertAll(data)
-                this.select()
-            })
-          })
+          this.select()
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false)

@@ -10,10 +10,6 @@ import { SerieProvider } from '../../providers/serie/serie'
 
 import { Observable } from 'rxjs/Rx'
 
-import { SQLiteObject } from '@ionic-native/sqlite'
-
-import { SerieSQLite } from '../../sqlite/serie/serie'
-
 import { Util } from '../../util'
 import { Layout } from '../../layout'
 
@@ -34,7 +30,7 @@ export class TreinoFormPage {
   _timer = 0
   running = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public serieSQLite: SerieSQLite, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {}
 
@@ -44,12 +40,7 @@ export class TreinoFormPage {
   }
 
   select() {
-    this.serieSQLite.startDatabase().then((db: SQLiteObject) => { db.executeSql('SELECT * FROM serie WHERE id = ' + this.data.id + '', []).then(
-      result => {
-        this.data = result.rows.item(0)
-        this.dataExercicios = this.util.toArray(result)
-      })
-    })
+    this.dataExercicios = this.util.getStorage('dataSerie').filter((elem, index, arr) => { return elem.id === this.data.id })
   }
 
   create() {
@@ -258,13 +249,7 @@ export class TreinoFormPage {
     if (this.util.checkNetwork()) {
       this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
         data => {
-          this.serieSQLite.startDatabase().then((db: SQLiteObject) => {
-            db.executeSql('DELETE FROM serie', {}).then(
-              () => {
-                this.serieSQLite.insertAll(data)
-                this.select()
-            })
-          })
+          this.select()
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)

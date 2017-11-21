@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core'
 import { AlertController, LoadingController } from 'ionic-angular'
 
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite'
-
 import { Network } from  "@ionic-native/network"
 
 import { Layout } from './layout'
@@ -17,19 +15,18 @@ export class Util {
 
   loading
 
-  constructor(public network: Network, public sqlite: SQLite, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public layout: Layout) {}
+  constructor(public network: Network, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public layout: Layout) {}
 
   setStorage(key, value) {
-    localStorage.setItem(key, value)
+    localStorage.setItem(key, JSON.stringify(value))
   }
 
   getStorage(key) {
-    return localStorage.getItem(key)
+    return JSON.parse(localStorage.getItem(key))
   }
   
   setLogout() {
     this.setStorage('isLogged', 'false')
-    this.cleanDatabase()
   }
 
   isLogged() {
@@ -75,37 +72,6 @@ export class Util {
 
   startDatabse() {
     return this.sqlite.create({ name: 'data.db', location: 'default' })
-  }
-
-  cleanDatabase() {
-    this.startDatabse().then(
-      (db: SQLiteObject) => {
-
-        db.executeSql('DELETE FROM usuario', {})
-        .then(() => console.log('Truncated Usuario'))
-
-        db.executeSql('DELETE FROM serie', {})
-        .then(() => console.log('Truncated Serie'))
-
-        db.executeSql('DELETE FROM avaliacao', {})
-        .then(() => console.log('Truncated Avaliacao'))
-
-        db.executeSql('DELETE FROM grafico', {})
-        .then(() => console.log('Truncated Grafico'))
-
-        db.executeSql('DELETE FROM treino', {})
-        .then(() => console.log('Truncated Treino'))
-
-        db.executeSql('DELETE FROM reserva', {})
-        .then(() => console.log('Truncated Reserva'))
-
-        db.executeSql('DELETE FROM informacao', {})
-        .then(() => console.log('Truncated Informacao'))
-
-        db.executeSql('DELETE FROM mensagem', {})
-        .then(() => console.log('Truncated Mensagem'))
-
-    })
   }
 
   toArray(data) {

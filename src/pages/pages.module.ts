@@ -16,7 +16,6 @@ import { GraficoModalPage } from '../pages/grafico-modal/grafico-modal'
 import { ReservaPage } from '../pages/reserva/reserva'
 import { InformacaoPage } from '../pages/informacao/informacao'
 
-import { ComponentsModule } from '../components/components.module'
 import { RoundProgressModule } from 'angular-svg-round-progressbar'
 
 @NgModule({
@@ -24,12 +23,11 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar'
 		CommonModule,
 		IonicModule,
 		RoundProgressModule,
-		ComponentsModule,
 		NgCalendarModule
 	],
 	declarations: [
 		LoginPage,
-    DashboardPage,
+    	DashboardPage,
 		SeriePage,
 		TreinoPage,
 		TreinoFormPage,
