@@ -67,11 +67,7 @@ export class Util {
   }
 
   checkNetwork() {
-    return this.network.type != "none" ? true : false
-  }
-
-  startDatabse() {
-    return this.sqlite.create({ name: 'data.db', location: 'default' })
+    return this.network.type !== "none" ? true : false
   }
 
   toArray(data) {
