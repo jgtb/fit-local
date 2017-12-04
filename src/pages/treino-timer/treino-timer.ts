@@ -23,7 +23,7 @@ export class TreinoTimerPage {
   responsive: boolean = false
   clockwise: boolean = true
   color: string = this.layout.colors.light
-  background: string = this.layout.colors.secondary
+  background: string = this.layout.colors.dark
   duration: number = 3000
   animation: string = 'easeOutCubic'
   animationDelay: number = 0

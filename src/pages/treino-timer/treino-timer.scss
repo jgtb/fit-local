@@ -1,10 +1,6 @@
 .ios, .md {
 	page-treino-timer {
-		.fixed-content, .scroll-content {
-			margin-top: 0 !important;
-		}
 		ion-content {
-			background-color: transparent;
 			text-align: center;
 			.bg-wrapper {
 				background-position: 50% 50%;
@@ -13,14 +9,8 @@
 				position: absolute;
 				width: 100%;
 			}
-			.backdrop {
-				background-color: rgba(map-get($colors, dark), 0.9);
-				height: 100%;
-		   		position: absolute;
-				width: 100%;
-			}
 			.progress-wrapper {
-				margin-top: 44px;
+				margin-top: 30px;
 				padding: 30px 0;
 				position: relative;
 				.current {

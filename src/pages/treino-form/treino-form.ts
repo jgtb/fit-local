@@ -89,10 +89,7 @@ export class TreinoFormPage {
       this.treinoProvider.create(data).subscribe(
         data => {
           this.util.showAlert('Atenção', 'Treino Registrado', 'Ok', true)
-        },
-        err => {
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', true)
-      });
+        })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
@@ -107,31 +104,30 @@ export class TreinoFormPage {
         value: item.carga,
         placeholder: 'Carga'
       }
-    ];
+    ]
     const buttons = [
       {
         text: 'Confirmar',
-        handler: data => {
-          this.doUpdate(item, data)
+        handler: dataCarga => {
+          this.doUpdate(item, dataCarga)
         }
       },
       {
         text: 'Cancelar',
         role: 'cancel',
       },
-     ];
+     ]
     this.util.showConfirmationAlert(title, message, inputs, buttons, true)
   }
 
-  doUpdate(item, data) {
+  doUpdate(item, dataCarga) {
     if (this.util.checkNetwork()) {
+      const data = JSON.stringify({id: item.id_exercicio_serie, carga: dataCarga.carga })
+
       this.serieProvider.updateCarga(data).subscribe(
         data => {
           this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true)
-        },
-        err => {
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', true)
-      });
+        })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
@@ -142,25 +138,30 @@ export class TreinoFormPage {
     this.subscription = Observable.interval(1000).subscribe(data => {
       this._timer++
       this.time()
-    });
+    })
   }
 
   stop() {
-    this.running = false
-    this.subscription.unsubscribe()
+    if (this._timer > 0) {
+      this.running = false
+      this.subscription.unsubscribe()
+    }
+  }
+
+  getDateTime() {
+    const date = new Date();
+
+    const datetime = date.toJSON().slice(0, 10) + ' ' + date.toJSON().slice(11, 19)
+
+    return datetime
   }
 
   time() {
-    const totalSeconds = this._timer
-    const hours   = Math.floor(totalSeconds / 3600)
-    const minutes = Math.floor((totalSeconds - (hours * 3600)) / 60)
-    let seconds = totalSeconds - (hours * 3600) - (minutes * 60)
+    const date = new Date(null)
 
-    seconds = Math.round(seconds * 100) / 100
+    date.setSeconds(this._timer)
 
-    let result = (hours < 10 ? "0" + hours : hours)
-    result += ":" + (minutes < 10 ? "0" + minutes : minutes)
-    result += ":" + (seconds  < 10 ? "0" + seconds : seconds)
+    const result = date.toISOString().substr(11, 8)
 
     return result
   }
@@ -170,11 +171,23 @@ export class TreinoFormPage {
   }
 
   done(index) {
-    if (index in this._done) {
-      this._done[index].value = !this._done[index].value
-    } else {
-      this._done.push({index: index, value: true})
+    const pos = this._done.indexOf(index)
+
+    if (pos > -1) {
+      this._done.splice(pos, 1)
+      return
     }
+
+    this._done.push(index)
+  }
+
+  isDone(index) {
+    const pos = this._done.indexOf(index)
+
+    if (pos > -1)
+      return true
+
+    return false
   }
 
   video(item) {
@@ -234,22 +247,11 @@ export class TreinoFormPage {
     return result[index]
   }
 
-  getDateTime() {
-    const date = new Date()
-
-    return date.getFullYear() + "-" +
-      ("00" + (date.getMonth() + 1)).slice(-2) + "-" +
-      ("00" + date.getDate()).slice(-2) + " " +
-      ("00" + date.getHours()).slice(-2) + ":" +
-      ("00" + date.getMinutes()).slice(-2) + ":" +
-      ("00" + date.getSeconds()).slice(-2)
-  }
-
   doRefresh(event) {
     if (this.util.checkNetwork()) {
       this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
         data => {
-          this.select()
+          this.dataExercicios = this.util.getStorage('dataSerie').filter((elem, index, arr) => { return elem.id === this.data.id })
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)

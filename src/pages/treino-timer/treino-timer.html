@@ -1,12 +1,11 @@
 <ion-header no-border>
   <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
-    <ion-title></ion-title>
+    <ion-title>Cronômetro</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-	<div class="bg-wrapper" style="background-image:url('assets/img/workout/bg.jpg');">
-		<div class="backdrop"></div>
+<ion-content [ngStyle]="layout.setBackgroundColor('secondary')">
+	<div class="bg-wrapper">
 		<div class="progress-wrapper">
 			<div class="current" [ngStyle]="getOverlayStyle()">{{ current }}s</div>
 			<round-progress [current]="current"

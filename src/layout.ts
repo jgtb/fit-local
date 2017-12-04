@@ -3,24 +3,19 @@ import { Injectable } from '@angular/core'
 @Injectable()
 export class Layout {
 
-  alertColors = {
-    primary:    '#488aff',
+  alertLoginColors = {
     secondary:  '#ffd400',
-    danger:     '#f53d3d',
     light:      '#f4f4f4',
-    dark:       '#1f2025',
-    darklight:  '#2b2b2b',
-    transparent: 'transparent'
+    darklight:  '#2b2b2b'
   }
 
   colors = {
-    primary:    '#9e9e9e',
-    secondary:  '#263238',
-    danger:     '#424242',
+    primary:    '#004d40',
+    secondary:  '#222',
+    danger:     '#4dd0e1',
     light:      '#ffffff',
-    dark:       '#b0bec5',
-    darklight:  '#546e7a',
-    transparent: 'transparent'
+    dark:       '#191919',
+    darklight:  '#1e1e1e'
   }
 
   constructor() {}
@@ -93,7 +88,7 @@ export class Layout {
       elem.style.color = light
     })
 
-    const calendarEventDetailItem = document.querySelectorAll(selector + ' .event-detail-container .item');
+    const calendarEventDetailItem = document.querySelectorAll('.' + selector + ' .event-detail-container .item');
 
     [].forEach.call(calendarEventDetailItem, function(elem, i) {
       elem.style.backgroundColor = (i%2 === 0) ? dark : darklight
@@ -127,9 +122,9 @@ export class Layout {
   }
 
   setAlertColor(colorsType) {
-    const secondary = colorsType ? this.colors.secondary : this.alertColors.secondary
-    const darklight = colorsType ? this.colors.darklight : this.alertColors.darklight
-    const light = colorsType ? this.colors.light : this.alertColors.light
+    const secondary = colorsType ? this.colors.secondary : this.alertLoginColors.secondary
+    const darklight = colorsType ? this.colors.darklight : this.alertLoginColors.darklight
+    const light = colorsType ? this.colors.light : this.alertLoginColors.light
 
     const alertWrapper = document.querySelectorAll('.alert-wrapper');
 

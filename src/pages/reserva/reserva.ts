@@ -39,6 +39,7 @@ export class ReservaPage {
 
   select() {
     this.data = this.util.getStorage('dataReserva')
+    this.eventSource = this.loadReservas()
   }
 
   loadReservas() {
@@ -47,18 +48,47 @@ export class ReservaPage {
     for (let i = 0; i < this.data.length; i++) {
 
       let title = this.data[i].title
-      let startTime = this.data[i]['start']
-      let endTime = this.data[i]['end']
+      let start = this.data[i]['start']
+      let end = this.data[i]['end']
+
+      let startTime = new Date(start);
+      let endTime = new Date(end);
 
       arr.push({
           title: title,
-          //startTime: startTime,
-          //endTime: endTime,
+          startTime: startTime,
+          endTime: endTime,
           allDay: false
-      });
+      })
     }
 
     return arr
+  }
+
+  onEventSelected(event) {
+    const title = event.title
+    const message = this.getMessage(event)
+    const buttons = [
+      {
+        text: 'Confirmar',
+        handler: data => {
+        }
+      },
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+      },
+     ];
+    this.util.showConfirmationAlert(title, message, [], buttons, true)
+  }
+
+  getMessage(event) {
+    const startTime = event.startTime.toTimeString().split(' ')[0]
+    const endTime = event.endTime.toTimeString().split(' ')[0]
+
+    const message = 'Deseja reservar esta aula ?' + '<br />' + startTime + ' - ' + endTime
+
+    return message
   }
 
   onViewTitleChanged(title) {
@@ -68,8 +98,6 @@ export class ReservaPage {
       this.title = title
     }
   }
-
-  onEventSelected(event) {}
 
   toggle() {
     this._toggle++

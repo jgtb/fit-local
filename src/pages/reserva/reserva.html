@@ -15,16 +15,16 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <h2 [ngStyle]="layout.setColor('secondary')" class="calendar-title">{{ title }}</h2>
+  <h2 [ngStyle]="layout.setColor('light')" class="calendar-title">{{ title }}</h2>
 
   <div class="calendar-reserva">
     <calendar [ngStyle]="layout.setCalendarColor('calendar-reserva')"
       [eventSource]="eventSource"
       [calendarMode]="calendar.mode"
-      [currentDate]="calendar.currentDate" 
+      [currentDate]="calendar.currentDate"
       [locale]="calendar.locale"
       [noEventsLabel]="calendar.noEventsLabel"
-      (onTitleChanged)="onViewTitleChanged($event)" 
+      (onTitleChanged)="onViewTitleChanged($event)"
       (onEventSelected)="onEventSelected($event)" step="30">
     </calendar>
   </div>
