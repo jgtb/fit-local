@@ -27,7 +27,7 @@ export class TreinoPage {
     locale: 'pt-BR',
     noEventsLabel: 'Nenhum Treino',
     currentDate: new Date()
-  };
+  }
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public util: Util, public layout: Layout) {}
 
@@ -35,6 +35,7 @@ export class TreinoPage {
 
   ionViewDidLoad() {
     this.select()
+    this.eventSource = this.loadTreinos()
   }
 
   select() {
@@ -42,23 +43,23 @@ export class TreinoPage {
   }
 
   loadTreinos() {
-    let arr = []
+    return this.data.map(obj => {
+      let title = obj.title
+      let start = obj.start
+      let end = obj.end
+      let borg = obj.borg
 
-    for (let i = 0; i < this.data.length; i++) {
+      let startTime = new Date(start)
+      let endTime = new Date(end)
 
-      let title = this.data[i]['title']
-      let startTime = this.data[i]['start']
-      let endTime = this.data[i]['end']
-
-      arr.push({
-          title: title,
-          //startTime: startTime,
-          //endTime: endTime,
-          allDay: false
-      })
-    }
-
-    return arr
+      return {
+        title: title,
+        startTime: startTime,
+        endTime: endTime,
+        borg: borg,
+        allDay: false
+      }
+    })
   }
 
   onViewTitleChanged(title) {
@@ -69,7 +70,30 @@ export class TreinoPage {
     }
   }
 
-  onEventSelected(event) {}
+  onEventSelected(event) {
+    const title = event.title
+    const subtitle = 'Tempo: ' + this.time(event.startTime, event.endTime) + '<br />' + this.getResultado(event.borg)
+    const button = 'Ok'
+
+    this.util.showAlert(title, subtitle, button , true)
+  }
+
+  time(startTime, endTime) {
+    const date = new Date(null)
+    const seconds = (endTime.getTime() - startTime.getTime()) / 1000
+
+    date.setSeconds(seconds)
+
+    const result = date.toISOString().substr(11, 8)
+
+    return result
+  }
+
+  getResultado(index) {
+    const result = ['Muito Bom', 'Bom', 'Mediano', 'Regular', 'Ruim', 'Muito Ruim']
+
+    return result[index]
+  }
 
   toggle() {
     this._toggle++

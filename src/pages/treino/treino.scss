@@ -1,4 +1,4 @@
-.ios, .md {
+.ios, .md, .wp {
 	page-treino {
 		.logo {
 	      	width: 40px;
@@ -21,8 +21,12 @@
 				}
 			}
 		}
+		.calendar-treino .event-detail-container .item:first-child {
+			margin-top: 15px;
+		}
 		.calendar-title {
 			text-transform: capitalize;
+			margin-bottom: 15px;
 		}
 		.event-detail-container {
 			border-top: none;
@@ -38,4 +42,3 @@
 		}
 	}
 }
-

@@ -17,21 +17,26 @@ export class ReservaPage {
 
   data: any = []
 
-  _toggle: any = 1
+  toggle: any = 1
 
   eventSource: any
   title: any
 
-  calendar = {
+  calendar: any = {
     mode: 'month',
     locale: 'pt-BR',
     noEventsLabel: 'Nenhuma Reserva',
     currentDate: new Date(),
-  };
+  }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public reservaProvider: ReservaProvider, public util: Util, public layout: Layout) {}
+  modes: any = ['month', 'wekk', 'day']
 
-  ionViewDidEnter() {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public reservaProvider: ReservaProvider,
+    public util: Util,
+    public layout: Layout) {}
 
   ionViewDidLoad() {
     this.select()
@@ -43,48 +48,120 @@ export class ReservaPage {
   }
 
   loadReservas() {
-    let arr = []
+    return this.data.map(obj => {
 
-    for (let i = 0; i < this.data.length; i++) {
+      let id = obj.id
+      let title = obj.title
+      let time = obj.tempo
+      let start = obj.start
+      let end = obj.end
 
-      let title = this.data[i].title
-      let start = this.data[i]['start']
-      let end = this.data[i]['end']
+      let startTime = new Date(start)
+      let endTime = new Date(end)
 
-      let startTime = new Date(start);
-      let endTime = new Date(end);
-
-      arr.push({
-          title: title,
-          startTime: startTime,
-          endTime: endTime,
-          allDay: false
-      })
-    }
-
-    return arr
+      return {
+        id: id,
+        title: title,
+        startTime: startTime,
+        endTime: endTime,
+        time: time,
+        allDay: false
+      }
+    })
   }
 
-  onEventSelected(event) {
-    const title = event.title
-    const message = this.getMessage(event)
+  onEventSelected(item) {
+    if (this.util.checkNetwork()) {
+      this.reservaProvider.checkIsReservado(item).subscribe(
+        data => {
+          if (data > 0) {
+            this.delete(item)
+          } else {
+            if (this.canReserva(item)) { 
+              this.reservaProvider.checkIsLotado(item).subscribe(
+                data => {
+                  if (item.vagas !== data.length) {
+                    this.create(item)
+                  } else {
+                    this.util.showAlert('Atenção', 'Aula lotada', 'Ok', true)
+                  }
+                })
+            } else {
+              this.util.showAlert('Atenção', 'Horário inválido para reserva', 'Ok', true)
+            }
+          }
+        })
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
+    }
+  }
+
+  canReserva(item) {
+    const startTime = item.startTime.setMinutes(item.startTime.getMinutes() - item.time)
+
+    if (new Date() <= startTime && new Date() <= item.endTime)
+      return true
+
+    return false
+  }
+
+  create(item) {
+    const title = item.title
+    const message = this.getMessage(item)
     const buttons = [
       {
         text: 'Confirmar',
         handler: data => {
+          this.reservaProvider.create(item).subscribe(
+            data => {
+              this.doCreate(item)
+            }
+          )
+        }
+      },
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+      }
+    ]
+    this.util.showConfirmationAlert(title, message, [], buttons, true)
+  }
+
+  doCreate(item) {
+    this.reservaProvider.create(item).subscribe(
+      data => {
+        this.util.showAlert('Atenção', 'Aula reservada', 'Ok', true)
+      })
+  }
+
+  delete(item) {
+    const title = item.title
+    const message = 'Deseja cancelar a reserva ?'
+    const buttons = [
+      {
+        text: 'Confirmar',
+        handler: data => {
+          this.doDelete(item)
         }
       },
       {
         text: 'Cancelar',
         role: 'cancel',
       },
-     ];
+    ]
     this.util.showConfirmationAlert(title, message, [], buttons, true)
   }
 
-  getMessage(event) {
-    const startTime = event.startTime.toTimeString().split(' ')[0]
-    const endTime = event.endTime.toTimeString().split(' ')[0]
+  doDelete(item) {
+    this.reservaProvider.delete(item).subscribe(
+      data => {
+        this.util.showAlert('Atenção', 'Aula cancelada', 'Ok', true)
+      })
+  }
+
+  getMessage(item) {
+    const startTime = item.startTime.toTimeString().split(' ')[0]
+    const endTime = item.endTime.toTimeString().split(' ')[0]
 
     const message = 'Deseja reservar esta aula ?' + '<br />' + startTime + ' - ' + endTime
 
@@ -94,27 +171,18 @@ export class ReservaPage {
   onViewTitleChanged(title) {
     if (this.calendar.mode == 'week') {
       this.title = title.split(',')[0]
-    } else {
-      this.title = title
+      return
     }
+
+    this.title = title
   }
 
-  toggle() {
-    this._toggle++
+  doToggle() {
+    this.toggle++
 
-    if (this._toggle > 3) this._toggle = 1
+    if (this.toggle > 3) this.toggle = 1
 
-    switch(this._toggle) {
-        case 1:
-            this.calendar.mode = 'month'
-        break
-        case 2:
-            this.calendar.mode = 'week'
-        break
-        case 3:
-            this.calendar.mode = 'day'
-        break
-    }
+    this.calendar.mode = this.modes[this.toggle]
   }
 
   doRefresh(event) {
@@ -124,7 +192,7 @@ export class ReservaPage {
           this.select()
         })
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false)
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
     setTimeout(() => { event.complete() }, 2000)
   }

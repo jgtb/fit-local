@@ -23,11 +23,12 @@ export class MyApp {
   }
 
   setRoot() {
-    if (this.util.isLogged()) {
-      this.rootPage = DashboardPage
-    } else {
+    if (!this.util.isLogged()) {
       this.rootPage = LoginPage
+      return
     }
+
+    this.rootPage = DashboardPage
   }
 
 }

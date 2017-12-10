@@ -1,4 +1,11 @@
 page-login {
+	.loading {
+	  background-color: red;
+	  color: #333;
+	  border-width: 1px !important;
+	  border-color: #999 !important;
+	  border-style: solid !important;
+	}
 	.bg-wrapper {
 	    background-position: 50% 50%;
 	    background-repeat: no-repeat;
@@ -54,9 +61,8 @@ page-login {
 							margin: 20px 0 0;
 						}
 					}
-			    }
+			  }
 			}
 		}
 	}
 }
-

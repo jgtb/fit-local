@@ -33,7 +33,7 @@
               <ion-card-content>
                 <p [ngStyle]="layout.setColor('light')">
                   {{ item.resumo }} <br>
-                  <span class="email" [ngStyle]="layout.setColor('secondary')">{{ item.email }}</span>
+                  <span class="email" [ngStyle]="layout.setColor('primary')">{{ item.email }}</span>
                 </p>
               </ion-card-content>
             </ion-card>
@@ -44,14 +44,14 @@
     <div *ngSwitchCase="'mensagem'">
       <ion-grid>
         <ion-row>
-          <ion-col col-12 *ngFor="let item of dataMensagem; let i = index;">    
+          <ion-col col-12 *ngFor="let item of dataMensagem; let i = index;">
             <ion-card [ngStyle]="layout.setBackgroundColor('darklight')">
               <ion-card-header [ngStyle]="layout.setColor('light')">{{ item.titulo }}</ion-card-header>
               <div padding *ngIf="showImg(item)">
                 <img class="img-mensagem" src="{{ util.baseUrl }}/imgs-mensagem/{{ item.id_mensagem }}.png"/>
               </div>
               <ion-card-content [ngStyle]="layout.setColor('light')">
-                {{ item.texto }} 
+                {{ item.texto }}
               </ion-card-content>
             </ion-card>
           </ion-col>

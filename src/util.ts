@@ -24,7 +24,7 @@ export class Util {
   getStorage(key) {
     return JSON.parse(localStorage.getItem(key))
   }
-  
+
   setLogout() {
     this.setStorage('isLogged', 'false')
   }
@@ -35,7 +35,7 @@ export class Util {
 
     return false
   }
-  
+
   showLoading() {
     this.loading = this.loadingCtrl.create()
     this.loading.present()

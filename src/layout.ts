@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 @Injectable()
 export class Layout {
 
-  alertLoginColors = {
+  loginColors = {
     secondary:  '#ffd400',
     light:      '#f4f4f4',
     darklight:  '#2b2b2b'
@@ -12,7 +12,7 @@ export class Layout {
   colors = {
     primary:    '#004d40',
     secondary:  '#222',
-    danger:     '#4dd0e1',
+    danger:     '#004d40',
     light:      '#ffffff',
     dark:       '#191919',
     darklight:  '#1e1e1e'
@@ -122,9 +122,9 @@ export class Layout {
   }
 
   setAlertColor(colorsType) {
-    const secondary = colorsType ? this.colors.secondary : this.alertLoginColors.secondary
-    const darklight = colorsType ? this.colors.darklight : this.alertLoginColors.darklight
-    const light = colorsType ? this.colors.light : this.alertLoginColors.light
+    const secondary = colorsType ? this.colors.secondary : this.loginColors.secondary
+    const darklight = colorsType ? this.colors.darklight : this.loginColors.darklight
+    const light = colorsType ? this.colors.light : this.loginColors.light
 
     const alertWrapper = document.querySelectorAll('.alert-wrapper');
 
@@ -174,6 +174,7 @@ export class Layout {
 
     [].forEach.call(alertRadioInner, function(elem, i) {
       elem.style.color = light
+      elem.style.borderColor = light
     })
 
   }

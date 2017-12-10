@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core'
 import { Http } from '@angular/http'
 import 'rxjs/add/operator/map'
 
-import { Util } from '../../util';
+import { Util } from '../../util'
 
 @Injectable()
 export class SerieProvider {
@@ -18,8 +18,8 @@ export class SerieProvider {
   }
 
   updateCarga(data) {
-  	const updateCarga = "/serie/atualiza"
-    const url = this.util.baseUrl + updateCarga
+  	const updateCargaURL = "/serie/atualiza"
+    const url = this.util.baseUrl + updateCargaURL
 
     return this.http.post(url, data).map(res => res.json())
   }

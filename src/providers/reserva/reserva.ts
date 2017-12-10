@@ -18,8 +18,29 @@ export class ReservaProvider {
   }
 
   create(data) {
-    const createURL = ""
+    const createURL = "/aula/reservar"
     const url = this.util.baseUrl + createURL
+
+    return this.http.post(url, data).map(res => res.json())
+  }
+
+  checkIsReservado(data) {
+    const checkReservadoURL = "/aula/reservado?id_aula=" + data.id + "&id_aluno=" + this.util.getStorage('id_aluno')
+    const url = this.util.baseUrl + checkReservadoURL
+
+    return this.http.post(url, data).map(res => res.json())
+  }
+
+  checkIsLotado(data) {
+    const checkLotadoURL = "/aula/reservas?id="
+    const url = this.util.baseUrl + checkLotadoURL
+
+    return this.http.post(url, data).map(res => res.json())
+  }
+
+  delete(data) {
+    const deleteURL = "/aula/cancelar"
+    const url = this.util.baseUrl + deleteURL
 
     return this.http.post(url, data).map(res => res.json())
   }

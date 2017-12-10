@@ -16,7 +16,7 @@ import { Layout } from '../../layout'
 })
 export class AvaliacaoPage {
 
-  data: any = []
+  data: any
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public avaliacaoProvider: AvaliacaoProvider, public util: Util, public layout: Layout) {}
 
@@ -24,10 +24,6 @@ export class AvaliacaoPage {
     this.select()
   }
 
-  ionViewDidLoad() {
-     this.select()
-  }
-  
   select() {
     this.data = this.util.getStorage('dataAvaliacao').filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index)
   }

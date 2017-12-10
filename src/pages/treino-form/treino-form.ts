@@ -88,6 +88,7 @@ export class TreinoFormPage {
 
       this.treinoProvider.create(data).subscribe(
         data => {
+          console.log(data)
           this.util.showAlert('Atenção', 'Treino Registrado', 'Ok', true)
         })
     } else {

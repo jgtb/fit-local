@@ -24,13 +24,20 @@ export class LoginPage {
 
   private data: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public authProvider: AuthProvider, public serieProvider: SerieProvider, public avaliacaoProvider: AvaliacaoProvider, public informacaoProvider: InformacaoProvider, public treinoProvider: TreinoProvider, public reservaProvider: ReservaProvider, public graficoProvider: GraficoProvider, public util: Util) {
-    this.initForm()
-  }
-
-  ionViewDidEnter() {}
-
-  ionViewDidLoad() {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public formBuilder: FormBuilder,
+    public authProvider: AuthProvider,
+    public serieProvider: SerieProvider,
+    public avaliacaoProvider: AvaliacaoProvider,
+    public informacaoProvider: InformacaoProvider,
+    public treinoProvider: TreinoProvider,
+    public reservaProvider: ReservaProvider,
+    public graficoProvider: GraficoProvider,
+    public util: Util) {
+      this.initForm()
+    }
 
   initForm() {
     this.data = this.formBuilder.group({
@@ -51,14 +58,8 @@ export class LoginPage {
           } else if (data === -1) {
             this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok', false)
           }
-        },
-        err => {
-          this.util.showAlert('Atenção', 'Erro no Servidor', 'Tente Novamente', false)
-        },
-        () => {
-          this.util.endLoading()
-        }
-      );
+        })
+      this.util.endLoading()
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false)
     }
@@ -68,7 +69,7 @@ export class LoginPage {
     const id_aluno = data[0]
     const id_professor = data[1]
     const id_tipo_professor = data[2]
-    
+
     this.util.setStorage('isLogged', 'true');
     this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'fase')
     this.util.setStorage('logo', id_professor)
@@ -115,7 +116,7 @@ export class LoginPage {
         name: 'login',
         placeholder: 'Login'
       }
-    ];
+    ]
     const buttons = [
       {
         text: 'Confirmar',
@@ -126,8 +127,8 @@ export class LoginPage {
       {
         text: 'Cancelar',
         role: 'cancel',
-      },
-     ];
+      }
+     ]
     this.util.showConfirmationAlert(title, message, inputs, buttons, false)
   }
 
@@ -140,7 +141,7 @@ export class LoginPage {
         } else {
           this.util.showAlert('Atenção', 'Não foi possível enviar o e-mail', 'Ok', false)
         }
-      });
+      })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false)
     }
