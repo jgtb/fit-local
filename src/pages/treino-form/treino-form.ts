@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular'
+import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 
@@ -31,9 +31,7 @@ export class TreinoFormPage {
   _timer = 0
   running = false
 
-  constructor(public alertCtrl:AlertController, public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
-
-  ionViewDidEnter() {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
 
   ionViewCanLeave() {
     if (this._timer > 0) {
