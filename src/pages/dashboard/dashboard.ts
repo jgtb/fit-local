@@ -32,8 +32,8 @@ export class DashboardPage {
 
   initMenu() {
     this.menu = [
-      { title: 'Séries', component: SeriePage, icon: 'ios-man-outline', class: '' },
-      { title: 'Treinos', component: TreinoPage, icon: 'ios-calendar-outline', class: '' },
+      { title: 'Treinos', component: SeriePage, icon: 'ios-man-outline', class: '' },
+      { title: 'Calendário', component: TreinoPage, icon: 'ios-calendar-outline', class: '' },
       { title: 'Avaliações', component: AvaliacaoPage, icon: 'ios-document-outline', class: '' },
       { title: 'Gráficos', component: GraficoPage, icon: 'ios-stats-outline', class: '' },
       { title: 'Reservas', component: ReservaPage, icon: 'ios-create-outline', class: '' },

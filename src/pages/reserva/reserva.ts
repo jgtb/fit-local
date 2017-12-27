@@ -29,7 +29,7 @@ export class ReservaPage {
     currentDate: new Date(),
   }
 
-  modes: any = ['month', 'wekk', 'day']
+  modes: any = ['month', 'week', 'day']
 
   constructor(
     public navCtrl: NavController,

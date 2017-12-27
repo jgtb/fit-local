@@ -1,9 +1,10 @@
 import { Component } from '@angular/core'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular'
 
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 
 import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer'
+import { TreinoPage } from '../../pages/treino/treino'
 
 import { TreinoProvider } from '../../providers/treino/treino'
 import { SerieProvider } from '../../providers/serie/serie'
@@ -30,15 +31,34 @@ export class TreinoFormPage {
   _timer = 0
   running = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
+  constructor(public alertCtrl:AlertController, public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {}
+
+  ionViewCanLeave() {
+    if (this._timer > 0) {
+      return new Promise((resolve, reject) => {
+        const buttons = [{
+          text: 'Confirmar',
+          handler: () => {
+            resolve();
+          },
+        }, {
+          text: 'Cancelar',
+          handler: () => {
+            reject();
+          }
+        }]  
+        this.util.showConfirmationAlert('Abandonar treino?', '', '', buttons, true)
+      })    
+    }
+  }
 
   ionViewDidLoad() {
     this.data = this.navParams.get('item')
     this.select()
   }
-
+ 
   select() {
     this.dataExercicios = this.util.getStorage('dataSerie').filter((elem, index, arr) => { return elem.id === this.data.id })
   }
@@ -94,6 +114,7 @@ export class TreinoFormPage {
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }
+    this.navCtrl.push(TreinoPage)
   }
 
   update(item) {
