@@ -23,7 +23,7 @@
           <ion-grid>
             <ion-row>
               <ion-col col-12>
-                <img class="img-sessao" *ngIf="!isPDF(item)" src="{{ util.baseUrl }}/imgs-avaliacao/{{ unserializeToUpload(item) }}" alt="">
+                <img-loader class="img-sessao" *ngIf="!isPDF(item)" src="{{ util.baseUrl }}/imgs-avaliacao/{{ unserializeToUpload(item) }}" alt="" useImg></img-loader>
               </ion-col>
             </ion-row>
             <ion-row>

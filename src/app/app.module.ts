@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen'
 import { StatusBar } from '@ionic-native/status-bar'
 import { Network } from '@ionic-native/network'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
+import { IonicImageLoader } from 'ionic-image-loader';
 
 import { MyApp } from './app.component'
 
@@ -26,7 +27,8 @@ import { Layout } from '../layout'
     HttpModule,
     PagesModule,
     ProvidersModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicImageLoader.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

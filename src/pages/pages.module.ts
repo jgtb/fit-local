@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core'
 import { IonicModule } from 'ionic-angular'
 import { CommonModule } from '@angular/common'
 import { NgCalendarModule  } from 'ionic2-calendar'
+import { IonicImageLoader } from 'ionic-image-loader';
 
 import { LoginPage } from '../pages/login/login'
 import { DashboardPage } from '../pages/dashboard/dashboard'
@@ -23,7 +24,8 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar'
 		CommonModule,
 		IonicModule,
 		RoundProgressModule,
-		NgCalendarModule
+		NgCalendarModule,
+		IonicImageLoader
 	],
 	declarations: [
 		LoginPage,

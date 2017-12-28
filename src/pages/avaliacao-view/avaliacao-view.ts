@@ -2,6 +2,7 @@ import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
 import { InAppBrowser } from '@ionic-native/in-app-browser'
+import { IonicImageLoader } from 'ionic-image-loader';
 
 import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao'
 

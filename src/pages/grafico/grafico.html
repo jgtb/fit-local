@@ -9,7 +9,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content [ngStyle]="layout.setBackgroundColor('dark')">
+<ion-content [ngStyle]="layout.setBackgroundColor('dark')" style="height:70%;">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -22,3 +22,7 @@
     </ion-item>
   </ion-list>
 </ion-content>
+
+<ion-grid ion-fixed style="heigth:15%; width:100%; position:absolute; bottom: 0;">
+  <canvas #chart></canvas>
+</ion-grid>

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core'
+import { Component, NgModule } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
 import { InAppBrowser } from '@ionic-native/in-app-browser'
+import { IonicImageLoader } from 'ionic-image-loader';
 
 import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer'
 import { TreinoPage } from '../../pages/treino/treino'
@@ -19,6 +20,7 @@ import { Layout } from '../../layout'
   selector: 'page-treino-form',
   templateUrl: 'treino-form.html',
 })
+
 export class TreinoFormPage {
 
   data: any = []
