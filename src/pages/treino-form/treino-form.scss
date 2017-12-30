@@ -1,5 +1,8 @@
 .ios, .md, .wp {
 	page-treino-form {
+		.item:last-child {
+			margin-bottom: 40px;
+		}
 		ion-item {
 			background-color: transparent;
 			border-bottom: none;

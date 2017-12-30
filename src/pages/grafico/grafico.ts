@@ -28,6 +28,7 @@ export class GraficoPage {
 
   ionViewDidLoad() {
     this.select()
+    this.modal(this.data[0])
   }
 
   select() {
@@ -37,20 +38,20 @@ export class GraficoPage {
   }
 
   selectPerguntas(item) {
-    return this.data.filter((elem, index, arr) => 
+    return this.data.filter((elem, index, arr) =>
       arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index && elem.id_sessao === item.id_sessao)
   }
 
   modal(item) {
-    let labels = [];
-    let values = [];
-    let title;
+    let labels = []
+    let values = []
+    let title
 
-    for(let dado of this.data) {
-      if(item.id_pergunta===dado.id_pergunta){
-         title = dado.pergunta
-        labels.push(dado.data)
-        values.push(parseFloat(dado.resposta.replace(',','.')))
+    for(let obj of this.data) {
+      if(obj.id_pergunta === item.id_pergunta) {
+         title = obj.pergunta
+         labels.push(obj.data)
+         values.push(parseFloat(obj.resposta.replace(',','.')))
       }
     }
 
@@ -66,7 +67,7 @@ export class GraficoPage {
   	})
   }
 
-   doRefresh(event) {
+  doRefresh(event) {
     if (this.util.checkNetwork()) {
       this.graficoProvider.index(this.util.getStorage('id_aluno')).subscribe(
         data => {

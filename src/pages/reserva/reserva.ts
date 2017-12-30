@@ -30,8 +30,6 @@ export class ReservaPage {
     currentDate: new Date()
   }
 
-  //modes: any = ['month', 'week', 'day']
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -78,7 +76,7 @@ export class ReservaPage {
           if (data > 0) {
             this.delete(item)
           } else {
-            if (this.canReserva(item)) { 
+            if (this.canReserva(item)) {
               this.reservaProvider.checkIsLotado(item).subscribe(
                 data => {
                   if (item.vagas !== data.length) {
@@ -170,14 +168,10 @@ export class ReservaPage {
   }
 
   onViewTitleChanged(title) {
-    if (this.calendar.mode == 'week') {
-      this.title = title.split(',')[0]
-      return
-    }
-
     this.title = title
   }
 
+<<<<<<< HEAD
   /*doToggle() {
     this.toggle++
 
@@ -186,6 +180,8 @@ export class ReservaPage {
     this.calendar.mode = this.modes[this.toggle]
   }*/
 
+=======
+>>>>>>> 6e05ab0db6b36ca45cdaf31a00ba7988fb2b0875
   doRefresh(event) {
     if (this.util.checkNetwork()) {
       this.reservaProvider.index(this.util.getStorage('id_professor')).subscribe(

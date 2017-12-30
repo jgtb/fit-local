@@ -1,7 +1,10 @@
 .ios, .md, .wp {
 	page-grafico {
+		.content {
+			height: 70%;
+		}
 		.logo {
-	      	width: 40px;
+	    width: 40px;
 			height: 40px;
 			margin-left: 5px;
 			border-radius: 50%;
@@ -26,6 +29,11 @@
 					border-bottom: none;
 				}
 			}
+		}
+		.chart {
+			width: 100%; 
+			position: absolute;
+			bottom: 0;
 		}
 	}
 }

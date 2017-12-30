@@ -48,6 +48,7 @@ export class TreinoPage {
       let start = obj.start
       let end = obj.end
       let borg = obj.borg
+      let comentario = obj.comentario
 
       let startTime = new Date(start.replace(/-/g, "/"))
       let endTime = new Date(end.replace(/-/g, "/"))
@@ -57,25 +58,30 @@ export class TreinoPage {
         startTime: startTime,
         endTime: endTime,
         borg: borg,
+        comentario: comentario,
         allDay: false
       }
     })
   }
 
   onViewTitleChanged(title) {
-    if (this.calendar.mode == 'week') {
-      this.title = title.split(',')[0]
-    } else {
-      this.title = title
-    }
+    this.title = title
   }
 
   onEventSelected(event) {
     const title = event.title
-    const subtitle = 'Tempo: ' + this.time(event.startTime, event.endTime) + '<br />' + this.getResultado(event.borg)
+    const subtitle = this.getSubtitle(event)
     const button = 'Ok'
 
     this.util.showAlert(title, subtitle, button , true)
+  }
+
+  getSubtitle(event) {
+    let time = 'Tempo: ' + this.time(event.startTime, event.endTime)
+    let img = event.borg !== null ? '<img src="assets/img/treino-modal/' + event.borg + '.png">' : ''
+    let comentario = event.comentario
+
+    return time + img + comentario
   }
 
   time(startTime, endTime) {
@@ -87,30 +93,6 @@ export class TreinoPage {
     const result = date.toISOString().substr(11, 8)
 
     return result
-  }
-
-  getResultado(index) {
-    const result = ['Muito Bom', 'Bom', 'Mediano', 'Regular', 'Ruim', 'Muito Ruim']
-
-    return result[index]
-  }
-
-  toggle() {
-    this._toggle++
-
-    if (this._toggle > 3) this._toggle = 1
-
-    switch(this._toggle) {
-        case 1:
-            this.calendar.mode = 'month'
-        break
-        case 2:
-            this.calendar.mode = 'week'
-        break
-        case 3:
-            this.calendar.mode = 'day'
-        break
-    }
   }
 
   doRefresh(event) {
