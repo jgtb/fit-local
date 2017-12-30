@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar'
 import { Network } from '@ionic-native/network'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { IonicImageLoader } from 'ionic-image-loader';
+import { NgCalendarModule  } from 'ionic2-calendar';
 
 import { MyApp } from './app.component'
 
@@ -27,8 +28,9 @@ import { Layout } from '../layout'
     HttpModule,
     PagesModule,
     ProvidersModule,
-    IonicModule.forRoot(MyApp),
-    IonicImageLoader.forRoot()
+    NgCalendarModule,
+    IonicImageLoader.forRoot(),
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

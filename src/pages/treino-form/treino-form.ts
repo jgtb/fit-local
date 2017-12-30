@@ -144,8 +144,8 @@ export class TreinoFormPage {
 
   doUpdate(item, dataCarga) {
     if (this.util.checkNetwork()) {
-      const data = JSON.stringify({id: item.id_exercicio_serie, carga: dataCarga.carga })
-
+      const data = JSON.stringify({'id': item.id_exercicio_serie, 'carga': dataCarga.carga })
+      console.log(data)
       this.serieProvider.updateCarga(data).subscribe(
         data => {
           this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true)

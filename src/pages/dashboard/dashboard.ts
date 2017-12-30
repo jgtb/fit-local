@@ -35,11 +35,14 @@ export class DashboardPage {
       { title: 'Treinos', component: SeriePage, icon: 'ios-man-outline', class: '' },
       { title: 'Calendário', component: TreinoPage, icon: 'ios-calendar-outline', class: '' },
       { title: 'Avaliações', component: AvaliacaoPage, icon: 'ios-document-outline', class: '' },
-      { title: 'Gráficos', component: GraficoPage, icon: 'ios-stats-outline', class: '' },
-      { title: 'Reservas', component: ReservaPage, icon: 'ios-create-outline', class: '' },
-      { title: 'Informações', component: InformacaoPage, icon: 'ios-information-circle-outline', class: this.util.getStorage('showReserva') === 'false' ? 'm-l-25p' : '' }
+      { title: 'Gráficos', component: GraficoPage, icon: 'md-trending-up', class: '' },
+      { title: 'Ranking', component: ReservaPage, icon: 'md-podium', class: '' },
+      { title: 'Informações', component: InformacaoPage, icon: 'ios-information-circle-outline', class: '' },
+      { title: 'Reservas', component: ReservaPage, icon: 'ios-create-outline', class: '' }
     ]
 
+    
+    
     if (this.util.getStorage('showReserva') === 'false')
       this.menu.splice(4, 1)
   }

@@ -17,19 +17,20 @@ export class ReservaPage {
 
   data: any = []
 
-  toggle: any = 1
+  //toggle: any = 1
 
   eventSource: any
   title: any
 
   calendar: any = {
-    mode: 'month',
+    mode: 'week',
     locale: 'pt-BR',
     noEventsLabel: 'Nenhuma Reserva',
-    currentDate: new Date(),
+    lockSwipeToPrev: 'false',
+    currentDate: new Date()
   }
 
-  modes: any = ['month', 'week', 'day']
+  //modes: any = ['month', 'week', 'day']
 
   constructor(
     public navCtrl: NavController,
@@ -177,13 +178,13 @@ export class ReservaPage {
     this.title = title
   }
 
-  doToggle() {
+  /*doToggle() {
     this.toggle++
 
     if (this.toggle > 3) this.toggle = 1
 
     this.calendar.mode = this.modes[this.toggle]
-  }
+  }*/
 
   doRefresh(event) {
     if (this.util.checkNetwork()) {

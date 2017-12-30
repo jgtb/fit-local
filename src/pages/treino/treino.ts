@@ -49,8 +49,8 @@ export class TreinoPage {
       let end = obj.end
       let borg = obj.borg
 
-      let startTime = new Date(start)
-      let endTime = new Date(end)
+      let startTime = new Date(start.replace(/-/g, "/"))
+      let endTime = new Date(end.replace(/-/g, "/"))
 
       return {
         title: title,

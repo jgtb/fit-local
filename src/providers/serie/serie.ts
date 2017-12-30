@@ -21,7 +21,7 @@ export class SerieProvider {
   	const updateCargaURL = "/serie/atualiza"
     const url = this.util.baseUrl + updateCargaURL
 
-    return this.http.post(url, data).map(res => res.json())
+    return this.http.post(url, data)
   }
 
 }

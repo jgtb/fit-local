@@ -53,9 +53,6 @@ export class GraficoPage {
         values.push(parseFloat(dado.resposta.replace(',','.')))
       }
     }
-    console.log(labels);
-    console.log(values);
-
 
   	this.chart = new Chart(this.chartCanvas.nativeElement, {
   		type: 'line',

@@ -16,8 +16,8 @@
   <ion-list>
     <ion-item *ngFor="let data of dataGrafico; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
       <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>
-      <div class="item-sessao" *ngFor="let item of selectPerguntas(data)">
-        <p (click)="modal(item)" [ngStyle]="layout.setColor('light')">{{ item?.pergunta }}</p>
+      <div (click)="modal(item)" class="item-sessao" *ngFor="let item of selectPerguntas(data)">
+        <p [ngStyle]="layout.setColor('light')">{{ item?.pergunta }}</p>
       </div>
     </ion-item>
   </ion-list>
