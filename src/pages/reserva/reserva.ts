@@ -29,8 +29,6 @@ export class ReservaPage {
     currentDate: new Date(),
   }
 
-  modes: any = ['month', 'week', 'day']
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -77,7 +75,7 @@ export class ReservaPage {
           if (data > 0) {
             this.delete(item)
           } else {
-            if (this.canReserva(item)) { 
+            if (this.canReserva(item)) {
               this.reservaProvider.checkIsLotado(item).subscribe(
                 data => {
                   if (item.vagas !== data.length) {
@@ -169,20 +167,7 @@ export class ReservaPage {
   }
 
   onViewTitleChanged(title) {
-    if (this.calendar.mode == 'week') {
-      this.title = title.split(',')[0]
-      return
-    }
-
     this.title = title
-  }
-
-  doToggle() {
-    this.toggle++
-
-    if (this.toggle > 3) this.toggle = 1
-
-    this.calendar.mode = this.modes[this.toggle]
   }
 
   doRefresh(event) {

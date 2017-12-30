@@ -9,11 +9,12 @@ import { Layout } from './layout'
 export class Util {
 
   baseUrl = 'http://fit.nexur.com.br'
-  //baseUrl = 'http://localhost/personal/web';
+  //baseUrl = 'http://localhost/personal/web'
+  //baseUrl = 'http://homolog.nexur.com.br'
 
-  logo
+  logo: any
 
-  loading
+  loading: any
 
   constructor(public network: Network, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public layout: Layout) {}
 

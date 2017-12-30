@@ -1,10 +1,11 @@
 import { Component, NgModule } from '@angular/core'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { IonicPage, NavController, NavParams, ModalController} from 'ionic-angular'
 
 import { InAppBrowser } from '@ionic-native/in-app-browser'
-import { IonicImageLoader } from 'ionic-image-loader';
+import { IonicImageLoader } from 'ionic-image-loader'
 
 import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer'
+import { TreinoModalPage } from '../../pages/treino-modal/treino-modal'
 import { TreinoPage } from '../../pages/treino/treino'
 
 import { TreinoProvider } from '../../providers/treino/treino'
@@ -33,88 +34,39 @@ export class TreinoFormPage {
   _timer = 0
   running = false
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public iab: InAppBrowser, public util: Util, public layout: Layout) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public treinoProvider: TreinoProvider, public serieProvider: SerieProvider, public iab: InAppBrowser, public modalCtrl: ModalController, public util: Util, public layout: Layout) {}
 
-  ionViewCanLeave() {
-    if (this._timer > 0) {
-      return new Promise((resolve, reject) => {
-        const buttons = [{
-          text: 'Confirmar',
-          handler: () => {
-            resolve();
-          },
-        }, {
-          text: 'Cancelar',
-          handler: () => {
-            reject();
-          }
-        }]  
-        this.util.showConfirmationAlert('Abandonar treino?', '', '', buttons, true)
-      })    
-    }
-  }
+  // ionViewCanLeave() {
+  //   if (this._timer > 0) {
+  //     return new Promise((resolve, reject) => {
+  //       const buttons = [{
+  //         text: 'Confirmar',
+  //         handler: () => {
+  //           resolve()
+  //         },
+  //       }, {
+  //         text: 'Cancelar',
+  //         handler: () => {
+  //           reject()
+  //         }
+  //       }]
+  //       this.util.showConfirmationAlert('Abandonar treino?', '', '', buttons, true)
+  //     })
+  //   }
+  // }
 
   ionViewDidLoad() {
     this.data = this.navParams.get('item')
     this.select()
   }
- 
+
   select() {
     this.dataExercicios = this.util.getStorage('dataSerie').filter((elem, index, arr) => { return elem.id === this.data.id })
   }
 
   create() {
-    const title = 'Finalizar Treino ?'
-    const message = 'Tempo: ' + this.time()
-    const inputs = this.getInputs()
-    const buttons = [
-      {
-        text: 'Confirmar',
-        handler: dataResultado => {
-          const _title = 'Algum Comentário ?';
-          const _message = message + '<br>' + this.getResultado(dataResultado)
-          const _inputs = [
-            {
-              name: 'comentario',
-              placeholder: 'Comentário'
-            }
-          ];
-          const _buttons = [
-            {
-              text: 'Confirmar',
-              handler: dataComentario => {
-                this.doCreate(dataResultado, dataComentario)
-              }
-            },
-            {
-              text: 'Cancelar',
-              role: 'cancel',
-            }
-          ];
-          this.util.showConfirmationAlert(_title, _message, _inputs, _buttons, true)
-        }
-      },
-      {
-        text: 'Cancelar',
-        role: 'cancel',
-      },
-     ];
-    this.util.showConfirmationAlert(title, message, inputs, buttons, true)
-  }
-
-  doCreate(dataResultado, dataComentario) {
-    if (this.util.checkNetwork()) {
-      const data = JSON.stringify({id_serie: this.data.id_serie, mensagem: dataComentario.comentario, borg: dataResultado, tempo: this.time(), datahora: this.getDateTime()})
-
-      this.treinoProvider.create(data).subscribe(
-        data => {
-          console.log(data)
-          this.util.showAlert('Atenção', 'Treino Registrado', 'Ok', true)
-        })
-    } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
-    }
-    this.navCtrl.push(TreinoPage)
+    const modal = this.modalCtrl.create(TreinoModalPage, {id_serie: this.data.id_serie, time: this.time()})
+    modal.present()
   }
 
   update(item) {
@@ -159,7 +111,6 @@ export class TreinoFormPage {
     this.running = true
     this.subscription = Observable.interval(1000).subscribe(data => {
       this._timer++
-      this.time()
     })
   }
 
@@ -168,14 +119,6 @@ export class TreinoFormPage {
       this.running = false
       this.subscription.unsubscribe()
     }
-  }
-
-  getDateTime() {
-    const date = new Date();
-
-    const datetime = date.toJSON().slice(0, 10) + ' ' + date.toJSON().slice(11, 19)
-
-    return datetime
   }
 
   time() {
