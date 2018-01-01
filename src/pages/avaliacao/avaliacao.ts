@@ -1,13 +1,13 @@
-import { Component } from '@angular/core'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { DashboardPage } from '../../pages/dashboard/dashboard'
-import { AvaliacaoViewPage } from '../../pages/avaliacao-view/avaliacao-view'
+import { DashboardPage } from '../../pages/dashboard/dashboard';
+import { AvaliacaoViewPage } from '../../pages/avaliacao-view/avaliacao-view';
 
-import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao'
+import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
 
-import { Util } from '../../util'
-import { Layout } from '../../layout'
+import { Util } from '../../util';
+import { Layout } from '../../layout';
 
 @IonicPage()
 @Component({
@@ -16,36 +16,44 @@ import { Layout } from '../../layout'
 })
 export class AvaliacaoPage {
 
-  data: any
+  data: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public avaliacaoProvider: AvaliacaoProvider, public util: Util, public layout: Layout) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public avaliacaoProvider: AvaliacaoProvider,
+    public util: Util,
+    public layout: Layout) {
+      this.data = this.util.getStorage('dataAvaliacao');
+    }
 
-  ionViewDidEnter() {
-    this.select()
+  ionViewDidLoad() {
+    this.select(this.data);
   }
 
-  select() {
-    this.data = this.util.getStorage('dataAvaliacao').filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index)
+  select(result) {
+    this.data = result.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
+  }
+
+  view(item) {
+    this.navCtrl.push(AvaliacaoViewPage, { item: item });
   }
 
   doRefresh(event) {
     if (this.util.checkNetwork()) {
       this.avaliacaoProvider.index(this.util.getStorage('id_aluno')).subscribe(
         data => {
-          this.select()
-        })
+          this.util.setStorage('dataAvaliacao', data);
+          this.select(data);
+        });
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
-    setTimeout(() => { event.complete() }, 2000)
-  }
-
-  view(item) {
-    this.navCtrl.push(AvaliacaoViewPage, { item: item })
+    setTimeout(() => { event.complete() }, 2000);
   }
 
   goToDashboard() {
-    this.navCtrl.push(DashboardPage)
+    this.navCtrl.push(DashboardPage);
   }
 
 }

@@ -1,6 +1,13 @@
 ion-alert {
 	.alert-wrapper {
     display: none;
+		.alert-sub-title {
+			text-align: center;
+			img {
+				width: 40px;
+				margin-top: 10px;
+			}
+		}
 		.alert-button {
 			border-top: 0;
 		}

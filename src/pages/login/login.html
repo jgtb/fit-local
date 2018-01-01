@@ -8,8 +8,8 @@
 			  </div>
         <form [formGroup]="data" (ngSubmit)="login(data.value)">
 				  <ion-list padding>
-			      		<ion-item>
-			        		<ion-icon item-left name="person"></ion-icon>
+			      	<ion-item>
+			          <ion-icon item-left name="person"></ion-icon>
 						  	<ion-input type="text" placeholder="Login" formControlName="usuario"></ion-input>
 					  	</ion-item>
 					  	<ion-item>
@@ -18,7 +18,7 @@
 					  	</ion-item>
 					  	<button ion-button color="secondary" block round [disabled]="!data.valid">ENTRAR</button>
 				  </ion-list>
-        		</form>
+        </form>
 				<p text-right>
 					<small (click)="forgotPassword()">esqueceu a senha?</small>
 				</p>
