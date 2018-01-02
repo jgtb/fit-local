@@ -26,11 +26,11 @@ export class AuthProvider {
     return this.http.post(url, data).map(res => res.json());
   }
 
-  playerId(data) {
-    const oneSignalURL = '';
+  playerId(userId, playerId) {
+    const oneSignalURL = '/usuario/player-id?id=' + userId + '&player_id=' + playerId;
     const url = this.util.baseUrl + oneSignalURL;
 
-    return this.http.post(url, data);
+    return this.http.get(url);
   }
 
   appConfig() {

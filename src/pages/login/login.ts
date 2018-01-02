@@ -79,7 +79,7 @@ export class LoginPage {
     this.util.setStorage('id_aluno', id_aluno);
     this.util.setStorage('id_professor', id_professor);
 
-    //this.playerId(id_aluno);
+    this.playerId(id_aluno);
     this.serieProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataSerie', data);
@@ -154,9 +154,8 @@ export class LoginPage {
     this.oneSignal.getIds().then(
       result => {
         const playerId = result.userId;
-        const data = JSON.stringify({userId: userId, playerId: playerId});
 
-        this.authProvider.playerId(data);
+        this.authProvider.playerId(userId, playerId).subscribe();
       });
   }
 
