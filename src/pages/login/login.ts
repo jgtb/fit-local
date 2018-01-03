@@ -72,6 +72,7 @@ export class LoginPage {
     const id_aluno = data[0];
     const id_professor = data[1];
     const id_tipo_professor = data[2];
+    const id_usuario = data[5];
 
     this.util.setStorage('isLogged', 'true');
     this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'fase');
@@ -79,7 +80,7 @@ export class LoginPage {
     this.util.setStorage('id_aluno', id_aluno);
     this.util.setStorage('id_professor', id_professor);
 
-    this.playerId(id_aluno);
+    this.playerId(id_usuario);
     this.serieProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataSerie', data);
