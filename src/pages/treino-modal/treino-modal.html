@@ -12,7 +12,7 @@
       <ion-grid>
     		<ion-row>
           <ion-col *ngFor="let item of items; let i = index;">
-            <img [ngClass]="{'selected' : this.form.controls['borg'].value === item.img}" src="assets/img/treino-modal/{{ item.img }}.png" (click)="setBorg(item.img)">
+            <img [ngClass]="{'unselected' : this.form.controls['borg'].value !== item.img, 'selected' : this.form.controls['borg'].value === item.img}" src="assets/img/treino-modal/{{ item.img }}.png" (click)="setBorg(item.img)">
           </ion-col>
     		</ion-row>
     	</ion-grid>

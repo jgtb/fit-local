@@ -1,19 +1,21 @@
-import { Component } from '@angular/core'
-import { IonicPage, NavController, NavParams } from 'ionic-angular'
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { Validators, FormBuilder, FormGroup } from '@angular/forms'
+import { OneSignal } from '@ionic-native/onesignal';
 
-import { AuthProvider } from '../../providers/auth/auth'
-import { SerieProvider } from '../../providers/serie/serie'
-import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao'
-import { GraficoProvider } from '../../providers/grafico/grafico'
-import { TreinoProvider } from '../../providers/treino/treino'
-import { ReservaProvider } from '../../providers/reserva/reserva'
-import { InformacaoProvider } from '../../providers/informacao/informacao'
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
-import { DashboardPage } from '../../pages/dashboard/dashboard'
+import { AuthProvider } from '../../providers/auth/auth';
+import { SerieProvider } from '../../providers/serie/serie';
+import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
+import { GraficoProvider } from '../../providers/grafico/grafico';
+import { TreinoProvider } from '../../providers/treino/treino';
+import { ReservaProvider } from '../../providers/reserva/reserva';
+import { InformacaoProvider } from '../../providers/informacao/informacao';
 
-import { Util } from '../../util'
+import { DashboardPage } from '../../pages/dashboard/dashboard';
+
+import { Util } from '../../util';
 
 @IonicPage()
 @Component({
@@ -35,81 +37,82 @@ export class LoginPage {
     public treinoProvider: TreinoProvider,
     public reservaProvider: ReservaProvider,
     public graficoProvider: GraficoProvider,
+    public oneSignal: OneSignal,
     public util: Util) {
-      this.initForm()
+      this.initForm();
     }
 
   initForm() {
     this.data = this.formBuilder.group({
       usuario: ['aluno', Validators.required],
       senha: ['aluno', Validators.required]
-    })
+    });
   }
 
   login(data) {
     if (this.util.checkNetwork()) {
-      this.util.showLoading()
+      this.util.showLoading();
       this.authProvider.login(data).subscribe(
         data => {
           if (data != 0 && data != -1) {
-            this.doLogin(data)
+            this.doLogin(data);
           } else if (data === 0) {
-            this.util.showAlert('Atenção', 'Usuário ou Senha estão Incorretos', 'Ok', false)
+            this.util.showAlert('Atenção', 'Usuário ou Senha estão Incorretos', 'Ok', false);
           } else if (data === -1) {
-            this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok', false)
+            this.util.showAlert('Atenção', 'Usuário Inativo', 'Ok', false);
           }
         })
-      this.util.endLoading()
+      this.util.endLoading();
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false)
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
     }
   }
 
   doLogin(data) {
-    const id_aluno = data[0]
-    const id_professor = data[1]
-    const id_tipo_professor = data[2]
+    const id_aluno = data[0];
+    const id_professor = data[1];
+    const id_tipo_professor = data[2];
 
     this.util.setStorage('isLogged', 'true');
-    this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'fase')
-    this.util.setStorage('logo', id_professor)
-    this.util.setStorage('id_aluno', id_aluno)
-    this.util.setStorage('id_professor', id_professor)
+    this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'fase');
+    this.util.setStorage('logo', id_professor);
+    this.util.setStorage('id_aluno', id_aluno);
+    this.util.setStorage('id_professor', id_professor);
 
-    this.util.setStorage('dataUsuario', data)
+    this.playerId(id_aluno);
     this.serieProvider.index(id_aluno).subscribe(
       data => {
-        this.util.setStorage('dataSerie', data)
+        this.util.setStorage('dataSerie', data);
     })
     this.avaliacaoProvider.index(id_aluno).subscribe(
       data => {
-        this.util.setStorage('dataAvaliacao', data)
+        this.util.setStorage('dataAvaliacao', data);
     })
     this.graficoProvider.index(id_aluno).subscribe(
       data => {
-        this.util.setStorage('dataGrafico', data)
+        this.util.setStorage('dataGrafico', data);
     })
     this.treinoProvider.index(id_aluno).subscribe(
       data => {
-        this.util.setStorage('dataTreino', data)
+        this.util.setStorage('dataTreino', data);
     })
     this.reservaProvider.index(id_aluno).subscribe(
       data => {
-        this.util.setStorage('dataReserva', data)
+        this.util.setStorage('dataReserva', data);
     })
     this.informacaoProvider.indexInformacao(id_professor).subscribe(
       data => {
-        this.util.setStorage('dataInformacao', data)
+        this.util.setStorage('dataInformacao', data);
     })
     this.informacaoProvider.indexMensagem(id_aluno).subscribe(
       data => {
-        this.util.setStorage('dataMensagem', data)
+        this.util.setStorage('dataMensagem', data);
     })
-    this.navCtrl.push(DashboardPage)
+    this.navCtrl.push(DashboardPage);
   }
 
   forgotPassword() {
-    const title = 'Esqueceu a senha?'
+    const title = 'Esqueceu a senha?';
     const message = '';
     const inputs = [
       {
@@ -128,8 +131,8 @@ export class LoginPage {
         text: 'Cancelar',
         role: 'cancel',
       }
-     ]
-    this.util.showConfirmationAlert(title, message, inputs, buttons, false)
+    ];
+    this.util.showConfirmationAlert(title, message, inputs, buttons, false);
   }
 
   doForgotPassword(data) {
@@ -137,14 +140,23 @@ export class LoginPage {
       this.authProvider.forgotPassword(data).subscribe(
       data => {
         if (data == 1) {
-          this.util.showAlert('Atenção', 'E-mail enviado com sucesso', 'Ok', false)
+          this.util.showAlert('Atenção', 'E-mail enviado com sucesso', 'Ok', false);
         } else {
-          this.util.showAlert('Atenção', 'Não foi possível enviar o e-mail', 'Ok', false)
+          this.util.showAlert('Atenção', 'Não foi possível enviar o e-mail', 'Ok', false);
         }
-      })
+      });
     } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false)
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
     }
+  }
+
+  playerId(userId) {
+    this.oneSignal.getIds().then(
+      result => {
+        const playerId = result.userId;
+
+        this.authProvider.playerId(userId, playerId).subscribe();
+      });
   }
 
 }

@@ -14,8 +14,8 @@ import { TreinoModalPage } from '../pages/treino-modal/treino-modal'
 import { AvaliacaoPage } from '../pages/avaliacao/avaliacao'
 import { AvaliacaoViewPage } from '../pages/avaliacao-view/avaliacao-view'
 import { GraficoPage } from '../pages/grafico/grafico'
-import { GraficoModalPage } from '../pages/grafico-modal/grafico-modal'
 import { ReservaPage } from '../pages/reserva/reserva'
+import { RankingPage } from '../pages/ranking/ranking'
 import { InformacaoPage } from '../pages/informacao/informacao'
 
 import { RoundProgressModule } from 'angular-svg-round-progressbar'
@@ -39,8 +39,8 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar'
 		AvaliacaoPage,
 		AvaliacaoViewPage,
 		GraficoPage,
-		GraficoModalPage,
 		ReservaPage,
+		RankingPage,
 		InformacaoPage
   ],
 	entryComponents: [
@@ -54,8 +54,8 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar'
 		AvaliacaoPage,
 		AvaliacaoViewPage,
 		GraficoPage,
-		GraficoModalPage,
 		ReservaPage,
+		RankingPage,
 		InformacaoPage
   ],
 })

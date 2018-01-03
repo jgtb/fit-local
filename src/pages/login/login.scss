@@ -1,46 +1,39 @@
 page-login {
-	.loading {
-	  background-color: red;
-	  color: #333;
-	  border-width: 1px !important;
-	  border-color: #999 !important;
-	  border-style: solid !important;
-	}
 	.bg-wrapper {
-	    background-position: 50% 50%;
-	    background-repeat: no-repeat;
-	    background-size: cover;
-	    width: 100%;
+	  background-position: 50% 50%;
+	  background-repeat: no-repeat;
+	  background-size: cover;
+	  width: 100%;
+	  height: 100%;
+    .backdrop {
+	    background-color: rgba(map-get($colors, dark), 0.9);
 	    height: 100%;
-	    .backdrop {
-		    background-color: rgba(map-get($colors, dark), 0.9);
-		    height: 100%;
-    	  	position: absolute;
-		    width: 100%;
-		    z-index: 1;
-	    }
+  	  position: absolute;
+	    width: 100%;
+	    z-index: 1;
+    }
 		ion-content {
 			background-color: transparent;
 			color: map-get($colors, light);
 			text-align: center;
 			.aligner-wrapper {
 				display: flex;
-			    align-items: center;
-			    justify-content: center;
-			    height: 100%;
+		    align-items: center;
+		    justify-content: center;
+		    height: 100%;
 				@media screen and (orientation:landscape) {
 					height: auto;
 					padding: 30px 0;
 				}
-			    .aligner-item {
-			    	flex: none;
+	    	.aligner-item {
+	    		flex: none;
 					.logo {
-	    				margin-bottom: 40px;
-					    text-align: center;
-					    img {
-					    	width: 150px;
+	  				margin-bottom: 40px;
+				    text-align: center;
+				    img {
+				    	width: 150px;
 							height: 150px;
-					    }
+				    }
 					}
 					ion-list {
 						background-color: rgba(map-get($colors, dark), 0.9);
@@ -61,7 +54,7 @@ page-login {
 							margin: 20px 0 0;
 						}
 					}
-			  }
+		  	}
 			}
 		}
 	}

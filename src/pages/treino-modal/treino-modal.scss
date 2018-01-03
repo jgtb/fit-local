@@ -48,8 +48,11 @@
 		    	width: 35px;
 		    	height: 35px;
 		    }
-				.selected {
+				.unselected {
 					opacity: 0.3;
+				}
+				.selected {
+					opacity: 1;
 				}
 		    ion-textarea {
 		    	background: #ffff;

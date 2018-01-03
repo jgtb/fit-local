@@ -1,23 +1,32 @@
-import { BrowserModule } from '@angular/platform-browser'
-import { ErrorHandler, NgModule } from '@angular/core'
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular'
+import { BrowserModule } from '@angular/platform-browser';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
+<<<<<<< HEAD
 import { SplashScreen } from '@ionic-native/splash-screen'
 import { StatusBar } from '@ionic-native/status-bar'
 import { Network } from '@ionic-native/network'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 import { IonicImageLoader } from 'ionic-image-loader';
 import { NgCalendarModule  } from 'ionic2-calendar';
+=======
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { Network } from '@ionic-native/network';
+import { OneSignal } from '@ionic-native/onesignal';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { IonicImageLoader } from 'ionic-image-loader';;
+>>>>>>> 4ba2c8624a0b869986dd6d4fb42ad652ff866b79
 
-import { MyApp } from './app.component'
+import { MyApp } from './app.component';
 
-import { PagesModule } from '../pages/pages.module'
-import { ProvidersModule } from '../providers/providers.module'
+import { PagesModule } from '../pages/pages.module';
+import { ProvidersModule } from '../providers/providers.module';
 
-import { HttpModule } from '@angular/http'
+import { HttpModule } from '@angular/http';
 
-import { Util } from '../util'
-import { Layout } from '../layout'
+import { Util } from '../util';
+import { Layout } from '../layout';
 
 @NgModule({
   declarations: [
@@ -40,6 +49,7 @@ import { Layout } from '../layout'
     StatusBar,
     SplashScreen,
     Network,
+    OneSignal,
     InAppBrowser,
     Util,
     Layout,

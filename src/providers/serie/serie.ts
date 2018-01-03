@@ -1,27 +1,29 @@
-import { Injectable } from '@angular/core'
+import { Injectable } from '@angular/core';
 
-import { Http } from '@angular/http'
-import 'rxjs/add/operator/map'
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';
 
-import { Util } from '../../util'
+import { Util } from '../../util';
 
 @Injectable()
 export class SerieProvider {
 
-  constructor(public http: Http, public util: Util) {}
+  constructor(
+    public http: Http,
+    public util: Util) {}
 
   index(id_aluno) {
-    const indexURL = "/serie/lista?id_aluno=" + id_aluno
-    const url = this.util.baseUrl + indexURL
+    const indexURL = '/serie/lista?id_aluno=' + id_aluno;
+    const url = this.util.baseUrl + indexURL;
 
-    return this.http.get(url).map(res => res.json())
+    return this.http.get(url).map(res => res.json());
   }
 
   updateCarga(data) {
-  	const updateCargaURL = "/serie/atualiza"
-    const url = this.util.baseUrl + updateCargaURL
+  	const updateCargaURL = '/serie/atualiza';
+    const url = this.util.baseUrl + updateCargaURL;
 
-    return this.http.post(url, data)
+    return this.http.post(url, data);
   }
 
 }

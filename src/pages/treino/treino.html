@@ -10,7 +10,6 @@
 </ion-header>
 
 <ion-content padding [ngStyle]="layout.setBackgroundColor('dark')">
-
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -28,5 +27,4 @@
     (onEventSelected)="onEventSelected($event)" step="30">
     </calendar>
   </div>
-
 </ion-content>

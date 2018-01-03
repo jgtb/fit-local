@@ -45,14 +45,20 @@ export class TreinoModalPage {
   }
 
   doCreate(form) {
-    console.log(form)
     if (this.util.checkNetwork()) {
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg, tempo: this.time, datahora: this.getDateTime()})
-
+      console.log(data)
       this.treinoProvider.create(data).subscribe(
         data => {
-          this.util.showAlert('Atenção', 'Treino Registrado', 'Ok', true)
-          this.navCtrl.push(TreinoPage)
+          const buttons = [
+            {
+              text: 'Ok',
+              handler: data => {
+                this.navCtrl.push(TreinoPage)
+              }
+            }
+           ]
+          this.util.showConfirmationAlert('Atenção', 'Treino Registrado', '', buttons, true)
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
