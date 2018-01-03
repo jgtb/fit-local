@@ -8,15 +8,9 @@ import { Layout } from './layout'
 @Injectable()
 export class Util {
 
-<<<<<<< HEAD
   //baseUrl = 'http://fit.nexur.com.br'
-  //baseUrl = 'http://localhost/personal/web';
-  baseUrl = 'http://homolog.nexur.com.br/web';
-=======
-  baseUrl = 'http://fit.nexur.com.br'
   //baseUrl = 'http://localhost/personal/web'
-  //baseUrl = 'http://homolog.nexur.com.br'
->>>>>>> 6e05ab0db6b36ca45cdaf31a00ba7988fb2b0875
+  baseUrl = 'http://homolog.nexur.com.br/web'
 
   logo: any
 

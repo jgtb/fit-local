@@ -171,17 +171,6 @@ export class ReservaPage {
     this.title = title
   }
 
-<<<<<<< HEAD
-  /*doToggle() {
-    this.toggle++
-
-    if (this.toggle > 3) this.toggle = 1
-
-    this.calendar.mode = this.modes[this.toggle]
-  }*/
-
-=======
->>>>>>> 6e05ab0db6b36ca45cdaf31a00ba7988fb2b0875
   doRefresh(event) {
     if (this.util.checkNetwork()) {
       this.reservaProvider.index(this.util.getStorage('id_professor')).subscribe(
