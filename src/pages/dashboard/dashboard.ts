@@ -37,13 +37,13 @@ export class DashboardPage {
 
   initMenu() {
     this.menu = [
-      { title: 'Treinos', component: SeriePage, icon: 'ios-man-outline', class: '' },
-      { title: 'Avaliações', component: AvaliacaoPage, icon: 'ios-document-outline', class: '' },
+      { title: 'Treinos', component: SeriePage, icon: 'ios-man', class: '' },
+      { title: 'Avaliações', component: AvaliacaoPage, icon: 'ios-document', class: '' },
       { title: 'Gráficos', component: GraficoPage, icon: 'md-trending-up', class: '' },
-      { title: 'Calendário', component: TreinoPage, icon: 'ios-calendar-outline', class: '' },
-      { title: 'Reservas', component: ReservaPage, icon: 'ios-create-outline', class: '' },
+      { title: 'Calendário', component: TreinoPage, icon: 'ios-calendar', class: '' },
+      { title: 'Reservas', component: ReservaPage, icon: 'ios-create', class: '' },
       { title: 'Ranking', component: RankingPage, icon: 'md-podium', class: '' },
-      { title: 'Informações', component: InformacaoPage, icon: 'ios-information-circle-outline', class: this.util.getStorage('showReserva') !== 'false' ? 'm-l-25p' : '' }
+      { title: 'Informações', component: InformacaoPage, icon: 'ios-information-circle', class: this.util.getStorage('showReserva') !== 'false' ? 'm-l-25p' : '' }
     ];
 
     if (this.util.getStorage('showReserva') === 'false')

@@ -41,7 +41,7 @@ export class InformacaoPage {
   }
 
   showImg(item) {
-    if (item.largura != "" && item.altura != "")
+    if (item.largura != 0 && item.altura != 0)
        return true;
 
      return false;
