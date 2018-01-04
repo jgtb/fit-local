@@ -6,11 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen'
 import { StatusBar } from '@ionic-native/status-bar'
 import { Network } from '@ionic-native/network'
 import { InAppBrowser } from '@ionic-native/in-app-browser'
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-import { Network } from '@ionic-native/network';
 import { OneSignal } from '@ionic-native/onesignal';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { IonicImageLoader } from 'ionic-image-loader';
 import { NgCalendarModule  } from 'ionic2-calendar';
