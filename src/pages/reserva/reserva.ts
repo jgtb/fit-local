@@ -72,7 +72,7 @@ export class ReservaPage {
     if (this.util.checkNetwork()) {
       this.reservaProvider.checkIsReservado(item).subscribe(
         data => {
-          if (data > 0) {
+          if (!data) {
             this.delete(item);
           } else {
             if (this.canReserva(item)) {
@@ -96,7 +96,7 @@ export class ReservaPage {
 
   canReserva(item) {
     const startTime = item.startTime.setMinutes(item.startTime.getMinutes() - item.time);
-
+    console.log(item);
     if (new Date() <= startTime && new Date() <= item.endTime)
       return true;
 

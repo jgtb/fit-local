@@ -1,7 +1,32 @@
 .weekview-allday-table{
 	display: none;
 }
+.weekview-normal-event-container{
+	color:white; //mudar
+	margin-top:40px;
+
+	ion-scroll{
+		margin-left:-16px;
+		margin-right:-16px;
+	}
+
 	
+
+}
+
+.weekview-header{
+	th{	
+		color:white; //mudar
+	}
+	ion-scroll{
+		.scroll-y{
+			margin-top:-40px;
+		}
+	}
+}
+	
+
+
 .ios, .md, .wp {
 	page-reserva {
 		.logo {
