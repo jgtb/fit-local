@@ -1,5 +1,5 @@
-import { Component, NgModule } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController} from 'ionic-angular';
+import { Component, NgModule, ViewChild } from '@angular/core';
+import { IonicPage, Platform, NavController, NavParams, ModalController, Navbar} from 'ionic-angular';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { IonicImageLoader } from 'ionic-image-loader';
@@ -24,6 +24,8 @@ import { Layout } from '../../layout';
 
 export class TreinoFormPage {
 
+  @ViewChild(Navbar) navBar: Navbar;
+
   data: any = [];
   dataExercicios: any = [];
 
@@ -35,6 +37,7 @@ export class TreinoFormPage {
   running = false;
 
   constructor(
+    platform: Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
     public treinoProvider: TreinoProvider,
@@ -46,28 +49,29 @@ export class TreinoFormPage {
       this.data = this.navParams.get('item');
     }
 
-  // ionViewCanLeave() {
-  //   if (this._timer > 0) {
-  //     return new Promise((resolve, reject) => {
-  //       const buttons = [{
-  //         text: 'Confirmar',
-  //         handler: () => {
-  //           resolve()
-  //         },
-  //       }, {
-  //         text: 'Cancelar',
-  //         handler: () => {
-  //           reject()
-  //         }
-  //       }]
-  //       this.util.showConfirmationAlert('Abandonar treino?', '', '', buttons, true)
-  //     })
-  //   }
-  // }
-
   ionViewDidLoad() {
     const data = this.util.getStorage('dataSerie');
     this.select(data);
+    this.setBackButtonAction();
+  }
+
+  setBackButtonAction(){
+    this.navBar.backButtonClick = () => {
+      if (this._timer > 0) {
+        const buttons = [{
+          text: 'Confirmar',
+          handler: () => {
+            this.navCtrl.pop();
+          },
+        }, {
+          text: 'Cancelar',
+          role: 'cancel'
+        }];
+        this.util.showConfirmationAlert('Abandonar treino?', '', '', buttons, true);
+      } else {
+        this.navCtrl.pop();
+      }
+    }
   }
 
   select(result) {
@@ -111,8 +115,9 @@ export class TreinoFormPage {
 
       this.serieProvider.updateCarga(data).subscribe(
         data => {
+          this.getData();
           this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true);
-        })
+        });
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
@@ -122,7 +127,7 @@ export class TreinoFormPage {
     this.running = true;
     this.subscription = Observable.interval(1000).subscribe(data => {
       this._timer++;
-    })
+    });
   }
 
   stop() {
@@ -170,13 +175,17 @@ export class TreinoFormPage {
     this.iab.create(item.video).show();
   }
 
+  getData() {
+    this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
+      data => {
+        this.util.setStorage('dataSerie', data);
+        this.select(data);
+      });
+  }
+
   doRefresh(event) {
     if (this.util.checkNetwork()) {
-      this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
-        data => {
-          //this.util.setStorage('dataSerie', data);
-          this.select(data);
-        })
+      this.getData();
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
