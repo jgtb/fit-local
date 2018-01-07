@@ -83,7 +83,7 @@ export class ReservaPage {
                   } else {
                     this.util.showAlert('Atenção', 'Aula lotada', 'Ok', true);
                   }
-                })
+                });
             } else {
               this.util.showAlert('Atenção', 'Horário inválido para reserva', 'Ok', true);
             }
@@ -96,8 +96,8 @@ export class ReservaPage {
 
   canReserva(item) {
     const startTime = item.startTime.setMinutes(item.startTime.getMinutes() - item.time);
-    console.log(item);
-    if (new Date() <= startTime && new Date() <= item.endTime)
+
+    if (new Date() >= startTime && new Date() <= item.endTime)
       return true;
 
     return false;

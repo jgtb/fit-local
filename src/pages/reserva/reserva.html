@@ -16,7 +16,7 @@
 
   <h2 [ngStyle]="layout.setColor('light')" class="calendar-title">{{ title }}</h2>
 
-  
+
   <calendar [ngStyle]="layout.setCalendarColor('calendar-reserva')"
     [eventSource]="eventSource"
     [calendarMode]="calendar.mode"
@@ -26,6 +26,6 @@
     (onTitleChanged)="onViewTitleChanged($event)"
     (onEventSelected)="onEventSelected($event)" step="30" startHour="6">
   </calendar>
-  
+
 
 </ion-content>

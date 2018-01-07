@@ -9,7 +9,7 @@ import { Util } from '../../util';
 export class ReservaProvider {
 
   constructor(
-    public http: Http, 
+    public http: Http,
     public util: Util) {}
 
   index(id_professor) {
@@ -35,7 +35,7 @@ export class ReservaProvider {
 
   checkIsLotado(data) {
     const checkLotadoURL = '/aula/reservas?id=';
-    const url = this.util.baseUrl + checkLotadoURL;
+    const url = this.util.baseUrl + checkLotadoURL + data.id;
 
     return this.http.post(url, data).map(res => res.json());
   }
