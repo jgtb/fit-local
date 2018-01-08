@@ -1,49 +1,53 @@
-import { Injectable } from '@angular/core'
-import { AlertController, LoadingController } from 'ionic-angular'
+import { Injectable } from '@angular/core';
+import { AlertController, LoadingController } from 'ionic-angular';
 
-import { Network } from  "@ionic-native/network"
+import { Network } from  "@ionic-native/network";
 
-import { Layout } from './layout'
+import { Layout } from './layout';
 
 @Injectable()
 export class Util {
 
-  //baseUrl = 'http://fit.nexur.com.br'
-  baseUrl = 'http://localhost/personal/web'
-  //baseUrl = 'http://homolog.nexur.com.br/web'
+  //baseUrl = 'http://fit.nexur.com.br';
+  //baseUrl = 'http://localhost/personal/web';
+  baseUrl = 'http://homolog.nexur.com.br/web';
 
-  logo: any
+  logo: any;
 
-  loading: any
+  loading: any;
 
-  constructor(public network: Network, public alertCtrl: AlertController, public loadingCtrl: LoadingController, public layout: Layout) {}
+  constructor(
+    public network: Network,
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController,
+    public layout: Layout) {}
 
   setStorage(key, value) {
-    localStorage.setItem(key, JSON.stringify(value))
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
   getStorage(key) {
-    return JSON.parse(localStorage.getItem(key))
+    return JSON.parse(localStorage.getItem(key));
   }
 
   setLogout() {
-    this.setStorage('isLogged', 'false')
+    this.setStorage('isLogged', 'false');
   }
 
   isLogged() {
     if (this.getStorage('isLogged') === 'true')
-      return true
+      return true;
 
-    return false
+    return false;
   }
 
   showLoading() {
-    this.loading = this.loadingCtrl.create()
-    this.loading.present()
+    this.loading = this.loadingCtrl.create();
+    this.loading.present();
   }
 
   endLoading() {
-    this.loading.dismiss()
+    this.loading.dismiss();
   }
 
   showAlert(title, subTitle, buttons, colorsType) {
@@ -51,9 +55,9 @@ export class Util {
       title: title,
       subTitle: subTitle,
       buttons: [buttons]
-    })
+    });
 
-    alert.present().then(data => this.layout.setAlertColor(colorsType))
+    alert.present().then(data => this.layout.setAlertColor(colorsType));
   }
 
   showConfirmationAlert(title, message, inputs, buttons, colorsType) {
@@ -62,30 +66,30 @@ export class Util {
       message: message,
       inputs: inputs,
       buttons: buttons,
-    })
+    });
 
-    alert.present().then(data => this.layout.setAlertColor(colorsType))
+    alert.present().then(data => this.layout.setAlertColor(colorsType));
   }
 
   checkNetwork() {
-    return this.network.type !== "none" ? true : false
+    return this.network.type !== "none" ? true : false;
   }
 
   toArray(data) {
-    let arr = []
+    let arr = [];
 
     for (let i = 0; i < data.rows.length; i++)
-      arr.push(data.rows.item(i))
+      arr.push(data.rows.item(i));
 
-    return arr
+    return arr;
   }
 
   unserialize(data) {
     const unserialize = data.split(';')
       .filter((elem, i) => !(i%2 === 0))
-      .map(elem => elem.split(':').reverse()[0].replace(/"/g, ""))
+      .map(elem => elem.split(':').reverse()[0].replace(/"/g, ""));
 
-    return unserialize
+    return unserialize;
   }
 
 }

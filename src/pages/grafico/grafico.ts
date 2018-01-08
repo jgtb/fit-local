@@ -36,7 +36,7 @@ export class GraficoPage {
 
   ionViewDidLoad() {
     this.select(this.data);
-    this.modal(this.data[0]);
+    this.chart(this.data[0]);
   }
 
   select(result) {
@@ -50,7 +50,7 @@ export class GraficoPage {
       arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index && elem.id_sessao === item.id_sessao);
   }
 
-  modal(item) {
+  chart(item) {
     let labels = [];
     let values = [];
     let title;
@@ -69,6 +69,7 @@ export class GraficoPage {
   			labels: labels,
   			datasets: [{
   				label: title,
+          backgroundColor: [this.layout.colors.light],
   				data: values
   			}]
   		}
