@@ -13,6 +13,8 @@ import { Layout } from '../../layout';
 })
 export class RankingPage {
 
+  tab: string = 'atual';
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public util: Util, public layout: Layout) {}
 
   ionViewDidEnter() {}

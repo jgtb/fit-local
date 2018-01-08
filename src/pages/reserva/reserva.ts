@@ -167,7 +167,7 @@ export class ReservaPage {
   }
 
   onViewTitleChanged(title) {
-    this.title = title;
+    this.title = title.split(',')[0];
   }
 
   doRefresh(event) {

@@ -2,10 +2,10 @@
   <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-buttons left>
       <div (click)="goToDashboard()">
-        <img class="logo" src="{{ util.baseUrl }}/logos/{{ util.getStorage('logo') }}.png" alt="">
+        <ion-icon class="page-icon-menu" name="menu" [ngStyle]="layout.setColor('light')"></ion-icon>
       </div>
     </ion-buttons>
-    <ion-title>Treinos</ion-title>
+    <ion-title>Calendário</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -16,15 +16,14 @@
 
   <h2 [ngStyle]="layout.setColor('light')" class="calendar-title">{{ title }}</h2>
 
-  <div class="calendar-treino">
-    <calendar [ngStyle]="layout.setCalendarColor('calendar-treino')"
-    [eventSource]="eventSource"
-    [calendarMode]="calendar.mode"
-    [currentDate]="calendar.currentDate"
-    [locale]="calendar.locale"
-    [noEventsLabel]="calendar.noEventsLabel"
-    (onTitleChanged)="onViewTitleChanged($event)"
-    (onEventSelected)="onEventSelected($event)" step="30">
-    </calendar>
-  </div>
+  <calendar [ngStyle]="layout.setCalendarColor('monthview')"
+  [eventSource]="eventSource"
+  [calendarMode]="calendar.mode"
+  [currentDate]="calendar.currentDate"
+  [locale]="calendar.locale"
+  [noEventsLabel]="calendar.noEventsLabel"
+  (onTitleChanged)="onViewTitleChanged($event)"
+  (onEventSelected)="onEventSelected($event)" step="30">
+  </calendar>
+
 </ion-content>
