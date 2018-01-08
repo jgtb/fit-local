@@ -36,7 +36,7 @@ export class GraficoPage {
 
   ionViewDidLoad() {
     this.select(this.data);
-    this.chart(this.data[0]);
+    this.graphic(this.data[0]);
   }
 
   select(result) {
@@ -50,7 +50,7 @@ export class GraficoPage {
       arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index && elem.id_sessao === item.id_sessao);
   }
 
-  chart(item) {
+  graphic(item) {
     let labels = [];
     let values = [];
     let title;
