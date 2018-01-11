@@ -11,7 +11,7 @@ export class Layout {
 
   colors = {
     primary:    '#004d40',
-    secondary:  '#222',
+    secondary:  '#2b2b2b',
     danger:     '#004d40',
     light:      '#ffffff',
     dark:       '#191919',
@@ -82,6 +82,19 @@ export class Layout {
       elem.style.color = light;
     });
 
+    const calendarMonthAllDay = document.querySelectorAll('.monthview-datetable td');
+
+    [].forEach.call(calendarMonthAllDay, function(elem, i) {
+        elem.style.color = light;
+        elem.style.backgroundColor = dark;
+    });
+
+    const calendarMonthDayWithEvent = document.querySelectorAll('.monthview-primary-with-event');
+    [].forEach.call(calendarMonthDayWithEvent, function(elem, i) {
+      elem.style.color = light;
+      elem.style.backgroundColor = secondary;
+    });
+
     const calendarTableColumns = document.querySelectorAll('.' + selector + '-datetable tbody tr td');
 
     [].forEach.call(calendarTableColumns, function(elem) {
@@ -101,17 +114,12 @@ export class Layout {
         element.setAttribute('style', 'background-color: ' + secondary + ' !important; color: ' + light + ';');
     });
 
-    Array.from(document.getElementsByClassName('no-events-label')).forEach(
-      function(element, index, array) {
-        element.setAttribute('style', 'color: ' + light + '');
-    });
+    const calendarMonthSelectedDay = document.querySelector('.activated.monthview-selected');
 
-    const calendarMonthSelectedDay = document.querySelectorAll('.monthview-selected');
-
-    [].forEach.call(calendarMonthSelectedDay, function(elem, i) {
-      elem.style.color = light;
-      elem.style.backgroundColor = primary;
-    });
+    if(calendarMonthSelectedDay){
+      calendarMonthSelectedDay.style.color = light;
+      calendarMonthSelectedDay.style.backgroundColor = primary;
+    }
 
     const calendarWeekViewHeader = document.querySelectorAll('.weekview-normal-event-container');
 

@@ -54,6 +54,7 @@ export class TreinoModalPage {
   doCreate(form) {
     if (this.util.checkNetwork()) {
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg, tempo: this.time, datahora: this.getDateTime()})
+      console.log(data);
       this.treinoProvider.create(data).subscribe(
         data => {
           const buttons = [
