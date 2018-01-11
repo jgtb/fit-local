@@ -117,8 +117,8 @@ export class Layout {
     const calendarMonthSelectedDay = document.querySelector('.activated.monthview-selected');
 
     if(calendarMonthSelectedDay){
-      calendarMonthSelectedDay.style.color = light;
-      calendarMonthSelectedDay.style.backgroundColor = primary;
+      //calendarMonthSelectedDay.style.color = light;
+      //calendarMonthSelectedDay.style.backgroundColor = primary;
     }
 
     const calendarWeekViewHeader = document.querySelectorAll('.weekview-normal-event-container');
