@@ -32,8 +32,7 @@ export class SeriePage {
   }
 
   select(result) {
-    this.data = result
-      .filter((elem, index, arr) => { return arr.map(obj => obj['id']).indexOf(elem['id']) === index });
+    this.data = result.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
   }
 
   create(item) {

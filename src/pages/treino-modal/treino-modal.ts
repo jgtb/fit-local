@@ -54,18 +54,9 @@ export class TreinoModalPage {
   doCreate(form) {
     if (this.util.checkNetwork()) {
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg, tempo: this.time, datahora: this.getDateTime()})
-      console.log(data);
       this.treinoProvider.create(data).subscribe(
         data => {
-          const buttons = [
-            {
-              text: 'Ok',
-              handler: data => {
-                this.navCtrl.push(TreinoPage);
-              }
-            }
-          ];
-          this.util.showConfirmationAlert('Atenção', 'Treino Registrado', '', buttons, true);
+          this.navCtrl.push(TreinoPage, {hasNewTreino: true});
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
