@@ -115,7 +115,7 @@ export class TreinoFormPage {
 
       this.serieProvider.updateCarga(data).subscribe(
         data => {
-          if (data) {
+          if (data._body) {
             this.getData();
             this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true);
           } else {
