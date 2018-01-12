@@ -47,7 +47,7 @@ export class TreinoPage {
 
   ionViewDidEnter() {
     if (this.hasNewTreino) {
-      this.util.showAlert('Atenção', 'Treino Registrado!', '', true);
+      this.util.showAlert('Atenção', 'Treino Registrado!', 'Ok', true);
       this.refreshData();
     }
   }

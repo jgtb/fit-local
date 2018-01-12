@@ -53,10 +53,14 @@ export class TreinoModalPage {
 
   doCreate(form) {
     if (this.util.checkNetwork()) {
-      const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg, tempo: this.time, datahora: this.getDateTime()})
+      const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg.toString(), tempo: this.time, datahora: this.getDateTime()})
       this.treinoProvider.create(data).subscribe(
         data => {
-          this.navCtrl.push(TreinoPage, {hasNewTreino: true});
+          if (data) {
+            this.navCtrl.push(TreinoPage, {hasNewTreino: true});
+          } else {
+            this.util.showAlert('Atenção', 'Não foi possível registrar o treino', 'Ok', true);
+          }
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
