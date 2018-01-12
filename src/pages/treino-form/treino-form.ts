@@ -115,8 +115,12 @@ export class TreinoFormPage {
 
       this.serieProvider.updateCarga(data).subscribe(
         data => {
-          this.getData();
-          this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true);
+          if (data._body) {
+            this.getData();
+            this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true);
+          } else {
+            this.util.showAlert('Atenção', 'Não foi possível alterar a carga', 'Ok', true);
+          }
         });
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
