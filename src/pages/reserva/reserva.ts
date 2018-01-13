@@ -53,6 +53,7 @@ export class ReservaPage {
       let time = obj.tempo;
       let start = obj.start;
       let end = obj.end;
+      let vagas = obj.vagas;
 
       let startTime = new Date(start.replace(/-/g,'/'));
       let endTime = new Date(end.replace(/-/g,'/'));
@@ -63,6 +64,7 @@ export class ReservaPage {
         startTime: startTime,
         endTime: endTime,
         time: time,
+        vagas: vagas,
         allDay: false
       }
     });
@@ -147,7 +149,7 @@ export class ReservaPage {
           item.id_aluno = this.util.getStorage('id_aluno');
           this.reservaProvider.delete(item).subscribe(
             data => {
-              this.util.showAlert('Atenção', 'Aula cancelada', 'Ok', true);
+              this.util.showAlert('Atenção', 'Reserva cancelada', 'Ok', true);
             });
           }
       },
