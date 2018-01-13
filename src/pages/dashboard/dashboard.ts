@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { Facebook } from '@ionic-native/facebook';
+
 import { LoginPage } from '../../pages/login/login';
 
 import { SeriePage } from '../../pages/serie/serie';
@@ -21,17 +23,22 @@ import { Layout } from '../../layout';
 })
 export class DashboardPage {
 
+  userImg: string;
+
   menu: Array<{title: string, component: any, icon: string, class: string}>;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public facebook: Facebook,
     public util: Util,
     public layout: Layout) {
     this.initMenu();
   }
 
-  ionViewDidEnter() {}
+  ionViewDidEnter() {
+    this.userImg = this.util.getStorage('facebookId');
+  }
 
   ionViewDidLoad() {}
 
@@ -52,6 +59,15 @@ export class DashboardPage {
 
   openPage(component) {
     this.navCtrl.push(component);
+  }
+
+  goToFacebook () {
+    this.facebook.login(['public_profile', 'email']).then((res) => {
+      this.facebook.api('/me?fields=name,email', []).then(res => {
+        this.util.setStorage('facebookId', res.id);
+        this.userImg = res.id;
+      })
+    });
   }
 
   logout() {

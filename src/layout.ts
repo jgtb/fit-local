@@ -115,7 +115,7 @@ export class Layout {
     });
 
     var calendarMonthSelectedDay = document.querySelectorAll('.activated.monthview-selected');
-    if(calendarMonthSelectedDay){
+    if(calendarMonthSelectedDay) {
       [].forEach.call(calendarMonthSelectedDay, function(elem, i) {
         elem.style.backgroundColor = primary;
       });
@@ -138,7 +138,7 @@ export class Layout {
     [].forEach.call(eventLabel, function(elem, i) {
       elem.innerHTML = elem.innerHTML.replace('all day','Planejado');
     });
-    
+
   }
 
   setSegmentButtonColor() {

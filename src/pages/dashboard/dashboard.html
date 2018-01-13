@@ -1,4 +1,8 @@
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
+	<div class="user" (click)="goToFacebook()">
+		<img class="user-img" src="{{ userImg }}" alt="">
+		<span class="user-ranking" [ngStyle]="layout.setBackgroundColor('primary')">60</span>
+	</div>
 	<div class="logo">
 		<img src="{{ util.baseUrl }}/logos/{{ util.getStorage('logo') }}.png" alt="">
 	</div>
@@ -17,6 +21,8 @@
 		</ion-grid>
 	</div>
 	<ion-fab top right>
-		<button ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('secondary')" (click)="logout()"><ion-icon [ngStyle]="layout.setColor('light')" name="md-log-out"></ion-icon></button>
+		<button ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('secondary')" (click)="logout()">
+			<ion-icon [ngStyle]="layout.setColor('light')" name="md-log-out"></ion-icon>
+		</button>
   </ion-fab>
 </ion-content>

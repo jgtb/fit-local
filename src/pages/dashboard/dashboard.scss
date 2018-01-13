@@ -3,6 +3,23 @@
 		.m-l-25p {
 			margin-left: 25%;
 		}
+		.user {
+			.user-img {
+				border-radius: 50%;
+				height: 60px;
+				margin-top: 15px;
+				margin-left: 15px;
+				position: fixed;
+			}
+			.user-ranking {
+				margin-top: 60px;
+				margin-left: 50px;
+				padding: 6px;
+				position: absolute;
+				border-radius: 50%;
+				color: #ffffff;
+			}
+		}
 		.logo {
 			text-align: center;
 			margin-top: 20px;
