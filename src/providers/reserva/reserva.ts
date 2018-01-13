@@ -22,8 +22,9 @@ export class ReservaProvider {
   create(data) {
     const createURL = '/aula/reservar';
     const url = this.util.baseUrl + createURL;
-
-    return this.http.post(url, data).map(res => res.json());
+    
+    console.log(data); 
+    return this.http.post(url, data);
   }
 
   checkIsReservado(data) {
@@ -44,7 +45,7 @@ export class ReservaProvider {
     const deleteURL = '/aula/cancelar';
     const url = this.util.baseUrl + deleteURL;
 
-    return this.http.post(url, data).map(res => res.json());
+    return this.http.post(url, data);
   }
 
 }

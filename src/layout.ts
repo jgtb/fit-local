@@ -114,12 +114,12 @@ export class Layout {
         element.setAttribute('style', 'background-color: ' + secondary + ' !important; color: ' + light + ';');
     });
 
-    // const calendarMonthSelectedDay = document.querySelector('.activated.monthview-selected');
-    //
-    // if(calendarMonthSelectedDay) {
-    //   calendarMonthSelectedDay.style.color = light;
-    //   calendarMonthSelectedDay.style.backgroundColor = primary;
-    // }
+    var calendarMonthSelectedDay = document.querySelectorAll('.activated.monthview-selected');
+    if(calendarMonthSelectedDay){
+      [].forEach.call(calendarMonthSelectedDay, function(elem, i) {
+        elem.style.backgroundColor = primary;
+      });
+    }
 
     const calendarWeekViewHeader = document.querySelectorAll('.weekview-normal-event-container');
 
@@ -132,6 +132,13 @@ export class Layout {
     [].forEach.call(calendarWeekViewTitle, function(elem, i) {
       elem.style.color = light;
     });
+
+    const eventLabel = document.querySelectorAll('.monthview-eventdetail-timecolumn');
+
+    [].forEach.call(eventLabel, function(elem, i) {
+      elem.innerHTML = elem.innerHTML.replace('all day','Planejado');
+    });
+    
   }
 
   setSegmentButtonColor() {

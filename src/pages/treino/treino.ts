@@ -63,7 +63,11 @@ export class TreinoPage {
       let start = obj.start;
       let end = obj.end;
       let borg = obj.borg;
-      let comentario = obj.comentario;
+      let comentario = obj.description;
+      let ser = obj.ser;
+      let rep = obj.rep;
+      let obs = obj.obs;
+      let tipo = obj.tipo;
 
       let startTime = new Date(start.replace(/-/g,'/'));
       let endTime = new Date(end.replace(/-/g,'/'));
@@ -74,7 +78,11 @@ export class TreinoPage {
         endTime: endTime,
         borg: borg,
         comentario: comentario,
-        allDay: false
+        tipo: tipo,
+        ser: ser,
+        rep: rep,
+        obs: obs,
+        allDay: obj.tipo==='p'?true:false //Se for planejado configura como allDay pra ter label diferente
       }
     });
   }
@@ -87,16 +95,27 @@ export class TreinoPage {
     const title = event.title;
     const subtitle = this.getSubtitle(event);
     const button = 'Ok';
-
     this.util.showAlert(title, subtitle, button , true);
   }
 
   getSubtitle(event) {
-    let time = 'Tempo: ' + this.time(event.startTime, event.endTime) + '<br />';
-    let img = event.borg !== '-1' ? '<img src="assets/img/treino-modal/' + event.borg + '.png"><br />' : '';
-    let comentario = event.comentario !== undefined ? event.comentario : '';
-
-    return time + img + comentario;
+    let html = '';
+    if(event.tipo==='h'){
+      if(!event.borg) event.borg = '-1';
+      html += '<p align="left">';
+      html += 'Tempo: ' + this.time(event.startTime, event.endTime) + '<br />';
+      html += event.comentario !== null ? 'Mensagem: ' +event.comentario + '<br />' : '';
+      html += '</p>';
+      html += event.borg !== '-1' ? '<img src="assets/img/treino-modal/' + event.borg + '.png"><br />' : '';
+    }
+    else{
+      html += '<p align="left">';
+      html += event.ser !== ''? 'Número de Séries: '+event.ser+'<br />':'';
+      html += event.rep !== ''? 'Número de Repetições: '+event.rep+'<br />':'';
+      html += event.obs !== ''? 'Observações: '+event.obs+'<br />':'';
+      html += '</p>';
+    }
+    return html;
   }
 
   time(startTime, endTime) {

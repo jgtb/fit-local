@@ -68,39 +68,49 @@ export class ReservaPage {
     });
   }
 
+  canReserve(item){
+    let start;
+    let end;
+    let now;
+    this.data.map(obj => {
+      if(item.id===obj.id){
+        start = new Date(obj.start.replace(/-/g,'/'));
+        end = new Date(obj.end.replace(/-/g,'/'));
+        now = new Date();
+        if(obj.tempo!==null) start.setMinutes(start.getMinutes()-parseInt(obj.tempo));
+      }
+    });
+    if(now>=start && now<=end)
+      return true;
+    return false;
+  }
+
   onEventSelected(item) {
     if (this.util.checkNetwork()) {
-      this.reservaProvider.checkIsReservado(item).subscribe(
-        data => {
-          if (!data) {
-            this.delete(item);
-          } else {
-            if (this.canReserva(item)) {
+      if(this.canReserve(item)){
+        this.reservaProvider.checkIsReservado(item).subscribe(
+          data => {
+            if (data['_body']) {
+              this.delete(item);
+            } else {
               this.reservaProvider.checkIsLotado(item).subscribe(
                 data => {
                   if (item.vagas !== data.length) {
+                    item.id_aula = item.id;
+                    item.id_aluno = this.util.getStorage('id_aluno');
                     this.create(item);
                   } else {
                     this.util.showAlert('Atenção', 'Aula lotada', 'Ok', true);
                   }
-                });
-            } else {
-              this.util.showAlert('Atenção', 'Horário inválido para reserva', 'Ok', true);
-            }
-          }
-        });
+              });
+            } 
+          });
+      }else {
+        this.util.showAlert('Atenção', 'Horário inválido para reserva', 'Ok', true);
+      }
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
-  }
-
-  canReserva(item) {
-    const startTime = item.startTime.setMinutes(item.startTime.getMinutes() - item.time);
-
-    if (new Date() >= startTime && new Date() <= item.endTime)
-      return true;
-
-    return false;
   }
 
   create(item) {
@@ -112,7 +122,8 @@ export class ReservaPage {
         handler: data => {
           this.reservaProvider.create(item).subscribe(
             data => {
-              this.doCreate(item);
+              if(data['_body'])
+                this.util.showAlert('Atenção', 'Aula reservada', 'Ok', true);
             }
           )
         }
@@ -125,36 +136,27 @@ export class ReservaPage {
     this.util.showConfirmationAlert(title, message, [], buttons, true);
   }
 
-  doCreate(item) {
-    this.reservaProvider.create(item).subscribe(
-      data => {
-        this.util.showAlert('Atenção', 'Aula reservada', 'Ok', true);
-      });
-  }
-
   delete(item) {
     const title = item.title;
-    const message = 'Deseja cancelar a reserva ?';
+    const message = 'Deseja cancelar a reserva?';
     const buttons = [
       {
-        text: 'Confirmar',
+        text: 'Sim',
         handler: data => {
-          this.doDelete(item);
-        }
+          item.id_aula = item.id;
+          item.id_aluno = this.util.getStorage('id_aluno');
+          this.reservaProvider.delete(item).subscribe(
+            data => {
+              this.util.showAlert('Atenção', 'Aula cancelada', 'Ok', true);
+            });
+          }
       },
       {
-        text: 'Cancelar',
+        text: 'Não',
         role: 'cancel',
       },
     ]
     this.util.showConfirmationAlert(title, message, [], buttons, true);
-  }
-
-  doDelete(item) {
-    this.reservaProvider.delete(item).subscribe(
-      data => {
-        this.util.showAlert('Atenção', 'Aula cancelada', 'Ok', true);
-      });
   }
 
   getMessage(item) {
