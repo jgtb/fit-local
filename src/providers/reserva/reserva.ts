@@ -22,8 +22,7 @@ export class ReservaProvider {
   create(data) {
     const createURL = '/aula/reservar';
     const url = this.util.baseUrl + createURL;
-    
-    console.log(data); 
+
     return this.http.post(url, data);
   }
 

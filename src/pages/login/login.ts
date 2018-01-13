@@ -8,6 +8,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { SerieProvider } from '../../providers/serie/serie';
 import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
+import { AvaliacaoFormProvider } from '../../providers/avaliacao-form/avaliacao-form';
 import { GraficoProvider } from '../../providers/grafico/grafico';
 import { TreinoProvider } from '../../providers/treino/treino';
 import { ReservaProvider } from '../../providers/reserva/reserva';
@@ -33,6 +34,7 @@ export class LoginPage {
     public authProvider: AuthProvider,
     public serieProvider: SerieProvider,
     public avaliacaoProvider: AvaliacaoProvider,
+    public avaliacaoFormProvider: AvaliacaoFormProvider,
     public informacaoProvider: InformacaoProvider,
     public treinoProvider: TreinoProvider,
     public reservaProvider: ReservaProvider,
@@ -82,35 +84,39 @@ export class LoginPage {
     this.util.setStorage('id_professor', id_professor);
     this.util.setStorage('facebookId', facebookId);
 
-    //this.playerId(id_usuario);
+    this.playerId(id_usuario);
     this.serieProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataSerie', data);
-    })
+    });
     this.avaliacaoProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataAvaliacao', data);
-    })
+    });
+    this.avaliacaoFormProvider.index().subscribe(
+      data => {
+        this.util.setStorage('dataAvaliacaoForm', data);
+    });
     this.graficoProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataGrafico', data);
-    })
+    });
     this.treinoProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataTreino', data);
-    })
+    });
     this.reservaProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataReserva', data);
-    })
+    });
     this.informacaoProvider.indexInformacao(id_professor).subscribe(
       data => {
         this.util.setStorage('dataInformacao', data);
-    })
+    });
     this.informacaoProvider.indexMensagem(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataMensagem', data);
-    })
+    });
     this.navCtrl.push(DashboardPage);
   }
 

@@ -53,8 +53,6 @@ export class TreinoModalPage {
 
   doCreate(form) {
     if (this.util.checkNetwork()) {
-      console.log(this.time);
-      console.log(this.getDateTime());
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg.toString(), tempo: this.time, datahora: this.getDateTime()})
       this.treinoProvider.create(data).subscribe(
         data => {
@@ -72,8 +70,8 @@ export class TreinoModalPage {
   getDateTime() {
     const date = new Date();
 
-    date.setTime( date.getTime() - date.getTimezoneOffset()*60*1000 );
-    
+    date.setTime(date.getTime() - date.getTimezoneOffset()*60*1000);
+
     const datetime = date.toJSON().slice(0, 10) + ' ' + date.toJSON().slice(11, 19);
 
     return datetime;

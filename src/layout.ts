@@ -136,7 +136,7 @@ export class Layout {
     const eventLabel = document.querySelectorAll('.monthview-eventdetail-timecolumn');
 
     [].forEach.call(eventLabel, function(elem, i) {
-      elem.innerHTML = elem.innerHTML.replace('all day','Planejado');
+      elem.innerHTML = elem.innerHTML.replace('all day', 'Planejado');
     });
 
   }

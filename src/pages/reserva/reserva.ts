@@ -48,15 +48,15 @@ export class ReservaPage {
   loadReservas() {
     return this.data.map(obj => {
 
-      let id = obj.id;
-      let title = obj.title;
-      let time = obj.tempo;
-      let start = obj.start;
-      let end = obj.end;
-      let vagas = obj.vagas;
+      let id = obj.id,
+          title = obj.title,
+          time = obj.tempo,
+          start = obj.start,
+          end = obj.end,
+          vagas = obj.vagas;
 
-      let startTime = new Date(start.replace(/-/g,'/'));
-      let endTime = new Date(end.replace(/-/g,'/'));
+      let startTime = new Date(start.replace(/-/g,'/')),
+          endTime = new Date(end.replace(/-/g,'/'));
 
       return {
         id: id,
@@ -70,26 +70,31 @@ export class ReservaPage {
     });
   }
 
-  canReserve(item){
-    let start;
-    let end;
-    let now;
+  canReserva(item) {
+    let start,
+        end,
+        now;
+
     this.data.map(obj => {
-      if(item.id===obj.id){
+      if (item.id === obj.id) {
         start = new Date(obj.start.replace(/-/g,'/'));
         end = new Date(obj.end.replace(/-/g,'/'));
         now = new Date();
-        if(obj.tempo!==null) start.setMinutes(start.getMinutes()-parseInt(obj.tempo));
+
+        if (obj.tempo !== null)
+          start.setMinutes(start.getMinutes() - parseInt(obj.tempo));
       }
     });
-    if(now>=start && now<=end)
+
+    if(now >= start && now <= end)
       return true;
+
     return false;
   }
 
   onEventSelected(item) {
     if (this.util.checkNetwork()) {
-      if(this.canReserve(item)){
+      if(this.canReserva(item)) {
         this.reservaProvider.checkIsReservado(item).subscribe(
           data => {
             if (data['_body']) {
@@ -105,9 +110,9 @@ export class ReservaPage {
                     this.util.showAlert('Atenção', 'Aula lotada', 'Ok', true);
                   }
               });
-            } 
+            }
           });
-      }else {
+      } else {
         this.util.showAlert('Atenção', 'Horário inválido para reserva', 'Ok', true);
       }
     } else {
@@ -124,7 +129,7 @@ export class ReservaPage {
         handler: data => {
           this.reservaProvider.create(item).subscribe(
             data => {
-              if(data['_body'])
+              if (data['_body'])
                 this.util.showAlert('Atenção', 'Aula reservada', 'Ok', true);
             }
           )

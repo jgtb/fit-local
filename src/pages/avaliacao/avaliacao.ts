@@ -35,6 +35,10 @@ export class AvaliacaoPage {
     this.data = result.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
   }
 
+  create() {
+    
+  }
+
   view(item) {
     this.navCtrl.push(AvaliacaoViewPage, { item: item });
   }

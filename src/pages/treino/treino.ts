@@ -57,6 +57,10 @@ export class TreinoPage {
     this.eventSource = this.loadTreinos();
   }
 
+  create() {
+    
+  }
+
   loadTreinos() {
     return this.data.map(obj => {
       let title = obj.title;
@@ -82,7 +86,7 @@ export class TreinoPage {
         ser: ser,
         rep: rep,
         obs: obs,
-        allDay: obj.tipo==='p'?true:false //Se for planejado configura como allDay pra ter label diferente
+        allDay: obj.tipo === 'p' ? true : false //Se for planejado configura como allDay pra ter label diferente
       }
     });
   }
@@ -100,21 +104,22 @@ export class TreinoPage {
 
   getSubtitle(event) {
     let html = '';
-    if(event.tipo==='h'){
-      if(!event.borg) event.borg = '-1';
+
+    if (event.tipo === 'h') {
+      if (!event.borg) event.borg = '-1';
       html += '<p align="left">';
       html += 'Tempo: ' + this.time(event.startTime, event.endTime) + '<br />';
-      html += event.comentario !== null ? 'Mensagem: ' +event.comentario + '<br />' : '';
+      html += event.comentario !== null ? 'Mensagem: ' + event.comentario + '<br />' : '';
       html += '</p>';
       html += event.borg !== '-1' ? '<img src="assets/img/treino-modal/' + event.borg + '.png"><br />' : '';
-    }
-    else{
+    } else {
       html += '<p align="left">';
-      html += event.ser !== ''? 'Número de Séries: '+event.ser+'<br />':'';
-      html += event.rep !== ''? 'Número de Repetições: '+event.rep+'<br />':'';
-      html += event.obs !== ''? 'Observações: '+event.obs+'<br />':'';
+      html += event.ser !== '' ? 'Número de Séries: ' + event.ser + '<br />':'';
+      html += event.rep !== '' ? 'Número de Repetições: ' + event.rep + '<br />':'';
+      html += event.obs !== '' ? 'Observações: ' + event.obs + '<br />':'';
       html += '</p>';
     }
+
     return html;
   }
 
