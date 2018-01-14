@@ -6,6 +6,11 @@
       </div>
     </ion-buttons>
     <ion-title>Avaliações</ion-title>
+    <ion-buttons right>
+      <div (click)="create()">
+        <ion-icon class="avaliacao-add" name="add" [ngStyle]="layout.setColor('light')"></ion-icon>
+      </div>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -13,18 +18,10 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
   <ion-list>
     <ion-item *ngFor="let item of data; let i = index;" (click)="view(item)" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
       <span>{{ item?.descricao }}</span>
       <span item-end>{{ item?.data }}</span>
     </ion-item>
   </ion-list>
-
-  <ion-fab top right>
-		<button class="avaliacao-add" ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('dark')" (click)="create()">
-			<ion-icon [ngStyle]="layout.setColor('light')" name="add"></ion-icon>
-		</button>
-  </ion-fab>
-
 </ion-content>

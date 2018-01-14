@@ -3,6 +3,9 @@
 		.m-l-25p {
 			margin-left: 25%;
 		}
+		.fab-ios {
+			margin-top: 20px;
+		}
 		.user {
 			.user-img {
 				border-radius: 50%;
@@ -15,7 +18,7 @@
 				margin-top: 60px;
 				margin-left: 50px;
 				padding: 6px;
-				position: absolute;
+				position: fixed;
 				border-radius: 50%;
 				color: #ffffff;
 			}
