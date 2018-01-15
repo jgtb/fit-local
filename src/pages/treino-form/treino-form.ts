@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { IonicPage, Platform, NavController, NavParams, ModalController, Navbar} from 'ionic-angular';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { IonicImageLoader } from 'ionic-image-loader';
 
 import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer';
 import { TreinoModalPage } from '../../pages/treino-modal/treino-modal';

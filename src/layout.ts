@@ -212,6 +212,12 @@ export class Layout {
       elem.style.borderColor = light;
     });
 
+    const selectText = document.querySelectorAll('.select-text');
+
+    [].forEach.call(selectText, function(elem, i) {
+      elem.style.color = light;
+    });
+
   }
 
 }

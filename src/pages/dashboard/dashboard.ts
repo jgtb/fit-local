@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Facebook } from '@ionic-native/facebook';
+import { IonicImageLoader } from 'ionic-image-loader';
 
 import { LoginPage } from '../../pages/login/login';
 
@@ -64,8 +65,8 @@ export class DashboardPage {
   goToFacebook () {
     this.facebook.login(['public_profile', 'email']).then((res) => {
       this.facebook.api('/me?fields=name,email', []).then(res => {
-        this.util.setStorage('facebookId', res.id);
-        this.userImg = res.id;
+        this.userImg = 'https://graph.facebook.com/' + res.id + '/picture';
+        this.util.setStorage('facebookId', this.userImg);
       })
     });
   }

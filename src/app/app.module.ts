@@ -33,7 +33,7 @@ import { Layout } from '../layout';
     ProvidersModule,
     NgCalendarModule,
     IonicImageLoader.forRoot(),
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {backButtonText: ''})
   ],
   bootstrap: [IonicApp],
   entryComponents: [
