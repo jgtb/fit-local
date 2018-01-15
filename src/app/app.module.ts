@@ -7,6 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { OneSignal } from '@ionic-native/onesignal';
+import { Facebook } from '@ionic-native/facebook';
 
 import { IonicImageLoader } from 'ionic-image-loader';
 import { NgCalendarModule  } from 'ionic2-calendar';
@@ -32,7 +33,7 @@ import { Layout } from '../layout';
     ProvidersModule,
     NgCalendarModule,
     IonicImageLoader.forRoot(),
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {backButtonText: ''})
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -44,6 +45,7 @@ import { Layout } from '../layout';
     Network,
     OneSignal,
     InAppBrowser,
+    Facebook,
     Util,
     Layout,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

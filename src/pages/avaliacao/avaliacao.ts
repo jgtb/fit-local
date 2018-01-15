@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { AvaliacaoViewPage } from '../../pages/avaliacao-view/avaliacao-view';
+import { AvaliacaoFormPage } from '../../pages/avaliacao-form/avaliacao-form';
 
 import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
 
@@ -33,6 +34,10 @@ export class AvaliacaoPage {
 
   select(result) {
     this.data = result.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
+  }
+
+  create() {
+    this.navCtrl.push(AvaliacaoFormPage);
   }
 
   view(item) {

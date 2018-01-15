@@ -22,6 +22,7 @@
         "@angular/platform-browser-dynamic": "4.4.3",
         "@ionic-native/base64": "^4.3.1",
         "@ionic-native/core": "4.3.0",
+        "@ionic-native/facebook": "^4.5.2",
         "@ionic-native/file": "^4.5.2",
         "@ionic-native/file-transfer": "^4.5.2",
         "@ionic-native/in-app-browser": "^4.3.2",
@@ -34,10 +35,11 @@
         "angular-svg-round-progressbar": "^1.1.1",
         "chart.js": "^2.7.0",
         "com-badrit-base64": "^0.2.0",
-        "cordova-android": "^6.3.0",
+        "cordova-android": "^5.0.0",
         "cordova-browser": "^4.1.0",
-        "cordova-ios": "^4.5.4",
+        "cordova-ios": "4.5.4",
         "cordova-plugin-device": "^1.1.7",
+        "cordova-plugin-facebook4": "^1.9.1",
         "cordova-plugin-file": "^5.0.0",
         "cordova-plugin-file-transfer": "^1.7.0",
         "cordova-plugin-inappbrowser": "^1.7.2",
@@ -78,12 +80,16 @@
             "cordova-plugin-inappbrowser": {},
             "onesignal-cordova-plugin": {},
             "cordova-plugin-file": {},
-            "cordova-plugin-file-transfer": {}
+            "cordova-plugin-file-transfer": {},
+            "cordova-plugin-facebook4": {
+                "APP_ID": "173730636716355",
+                "APP_NAME": "fit app"
+            }
         },
         "platforms": [
-            "android",
             "browser",
-            "ios"
+            "ios",
+            "android"
         ]
     }
 }

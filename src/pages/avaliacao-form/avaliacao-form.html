@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
+    <ion-title>Nova Avaliação</ion-title>
+    <ion-buttons right>
+      <div (click)="doCreate(form)">
+        <ion-icon class="avaliacao-form-add" name="create" [ngStyle]="layout.setColor('light')"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content [ngStyle]="layout.setBackgroundColor('dark')">
+
+  <form [formGroup]="form" (ngSubmit)="doCreate(form.value)">
+
+    <ion-list>
+      <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
+        <ion-label [ngStyle]="layout.setColor('light')">Avaliação</ion-label>
+        <ion-select [ngStyle]="layout.setAlertColor(true)" formControlName="id_avaliacao" (ionChange)="selectPerguntas()">
+          <ion-option value="{{ item.id_avaliacao }}" *ngFor="let item of dataAvaliacao">{{ item.avaliacao }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
+        <ion-label [ngStyle]="layout.setColor('light')">Descrição</ion-label>
+        <ion-input type="text" formControlName="descricao" text-right [ngStyle]="layout.setColor('light')"></ion-input>
+      </ion-item>
+      <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
+        <ion-label [ngStyle]="layout.setColor('light')">Prox Avaliação</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="data" [ngStyle]="layout.setColor('light')"></ion-datetime>
+      </ion-item>
+    </ion-list>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 *ngFor="let item of dataPergunta; let i = index;">
+          <ion-card [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+            <ion-card-header [ngStyle]="layout.setColor('light')">{{ item.pergunta }}</ion-card-header>
+            <ion-card-content>
+              <div *ngIf="isTipoPergunta(item, 1)">
+                <ion-list radio-group>
+                  <ion-item *ngFor="let radio of selectOpcoes(item); let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+                    <ion-label>{{ radio?.opcao }}</ion-label>
+                    <ion-radio value="{{ radio?.id_opcao }}"></ion-radio>
+                  </ion-item>
+                </ion-list>
+              </div>
+              <div *ngIf="isTipoPergunta(item, 5)">
+                <ion-item [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+                  <ion-input placeholder="Descrição..." [ngStyle]="layout.setColor('light')"></ion-input>
+                </ion-item>
+              </div>
+              <div *ngIf="isTipoPergunta(item, 3)">
+                <ion-item *ngFor="let checkbox of selectOpcoes(item); let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+                  <ion-label item-start>{{ checkbox?.opcao }}</ion-label>
+                  <ion-checkbox item-end></ion-checkbox>
+                </ion-item>
+              </div>
+              <div *ngIf="isTipoPergunta(item, 4)">
+                <ion-item [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+                  <input id="file-input" type="file" (change)="fileUpload($event)" #fileInp>
+                  <button ion-button (click)="upload()" [ngStyle]="layout.setBackgroundColor('primary')">
+                    <span [ngStyle]="layout.setColor('light')">Upload</span>
+                  </button>
+                </ion-item>
+              </div>
+              <div *ngIf="isTipoPergunta(item, 2)">
+                <ion-item [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+                  <ion-textarea placeholder="Descrição..." [ngStyle]="layout.setColor('light')"></ion-textarea>
+                </ion-item>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>
+
+</ion-content>

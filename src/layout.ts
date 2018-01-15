@@ -114,10 +114,8 @@ export class Layout {
         element.setAttribute('style', 'background-color: ' + secondary + ' !important; color: ' + light + ';');
     });
 
-
     var calendarMonthSelectedDay = document.querySelectorAll('.monthview-selected');
-
-    if(calendarMonthSelectedDay){
+    if(calendarMonthSelectedDay) {
       [].forEach.call(calendarMonthSelectedDay, function(elem, i) {
         elem.style.backgroundColor = primary;
       });
@@ -138,9 +136,9 @@ export class Layout {
     const eventLabel = document.querySelectorAll('.monthview-eventdetail-timecolumn');
 
     [].forEach.call(eventLabel, function(elem, i) {
-      elem.innerHTML = elem.innerHTML.replace('all day','Planejado');
+      elem.innerHTML = elem.innerHTML.replace('all day', 'Planejado');
     });
-    
+
   }
 
   setSegmentButtonColor() {
@@ -212,6 +210,12 @@ export class Layout {
     [].forEach.call(alertRadioInner, function(elem, i) {
       elem.style.color = light;
       elem.style.borderColor = light;
+    });
+
+    const selectText = document.querySelectorAll('.select-text');
+
+    [].forEach.call(selectText, function(elem, i) {
+      elem.style.color = light;
     });
 
   }
