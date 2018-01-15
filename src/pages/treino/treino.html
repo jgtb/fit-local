@@ -6,14 +6,17 @@
       </div>
     </ion-buttons>
     <ion-title>Calendário</ion-title>
-  </ion-navbar>
+    <ion-fab top right>
+      <button ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('primary')" style="top:-10px;" (click)="add()"><ion-icon [ngStyle]="layout.setColor('light')" name="md-add"></ion-icon></button>
+    </ion-fab>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding [ngStyle]="layout.setBackgroundColor('dark')">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
+  
   <h2 [ngStyle]="layout.setColor('light')" class="calendar-title">{{ title }}</h2>
 
   <calendar [ngStyle]="layout.setCalendarColor('monthview')"

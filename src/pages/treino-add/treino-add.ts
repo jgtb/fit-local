@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { TreinoPage } from '../../pages/treino/treino';
 
+import { SerieProvider } from '../../providers/serie/serie';
 import { TreinoProvider } from '../../providers/treino/treino';
 
 import { Util } from '../../util';
@@ -12,15 +13,12 @@ import { Layout } from '../../layout';
 
 @IonicPage()
 @Component({
-  selector: 'page-treino-modal',
-  templateUrl: 'treino-modal.html',
+  selector: 'page-treino-add',
+  templateUrl: 'treino-add.html',
 })
-export class TreinoModalPage {
+export class TreinoAddPage {
 
   form: FormGroup;
-
-  id_serie: any;
-  time: any;
 
   items: any = [
     {img: 0},
@@ -31,17 +29,22 @@ export class TreinoModalPage {
     {img: 5}
   ];
 
+  series: any = [];
+
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
+    public serieProvider: SerieProvider,
     public treinoProvider: TreinoProvider,
     public util: Util,
     public layout: Layout) {
-    this.id_serie = this.navParams.get('id_serie');
-    this.time = this.navParams.get('time');
-    this.initForm();
+      
+      this.series = this.util.getStorage('dataSerie');
+      this.series = this.series.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
+      console.log(this.series);
+      this.initForm();
   }
 
   initForm() {
@@ -53,7 +56,7 @@ export class TreinoModalPage {
 
   doCreate(form) {
     if (this.util.checkNetwork()) {
-      const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg.toString(), tempo: this.time, datahora: this.getDateTime()})
+      const data = JSON.stringify({ mensagem: form.comentario, borg: form.borg.toString(), datahora: this.getDateTime()})
       this.treinoProvider.create(data).subscribe(
         data => {
           if (data['_body']) {

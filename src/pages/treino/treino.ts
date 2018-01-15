@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 
 import { TreinoProvider } from '../../providers/treino/treino';
+
+import { TreinoAddPage } from '../../pages/treino-add/treino-add';
 
 import { Util } from '../../util';
 import { Layout } from '../../layout';
@@ -35,6 +37,7 @@ export class TreinoPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public treinoProvider: TreinoProvider,
+    public modalCtrl: ModalController,
     public util: Util,
     public layout: Layout) {
       this.data = this.util.getStorage('dataTreino');
@@ -148,6 +151,12 @@ export class TreinoPage {
 
   goToDashboard() {
     this.navCtrl.push(DashboardPage);
+  }
+
+  add(){
+    const modal = this.modalCtrl.create(TreinoAddPage, {});
+    modal.present();
+    
   }
 
 }

@@ -26,14 +26,14 @@
 
   <div *ngIf="_toggle">
     <ion-list>
-      <ion-item *ngFor="let item of dataExercicios; let i = index;" [ngStyle]="layout.setStripedColor(i, 'darklight', 'dark')">
+      <ion-item *ngFor="let item of dataExercicios; let i = index;" [ngStyle]="layout.setStripedColor(i, 'darklight', 'dark')" [ngClass]="{'done' : isDone(i)}">
         <ion-grid>
           <ion-row>
             <h2 [ngStyle]="layout.setColor('light')">{{ item.descricao_ex }}</h2>
           </ion-row>
           <ion-row>
             <ion-col col-12>
-              <img-loader height="auto !important" width="100%" [ngClass]="{'done' : isDone(i)}" src="{{ util.baseUrl }}/exercicios/{{ item.id_exercicio }}-0.gif" useImg></img-loader>
+              <img-loader height="auto !important" width="100%"  src="{{ util.baseUrl }}/exercicios/{{ item.id_exercicio }}-0.gif" useImg></img-loader>
             </ion-col>
           </ion-row>
           <ion-row>

@@ -11,6 +11,7 @@ import { TreinoPage } from '../pages/treino/treino'
 import { TreinoFormPage } from '../pages/treino-form/treino-form'
 import { TreinoTimerPage } from '../pages/treino-timer/treino-timer'
 import { TreinoModalPage } from '../pages/treino-modal/treino-modal'
+import { TreinoAddPage } from '../pages/treino-add/treino-add'
 import { AvaliacaoPage } from '../pages/avaliacao/avaliacao'
 import { AvaliacaoViewPage } from '../pages/avaliacao-view/avaliacao-view'
 import { GraficoPage } from '../pages/grafico/grafico'
@@ -36,6 +37,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar'
 		TreinoFormPage,
 		TreinoTimerPage,
 		TreinoModalPage,
+		TreinoAddPage,
 		AvaliacaoPage,
 		AvaliacaoViewPage,
 		GraficoPage,
@@ -51,6 +53,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar'
 		TreinoFormPage,
 		TreinoTimerPage,
 		TreinoModalPage,
+		TreinoAddPage,
 		AvaliacaoPage,
 		AvaliacaoViewPage,
 		GraficoPage,

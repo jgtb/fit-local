@@ -81,6 +81,7 @@ export class LoginPage {
     this.util.setStorage('id_professor', id_professor);
 
     //this.playerId(id_usuario);
+
     this.serieProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataSerie', data);

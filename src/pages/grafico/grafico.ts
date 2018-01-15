@@ -73,7 +73,7 @@ export class GraficoPage {
   				data: values
   			}]
   		}
-  	});
+    });
   }
 
   doRefresh(event) {

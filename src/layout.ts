@@ -114,7 +114,9 @@ export class Layout {
         element.setAttribute('style', 'background-color: ' + secondary + ' !important; color: ' + light + ';');
     });
 
-    var calendarMonthSelectedDay = document.querySelectorAll('.activated.monthview-selected');
+
+    var calendarMonthSelectedDay = document.querySelectorAll('.monthview-selected');
+
     if(calendarMonthSelectedDay){
       [].forEach.call(calendarMonthSelectedDay, function(elem, i) {
         elem.style.backgroundColor = primary;
