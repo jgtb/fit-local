@@ -20,14 +20,6 @@
           <ion-option value="{{ item.id_avaliacao }}" *ngFor="let item of dataAvaliacao">{{ item.avaliacao }}</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
-        <ion-label [ngStyle]="layout.setColor('light')">Descrição</ion-label>
-        <ion-input type="text" formControlName="descricao" text-right [ngStyle]="layout.setColor('light')"></ion-input>
-      </ion-item>
-      <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
-        <ion-label [ngStyle]="layout.setColor('light')">Prox Avaliação</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" formControlName="data" [ngStyle]="layout.setColor('light')"></ion-datetime>
-      </ion-item>
     </ion-list>
 
     <ion-grid>
@@ -44,9 +36,9 @@
                   </ion-item>
                 </ion-list>
               </div>
-              <div *ngIf="isTipoPergunta(item, 5)">
+              <div *ngIf="isTipoPergunta(item, 2)">
                 <ion-item [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
-                  <ion-input placeholder="Descrição..." [ngStyle]="layout.setColor('light')"></ion-input>
+                  <ion-textarea placeholder="Descrição..." [ngStyle]="layout.setColor('light')"></ion-textarea>
                 </ion-item>
               </div>
               <div *ngIf="isTipoPergunta(item, 3)">
@@ -63,9 +55,9 @@
                   </button>
                 </ion-item>
               </div>
-              <div *ngIf="isTipoPergunta(item, 2)">
+              <div *ngIf="isTipoPergunta(item, 5)">
                 <ion-item [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
-                  <ion-textarea placeholder="Descrição..." [ngStyle]="layout.setColor('light')"></ion-textarea>
+                  <ion-input placeholder="Descrição..." [ngStyle]="layout.setColor('light')"></ion-input>
                 </ion-item>
               </div>
             </ion-card-content>
