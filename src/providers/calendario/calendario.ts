@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import { Util } from '../../util';
 
 @Injectable()
-export class TreinoProvider {
+export class CalendarioProvider {
 
   constructor(
     public http: Http,

@@ -1,11 +1,15 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, Platform, NavController, NavParams, ModalController, Navbar} from 'ionic-angular';
 
-import { DashboardPage } from '../../pages/dashboard/dashboard';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { IonicImageLoader } from 'ionic-image-loader';
 
-import { TreinoProvider } from '../../providers/treino/treino';
+import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer';
+import { TreinoModalPage } from '../../pages/treino-modal/treino-modal';
 
-import { TreinoAddPage } from '../../pages/treino-add/treino-add';
+import { SerieProvider } from '../../providers/serie/serie';
+
+import { Observable } from 'rxjs/Rx';
 
 import { Util } from '../../util';
 import { Layout } from '../../layout';
@@ -15,153 +19,178 @@ import { Layout } from '../../layout';
   selector: 'page-treino',
   templateUrl: 'treino.html',
 })
+
 export class TreinoPage {
 
+  @ViewChild(Navbar) navBar: Navbar;
+
   data: any = [];
+  dataExercicios: any = [];
 
-  _toggle: any = 1;
+  _done: any = [];
+  _toggle: boolean = true;
 
-  eventSource: any;
-  title: any;
-
-  calendar = {
-    mode: 'month',
-    locale: 'pt-BR',
-    noEventsLabel: 'Nenhum Treino',
-    currentDate: new Date()
-  };
-
-  hasNewTreino: boolean = false;
+  subscription: any;
+  _timer = 0;
+  running = false;
 
   constructor(
+    platform: Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public treinoProvider: TreinoProvider,
+    public serieProvider: SerieProvider,
+    public iab: InAppBrowser,
     public modalCtrl: ModalController,
     public util: Util,
     public layout: Layout) {
-      this.data = this.util.getStorage('dataTreino');
-      this.hasNewTreino = this.navParams.get('hasNewTreino');
+      this.data = this.navParams.get('item');
     }
 
   ionViewDidLoad() {
-    this.select(this.data);
+    const data = this.util.getStorage('dataSerie');
+    this.select(data);
+    this.setBackButtonAction();
   }
 
-  ionViewDidEnter() {
-    if (this.hasNewTreino) {
-      this.util.showAlert('Atenção', 'Treino Registrado!', 'Ok', true);
-      this.refreshData();
+  setBackButtonAction(){
+    this.navBar.backButtonClick = () => {
+      if (this._timer > 0) {
+        const buttons = [{
+          text: 'Confirmar',
+          handler: () => {
+            this.navCtrl.pop();
+          },
+        }, {
+          text: 'Cancelar',
+          role: 'cancel'
+        }];
+        this.util.showConfirmationAlert('Abandonar treino?', '', '', buttons, true);
+      } else {
+        this.navCtrl.pop();
+      }
     }
   }
 
   select(result) {
-    this.data = result;
-    this.eventSource = this.loadTreinos();
+    this.dataExercicios = result.filter((elem, index, arr) => { return elem.id === this.data.id });
+    this.data = this.dataExercicios[0];
   }
 
   create() {
-    
+    const modal = this.modalCtrl.create(TreinoModalPage, {id_serie: this.data.id_serie, time: this.time()});
+    modal.present();
   }
 
-  loadTreinos() {
-    return this.data.map(obj => {
-      let title = obj.title;
-      let start = obj.start;
-      let end = obj.end;
-      let borg = obj.borg;
-      let comentario = obj.description;
-      let ser = obj.ser;
-      let rep = obj.rep;
-      let obs = obj.obs;
-      let tipo = obj.tipo;
-
-      let startTime = new Date(start.replace(/-/g,'/'));
-      let endTime = new Date(end.replace(/-/g,'/'));
-
-      return {
-        title: title,
-        startTime: startTime,
-        endTime: endTime,
-        borg: borg,
-        comentario: comentario,
-        tipo: tipo,
-        ser: ser,
-        rep: rep,
-        obs: obs,
-        allDay: obj.tipo === 'p' ? true : false //Se for planejado configura como allDay pra ter label diferente
+  update(item) {
+    const title = item.descricao_ex;
+    const message = 'Alterar Carga';
+    const inputs = [
+      {
+        name: 'carga',
+        value: item.carga,
+        placeholder: 'Carga'
       }
+    ];
+    const buttons = [
+      {
+        text: 'Confirmar',
+        handler: dataCarga => {
+          this.doUpdate(item, dataCarga)
+        }
+      },
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+      },
+    ];
+    this.util.showConfirmationAlert(title, message, inputs, buttons, true);
+  }
+
+  doUpdate(item, dataCarga) {
+    if (this.util.checkNetwork()) {
+      const data = JSON.stringify({id: item.id_exercicio_serie, carga: dataCarga.carga });
+
+      this.serieProvider.updateCarga(data).subscribe(
+        data => {
+          if (data['_body']) {
+            this.getData();
+            this.util.showAlert('Atenção', 'Carga Alterada', 'Ok', true);
+          } else {
+            this.util.showAlert('Atenção', 'Não foi possível alterar a carga', 'Ok', true);
+          }
+        });
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+    }
+  }
+
+  start() {
+    this.running = true;
+    this.subscription = Observable.interval(1000).subscribe(data => {
+      this._timer++;
     });
   }
 
-  onViewTitleChanged(title) {
-    this.title = title;
-  }
-
-  onEventSelected(event) {
-    const title = event.title;
-    const subtitle = this.getSubtitle(event);
-    const button = 'Ok';
-    this.util.showAlert(title, subtitle, button , true);
-  }
-
-  getSubtitle(event) {
-    let html = '';
-
-    if (event.tipo === 'h') {
-      if (!event.borg) event.borg = '-1';
-      html += '<p align="left">';
-      html += 'Tempo: ' + this.time(event.startTime, event.endTime) + '<br />';
-      html += event.comentario !== null ? 'Mensagem: ' + event.comentario + '<br />' : '';
-      html += '</p>';
-      html += event.borg !== '-1' ? '<img src="assets/img/treino-modal/' + event.borg + '.png"><br />' : '';
-    } else {
-      html += '<p align="left">';
-      html += event.ser !== '' ? 'Número de Séries: ' + event.ser + '<br />':'';
-      html += event.rep !== '' ? 'Número de Repetições: ' + event.rep + '<br />':'';
-      html += event.obs !== '' ? 'Observações: ' + event.obs + '<br />':'';
-      html += '</p>';
+  stop() {
+    if (this._timer > 0) {
+      this.running = false;
+      this.subscription.unsubscribe();
     }
-
-    return html;
   }
 
-  time(startTime, endTime) {
+  time() {
     const date = new Date(null);
-    const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
 
-    date.setSeconds(seconds);
+    date.setSeconds(this._timer);
 
     const result = date.toISOString().substr(11, 8);
 
     return result;
   }
 
-  refreshData() {
-    this.treinoProvider.index(this.util.getStorage('id_aluno')).subscribe(
+  timer(item) {
+    this.navCtrl.push(TreinoTimerPage, { item: item });
+  }
+
+  done(index) {
+    const pos = this._done.indexOf(index);
+
+    if (pos > -1) {
+      this._done.splice(pos, 1);
+      return true;
+    }
+
+    this._done.push(index);
+  }
+
+  isDone(index) {
+    const pos = this._done.indexOf(index);
+
+    if (pos > -1)
+      return true;
+
+    return false;
+  }
+
+  video(item) {
+    this.iab.create(item.video).show();
+  }
+
+  getData() {
+    this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
       data => {
-        this.util.setStorage('dataTreino', data);
+        this.util.setStorage('dataSerie', data);
         this.select(data);
       });
   }
 
   doRefresh(event) {
     if (this.util.checkNetwork()) {
-      this.refreshData();
+      this.getData();
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
     setTimeout(() => { event.complete(); }, 2000);
-  }
-
-  goToDashboard() {
-    this.navCtrl.push(DashboardPage);
-  }
-
-  add(){
-    const modal = this.modalCtrl.create(TreinoAddPage, {});
-    modal.present();
-    
   }
 
 }

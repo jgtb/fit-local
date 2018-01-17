@@ -1,40 +1,68 @@
 .ios, .md, .wp {
 	page-treino-form {
-		.running {
-			margin-top: -40px;
+		.treino-modal {
+			background: transparent;
 		}
-		.item:first-child {
-			margin-top: 20px;
-		}
-		.item:last-child {
-			margin-bottom: 40px;
-		}
-		ion-item {
-			background-color: transparent;
-			border-bottom: none;
-			font-size: 1.4rem;
-			.item-inner {
-				border: none;
+		.overlay {
+			position: fixed;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			z-index: 1;
+  	}
+	  .treino-modal-body {
+      position: absolute;
+	    top: calc(50% - (50%/2));
+	    left: 25px;
+	    right: 25px;
+	    width: auto;
+	    height: auto;
+	    padding: 10px;
+	    z-index: 100;
+	    margin: 0 auto;
+	    padding: 10px;
+	    background-color: rgba(0, 0, 0, 0.3);
+	    border-radius: 5px;
+	    box-shadow: 2px 2px 2px 2px rgba(51, 51, 51, .35);
+	    box-sizing: border-box;
+	    -moz-box-sizing: border-box;
+	    -webkit-box-sizing: border-box;
+	    overflow: hidden;
+	    .treino-title {
+	    	margin-top: -2px;
+	    	text-align: center;
+	    	font-size: 16px;
+	    }
+	    .treino-subtitle {
+	    	text-align: center;
+	    	font-size: 14px;
+	    }
+	    ion-grid ion-row {
+	    	margin: 0 auto;
+	    }
+	    ion-grid ion-row:last-child {
+	    	margin-top: -10px;
+	    	margin-bottom: -2px;
+	    }
+	    img {
+	    	width: 35px;
+	    	height: 35px;
+	    }
+			.unselected {
+				opacity: 0.3;
 			}
-			&.item-block {
-				.item-inner, &:first-child, &:last-child {
-					border-bottom: 0;
-					border-top: none;
-					border-bottom: none;
-				}
+			.selected {
+				opacity: 1;
 			}
-			.img {
-				width: 100%;
-				height: 100%;
+	    ion-textarea {
+	    	background: #ffff;
+		    padding: 8px;
+		    border-radius: 15px;
+		    height: auto;
+	    }
+		  textarea {
+			  resize: both;
 			}
-		}
-		.timer-clock {
-			text-align: center;
-			margin: 0 auto;
-			margin-top: 3%;
-		}
-		.done {
-			opacity: 0.3;
 		}
 	}
 }

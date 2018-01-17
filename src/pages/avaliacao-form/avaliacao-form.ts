@@ -13,18 +13,13 @@ import { Layout } from '../../layout';
 })
 export class AvaliacaoFormPage {
 
-  text: string = 'none';
-
   @ViewChild('fileInp') fileInput: ElementRef;
 
   form: FormGroup;
-  items: any = [];
 
   data: any = [];
   dataAvaliacao: any = [];
   dataPergunta: any = [];
-
-  filterSessao: any = [1, 2, 3];
 
   constructor(
     public navCtrl: NavController,
@@ -44,8 +39,7 @@ export class AvaliacaoFormPage {
     this.form = this.formBuilder.group({
       id_avaliacao: ['', Validators.required],
       descricao: ['', Validators.required],
-      data: [new Date().toISOString(), Validators.required],
-      items: this.formBuilder.array([])
+      data: [new Date().toISOString(), Validators.required]
     });
   }
 
@@ -54,27 +48,12 @@ export class AvaliacaoFormPage {
   }
 
   selectPerguntas() {
-    this.dataPergunta = this.data.filter((elem, index, arr) => elem.id_avaliacao === this.form.value.id_avaliacao && elem.id_sessao != 1 && elem.id_sessao != 2 && elem.id_sessao != 3).filter((elem, index, arr) => arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index);
-    this.dataPergunta.map((item, index) => this.addItem(item, index));
+    this.dataPergunta = this.data.filter((elem, index, arr) => elem.id_avaliacao === this.form.value.id_avaliacao && elem.id_sessao != 1 && elem.id_sessao != 2 && elem.id_sessao != 3)
+      .filter((elem, index, arr) => arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index);
   }
 
   selectOpcoes(item) {
     return this.data.filter((elem, index, arr) => elem.id_pergunta == item.id_pergunta);
-  }
-
-  createItem(item, index) {
-    const perguntaName = 'pergunta-' + index;
-    const respostaName = 'resposta-' + index;
-
-    return this.formBuilder.group({
-      [perguntaName]: [item.id_pergunta, Validators.required],
-      [respostaName]: ['', item.obrigatoria == 1 ? Validators.required : []]
-    });
-  }
-
-  addItem(item, index) {
-    this.items = this.form.get('items') as FormArray;
-    this.items.push(this.createItem(item, index));
   }
 
   doCreate(form) {
@@ -98,6 +77,10 @@ export class AvaliacaoFormPage {
   }
 
   fileUpload($event) {
+
+  }
+
+  setRadioValue(value, index) {
 
   }
 

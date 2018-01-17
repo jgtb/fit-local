@@ -7,7 +7,7 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { LoginPage } from '../../pages/login/login';
 
 import { SeriePage } from '../../pages/serie/serie';
-import { TreinoPage } from '../../pages/treino/treino';
+import { CalendarioPage } from '../../pages/calendario/calendario';
 import { AvaliacaoPage } from '../../pages/avaliacao/avaliacao';
 import { GraficoPage } from '../../pages/grafico/grafico';
 import { ReservaPage } from '../../pages/reserva/reserva';
@@ -48,7 +48,7 @@ export class DashboardPage {
       { title: 'Treinos', component: SeriePage, icon: 'ios-man', class: '' },
       { title: 'Avaliações', component: AvaliacaoPage, icon: 'ios-document', class: '' },
       { title: 'Gráficos', component: GraficoPage, icon: 'md-trending-up', class: '' },
-      { title: 'Calendário', component: TreinoPage, icon: 'ios-calendar', class: '' },
+      { title: 'Calendário', component: CalendarioPage, icon: 'ios-calendar', class: '' },
       { title: 'Reservas', component: ReservaPage, icon: 'ios-create', class: '' },
       { title: 'Ranking', component: RankingPage, icon: 'md-podium', class: '' },
       { title: 'Informações', component: InformacaoPage, icon: 'ios-information-circle', class: this.util.getStorage('showReserva') !== 'false' ? 'm-l-25p' : '' }

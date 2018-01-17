@@ -10,4 +10,4 @@ import { TreinoPage } from './treino';
     IonicPageModule.forChild(TreinoPage),
   ],
 })
-export class TreinoPageModule {}
+export class TreinoFormPageModule {}

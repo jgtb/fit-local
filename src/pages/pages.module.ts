@@ -7,11 +7,11 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { LoginPage } from '../pages/login/login';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { SeriePage } from '../pages/serie/serie';
+import { CalendarioPage } from '../pages/calendario/calendario';
 import { TreinoPage } from '../pages/treino/treino';
 import { TreinoFormPage } from '../pages/treino-form/treino-form';
 import { TreinoTimerPage } from '../pages/treino-timer/treino-timer';
 import { TreinoModalPage } from '../pages/treino-modal/treino-modal';
-import { TreinoAddPage } from '../pages/treino-add/treino-add'
 import { AvaliacaoPage } from '../pages/avaliacao/avaliacao';
 import { AvaliacaoViewPage } from '../pages/avaliacao-view/avaliacao-view';
 import { AvaliacaoFormPage } from '../pages/avaliacao-form/avaliacao-form'
@@ -34,11 +34,12 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 		LoginPage,
     DashboardPage,
 		SeriePage,
+		CalendarioPage,
 		TreinoPage,
 		TreinoFormPage,
 		TreinoTimerPage,
 		TreinoModalPage,
-		TreinoAddPage,
+		TreinoFormPage,
 		AvaliacaoPage,
 		AvaliacaoViewPage,
 		AvaliacaoFormPage,
@@ -51,11 +52,12 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
     LoginPage,
     DashboardPage,
 		SeriePage,
+		CalendarioPage,
 		TreinoPage,
 		TreinoFormPage,
 		TreinoTimerPage,
 		TreinoModalPage,
-		TreinoAddPage,
+		TreinoFormPage,
 		AvaliacaoPage,
 		AvaliacaoViewPage,
 		AvaliacaoFormPage,
