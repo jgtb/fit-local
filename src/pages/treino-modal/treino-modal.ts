@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { TreinoPage } from '../../pages/treino/treino';
 
-import { TreinoProvider } from '../../providers/treino/treino';
+import { CalendarioProvider } from '../../providers/calendario/calendario';
 
 import { Util } from '../../util';
 import { Layout } from '../../layout';
@@ -36,7 +36,7 @@ export class TreinoModalPage {
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
-    public treinoProvider: TreinoProvider,
+    public calendarioProvider: CalendarioProvider,
     public util: Util,
     public layout: Layout) {
     this.id_serie = this.navParams.get('id_serie');
@@ -54,7 +54,7 @@ export class TreinoModalPage {
   doCreate(form) {
     if (this.util.checkNetwork()) {
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg.toString(), tempo: this.time, datahora: this.getDateTime()})
-      this.treinoProvider.create(data).subscribe(
+      this.calendarioProvider.create(data).subscribe(
         data => {
           if (data['_body']) {
             this.navCtrl.push(TreinoPage, {hasNewTreino: true});

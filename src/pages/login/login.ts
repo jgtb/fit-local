@@ -10,7 +10,7 @@ import { SerieProvider } from '../../providers/serie/serie';
 import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
 import { AvaliacaoFormProvider } from '../../providers/avaliacao-form/avaliacao-form';
 import { GraficoProvider } from '../../providers/grafico/grafico';
-import { TreinoProvider } from '../../providers/treino/treino';
+import { CalendarioProvider } from '../../providers/calendario/calendario';
 import { ReservaProvider } from '../../providers/reserva/reserva';
 import { InformacaoProvider } from '../../providers/informacao/informacao';
 
@@ -36,7 +36,7 @@ export class LoginPage {
     public avaliacaoProvider: AvaliacaoProvider,
     public avaliacaoFormProvider: AvaliacaoFormProvider,
     public informacaoProvider: InformacaoProvider,
-    public treinoProvider: TreinoProvider,
+    public calendarioProvider: CalendarioProvider,
     public reservaProvider: ReservaProvider,
     public graficoProvider: GraficoProvider,
     public oneSignal: OneSignal,
@@ -101,7 +101,7 @@ export class LoginPage {
       data => {
         this.util.setStorage('dataGrafico', data);
     });
-    this.treinoProvider.index(id_aluno).subscribe(
+    this.calendarioProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataTreino', data);
     });

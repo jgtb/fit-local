@@ -4,7 +4,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { SerieProvider } from '../providers/serie/serie';
 import { AvaliacaoProvider } from '../providers/avaliacao/avaliacao';
 import { AvaliacaoFormProvider } from '../providers/avaliacao-form/avaliacao-form';
-import { TreinoProvider } from '../providers/treino/treino';
+import { CalendarioProvider } from '../providers/calendario/calendario';
 import { GraficoProvider } from '../providers/grafico/grafico';
 import { ReservaProvider } from '../providers/reserva/reserva';
 import { InformacaoProvider } from '../providers/informacao/informacao';
@@ -15,7 +15,7 @@ import { InformacaoProvider } from '../providers/informacao/informacao';
 		SerieProvider,
 		AvaliacaoProvider,
 		AvaliacaoFormProvider,
-		TreinoProvider,
+		CalendarioProvider,
 		GraficoProvider,
 		ReservaProvider,
 		InformacaoProvider

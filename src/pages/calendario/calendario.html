@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
+    <ion-buttons left>
+      <div (click)="goToDashboard()">
+        <ion-icon class="page-icon-menu" name="menu" [ngStyle]="layout.setColor('light')"></ion-icon>
+      </div>
+    </ion-buttons>
+    <ion-title>Calendário</ion-title>
+    <ion-buttons right>
+      <div (click)="create()">
+        <ion-icon class="avaliacao-add" name="add" [ngStyle]="layout.setColor('light')"></ion-icon>
+      </div>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding [ngStyle]="layout.setBackgroundColor('dark')">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <h2 [ngStyle]="layout.setColor('light')" class="calendar-title">{{ title }}</h2>
+
+  <calendar [ngStyle]="layout.setCalendarColor('monthview')"
+  [eventSource]="eventSource"
+  [calendarMode]="calendar.mode"
+  [currentDate]="calendar.currentDate"
+  [locale]="calendar.locale"
+  [noEventsLabel]="calendar.noEventsLabel"
+  (onTitleChanged)="onViewTitleChanged($event)"
+  (onEventSelected)="onEventSelected($event)" step="30">
+  </calendar>
+
+</ion-content>

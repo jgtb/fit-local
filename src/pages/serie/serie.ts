@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
-import { TreinoFormPage } from '../../pages/treino-form/treino-form';
+import { TreinoPage } from '../../pages/treino/treino';
 
 import { SerieProvider } from '../../providers/serie/serie';
 
@@ -36,7 +36,7 @@ export class SeriePage {
   }
 
   create(item) {
-    this.navCtrl.push(TreinoFormPage, {item: item});
+    this.navCtrl.push(TreinoPage, {item: item});
   }
 
   doRefresh(event) {
