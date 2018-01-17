@@ -1,27 +1,18 @@
 .ios, .md, .wp {
-	page-avaliacao-view {
-		.logo {
-	    width: 40px;
-			height: 40px;
-			margin-left: 5px;
-			border-radius: 50%;
+	page-treino {
+		.running {
+			margin-top: -40px;
+		}
+		.item:first-child {
+			margin-top: 20px;
+		}
+		.item:last-child {
+			margin-bottom: 40px;
 		}
 		ion-item {
 			background-color: transparent;
 			border-bottom: none;
 			font-size: 1.4rem;
-			.sessao {
-				margin-bottom: 25px;
-			},
-			.item-sessao {
-				margin-bottom: 10px;
-				.img-sessao {
-					margin-top: 5px;
-				}
-				.centered {
-					text-align: center;
-				}
-			}
 			.item-inner {
 				border: none;
 			}
@@ -32,6 +23,18 @@
 					border-bottom: none;
 				}
 			}
+			.img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+		.timer-clock {
+			text-align: center;
+			margin: 0 auto;
+			margin-top: 3%;
+		}
+		.done {
+			opacity: 0.3;
 		}
 	}
 }
