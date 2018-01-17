@@ -29,7 +29,7 @@ export class TreinoFormPage {
     {img: 5}
   ];
 
-  series: any = [];
+  data: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -40,10 +40,13 @@ export class TreinoFormPage {
     public calendarioProvider: CalendarioProvider,
     public util: Util,
     public layout: Layout) {
-
-      this.series = this.util.getStorage('dataSerie');
-      this.series = this.series.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
+      this.data = this.util.getStorage('dataSerie');
       this.initForm();
+  }
+
+  ionViewDidLoad() {
+    this.select();
+    console.log(this.data);
   }
 
   initForm() {
@@ -52,8 +55,12 @@ export class TreinoFormPage {
       borg: [''],
       comentario: [''],
       data_inicio: [''],
-      data_fim: ['']
+      time: ['']
     });
+  }
+
+  select() {
+    this.data = this.data.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
   }
 
   doCreate(form) {

@@ -1,22 +1,30 @@
 <ion-content class="treino-modal">
-    
+
       <div class="overlay" (click)="dismiss()"></div>
-    
+
       <div class="treino-modal-body" [ngStyle]="layout.setBackgroundColor('dark')">
-    
+
         <h2 class="treino-title" [ngStyle]="layout.setColor('light')">Registrar Treino</h2>
-    
+
         <form [formGroup]="form" (ngSubmit)="doCreate(form.value)">
-    
-          <ion-grid>
-            <ion-row>
+
+          <ion-list>
+            <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
               <ion-label [ngStyle]="layout.setColor('light')">Treino</ion-label>
-              <ion-select [ngStyle]="layout.setAlertColor(true)" formControlName="id" (ionChange)="selectSeries()">
-                <ion-option value="{{ item.id }}" *ngFor="let item of series">{{ item.descricao }}</ion-option>
+              <ion-select [ngStyle]="layout.setAlertColor(true)" formControlName="id">
+                <ion-option value="{{ item.id }}" *ngFor="let item of data">{{ item.descricao }}</ion-option>
               </ion-select>
-            </ion-row>
-          </ion-grid>
-      
+            </ion-item>
+            <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
+              <ion-label [ngStyle]="layout.setColor('light')">Inicío</ion-label>
+              <ion-datetime format="m" formControlName="data_inicio" [ngStyle]="layout.setColor('light')"></ion-datetime>
+            </ion-item>
+            <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
+              <ion-label [ngStyle]="layout.setColor('light')">Tempo</ion-label>
+              <ion-datetime format="m" formControlName="time" [ngStyle]="layout.setColor('light')"></ion-datetime>
+            </ion-item>
+          </ion-list>
+
           <ion-grid>
             <ion-row>
               <ion-col *ngFor="let item of items; let i = index;">
@@ -24,7 +32,7 @@
               </ion-col>
             </ion-row>
           </ion-grid>
-    
+
           <ion-grid>
             <ion-row>
               <ion-col>
@@ -34,24 +42,6 @@
             </ion-row>
           </ion-grid>
 
-          <ion-grid>
-            <ion-row>
-              <ion-item>
-                <ion-label>Início</ion-label>
-                <ion-datetime formControlName="data_inicio" displayFormat="DD/MMM/YYYY HH:mm"></ion-datetime>
-              </ion-item>          
-            </ion-row>
-          </ion-grid>
-    
-          <ion-grid>
-            <ion-row>
-              <ion-item>
-                <ion-label>Fim</ion-label>
-                <ion-datetime formControlName="data_fim" displayFormat="DD/MMM/YYYY HH:mm"></ion-datetime>
-              </ion-item>          
-            </ion-row>
-          </ion-grid>
-      
           <ion-grid>
             <ion-row>
               <ion-col>
@@ -65,4 +55,3 @@
         </form>
       </div>
     </ion-content>
-    
