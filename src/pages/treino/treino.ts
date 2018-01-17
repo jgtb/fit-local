@@ -60,10 +60,6 @@ export class TreinoPage {
     this.eventSource = this.loadTreinos();
   }
 
-  create() {
-    
-  }
-
   loadTreinos() {
     return this.data.map(obj => {
       let title = obj.title;
@@ -157,11 +153,13 @@ export class TreinoPage {
   goToDashboard() {
     this.navCtrl.push(DashboardPage);
   }
+  
+  create() {}
+
 
   add(){
     const modal = this.modalCtrl.create(TreinoAddPage, {});
     modal.present();
-    
   }
 
 }

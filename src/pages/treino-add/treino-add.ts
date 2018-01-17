@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angular';
 
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 import { TreinoPage } from '../../pages/treino/treino';
 
@@ -31,6 +31,9 @@ export class TreinoAddPage {
 
   series: any = [];
 
+  data_inicio = '';
+  data_fim = '';
+
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
@@ -40,20 +43,25 @@ export class TreinoAddPage {
     public treinoProvider: TreinoProvider,
     public util: Util,
     public layout: Layout) {
-      
       this.series = this.util.getStorage('dataSerie');
       this.series = this.series.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
-      console.log(this.series);
       this.initForm();
   }
 
   initForm() {
     this.form = this.formBuilder.group({
+      id: [''],
       borg: [''],
-      comentario: ['']
+      comentario: [''],
+      data_inicio: [''],
+      data_fim: ['']
     });
   }
 
+  selectSeries(){
+    return this.series;
+  }
+  
   doCreate(form) {
     if (this.util.checkNetwork()) {
       const data = JSON.stringify({ mensagem: form.comentario, borg: form.borg.toString(), datahora: this.getDateTime()})

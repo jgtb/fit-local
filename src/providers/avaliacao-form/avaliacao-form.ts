@@ -12,10 +12,10 @@ export class AvaliacaoFormProvider {
     public http: Http,
     public util: Util) {}
 
-  index() {
-    const indexURL = '';
-    const url = this.util.baseUrl + indexURL;
-
+  index(id_professor) {
+    const indexURL = '/avaliacao/avaliacao-app?id=';
+    const url = this.util.baseUrl + indexURL + id_professor;
+    console.log(url)
     return this.http.get(url).map(res => res.json());
   }
 

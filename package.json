@@ -68,7 +68,10 @@
     "description": "An Ionic project",
     "cordova": {
         "plugins": {
-            "cordova-sqlite-storage": {},
+            "cordova-sqlite-storage": {
+                "APP_ID": "173730636716355",
+                "APP_NAME": "fit app"
+            },
             "cordova-plugin-device": {},
             "cordova-plugin-ionic-webview": {},
             "cordova-plugin-splashscreen": {},

@@ -8,7 +8,7 @@
     <ion-title>Calendário</ion-title>
     <ion-buttons right>
       <div (click)="create()">
-        <ion-icon class="avaliacao-add" name="add" [ngStyle]="layout.setColor('light')"></ion-icon>
+        <ion-icon class="avaliacao-add" name="add" (click)='add()' [ngStyle]="layout.setColor('light')"></ion-icon>
       </div>
     </ion-buttons>
   </ion-navbar>

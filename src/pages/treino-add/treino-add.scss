@@ -1,6 +1,6 @@
 .ios, .md, .wp {
-	page-treino-modal {
-		.treino-modal{
+	page-treino-add {
+		.treino-add{
 			background: transparent;
 		}
 		.overlay {
@@ -10,7 +10,7 @@
 			height: 100%;
 			z-index: 1;
   	}
-	  .treino-modal-body {
+	  .treino-add-body {
         position: absolute;
 	    top: calc(50% - (50%/2));
 	    left: 25px;
