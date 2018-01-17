@@ -48,8 +48,11 @@ export class TreinoFormPage {
 
   initForm() {
     this.form = this.formBuilder.group({
+      id: [''],
       borg: [''],
-      comentario: ['']
+      comentario: [''],
+      data_inicio: [''],
+      data_fim: ['']
     });
   }
 
