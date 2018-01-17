@@ -43,7 +43,6 @@ export class TreinoFormPage {
 
       this.series = this.util.getStorage('dataSerie');
       this.series = this.series.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
-      console.log(this.series);
       this.initForm();
   }
 

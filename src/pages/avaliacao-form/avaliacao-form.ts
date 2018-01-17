@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 import { Util } from '../../util';
 import { Layout } from '../../layout';
@@ -38,8 +38,8 @@ export class AvaliacaoFormPage {
   initForm() {
     this.form = this.formBuilder.group({
       id_avaliacao: ['', Validators.required],
-      descricao: ['', Validators.required],
-      data: [new Date().toISOString(), Validators.required]
+      descricao: [''],
+      data: [new Date().toISOString()]
     });
   }
 
@@ -77,10 +77,6 @@ export class AvaliacaoFormPage {
   }
 
   fileUpload($event) {
-
-  }
-
-  setRadioValue(value, index) {
 
   }
 
