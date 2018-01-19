@@ -3,7 +3,7 @@ import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angul
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { TreinoPage } from '../../pages/treino/treino';
+import { CalendarioPage } from '../../pages/calendario/calendario';
 
 import { CalendarioProvider } from '../../providers/calendario/calendario';
 
@@ -57,7 +57,8 @@ export class TreinoModalPage {
       this.calendarioProvider.create(data).subscribe(
         data => {
           if (data['_body']) {
-            this.navCtrl.push(TreinoPage, {hasNewTreino: true});
+            this.util.showAlert('Atenção', 'Treino salvo.', 'Ok', true);
+            this.navCtrl.push(CalendarioPage);
           } else {
             this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
           }

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core'
 import { IonicPage, NavController, NavParams } from 'ionic-angular'
 
-import { Observable } from 'rxjs/Rx'
-
 import { Layout } from '../../layout'
 
 @IonicPage()
@@ -13,18 +11,18 @@ import { Layout } from '../../layout'
 export class TreinoTimerPage {
 
   data: any = []
-
+  timer: any = []
   current: number
   max: number 
-  stroke: number = 7
-  radius: number = 70
+  stroke: number = 15
+  radius: number = 100
   semicircle: boolean = false
   rounded: boolean = false
   responsive: boolean = false
   clockwise: boolean = true
   color: string = this.layout.colors.light
   background: string = this.layout.colors.dark
-  duration: number = 3000
+  duration: number = 800
   animation: string = 'easeOutCubic'
   animationDelay: number = 0
   animations: string[] = []
@@ -41,25 +39,35 @@ export class TreinoTimerPage {
   ionViewDidEnter() {}
 
   ionViewDidLoad() {
-    this.current = this.data.intervalo
-    this.max = this.data.intervalo
+    this.timer.display = this.data.intervalo;
+    this.max = this.data.intervalo;
+    this.start();
   }
 
   start() {
-    this.running = true
-    this.subscription = Observable.interval(1000).subscribe(data => {
-      if (this.current != 0) {
-        this.current--
-      } else {
-        this.stop()
-        this.current = this.data.intervalo
-      }
-    });
+    this.timer.start = Math.floor((new Date()).getTime()/1000);
+    this.timer.running = true;
+    this.time();
+  }
+
+  time() {
+    setTimeout(() => {
+      if (!this.timer.running) { return; }
+      this.timer.now = Math.floor((new Date()).getTime()/1000);
+      this.timer.time = (this.timer.now-this.timer.start);
+      this.timer.display = this.data.intervalo-this.timer.time;
+      if(this.timer.display!=0)
+        this.time();
+    }, 1000);
   }
 
   stop() {
-    this.running = false
-    this.subscription.unsubscribe()
+    this.timer.running = false;
+  }
+
+  restart(){
+    this.timer.display = this.data.intervalo;
+    this.stop();
   }
 
   getOverlayStyle() {

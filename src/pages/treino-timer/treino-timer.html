@@ -1,14 +1,14 @@
 <ion-header no-border>
   <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
-    <ion-title>Cronômetro</ion-title>
+    <ion-title>Timer</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content [ngStyle]="layout.setBackgroundColor('secondary')">
 	<div class="bg-wrapper">
 		<div class="progress-wrapper">
-			<div class="current" [ngStyle]="getOverlayStyle()">{{ current }}s</div>
-			<round-progress [current]="current"
+			<div class="current" [ngStyle]="getOverlayStyle()">{{ timer.display }}s</div>
+			<round-progress [current]="timer.display"
 		      [max]="max"
 		      [stroke]="stroke"
 		      [radius]="radius"
@@ -25,8 +25,8 @@
 		</div>
 
 	    <div class="controls-wrapper">
-	      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'primary')" round *ngIf="!running" (click)="start()">START</button>
-	      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'danger')" round *ngIf="running" (click)="stop()">STOP</button>
+				<button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'danger')" round *ngIf="timer.running" (click)="restart()"><ion-icon name="refresh"></ion-icon></button>
+	      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'primary')" round *ngIf="!timer.running" (click)="start()"><ion-icon name="play"></ion-icon></button>
 	    </div>
 
 	</div>

@@ -45,6 +45,7 @@ export class CalendarioPage {
     }
 
   ionViewDidLoad() {
+    this.refreshData();
     this.select(this.data);
   }
 
@@ -113,7 +114,7 @@ export class CalendarioPage {
       if (!event.borg) event.borg = '-1';
       html += '<p align="left">';
       html += 'Tempo: ' + this.time(event.startTime, event.endTime) + '<br />';
-      html += event.comentario !== null ? 'Mensagem: ' + event.comentario + '<br />' : '';
+      html += event.comentario !== '' ? 'Mensagem: ' + event.comentario + '<br />' : '';
       html += '</p>';
       html += event.borg !== '-1' ? '<img src="assets/img/treino-modal/' + event.borg + '.png"><br />' : '';
     } else {

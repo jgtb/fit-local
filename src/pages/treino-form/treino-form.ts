@@ -3,7 +3,7 @@ import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angul
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { TreinoPage } from '../../pages/treino/treino';
+import { CalendarioPage } from '../../pages/calendario/calendario';
 
 import { SerieProvider } from '../../providers/serie/serie';
 import { CalendarioProvider } from '../../providers/calendario/calendario';
@@ -31,6 +31,7 @@ export class TreinoFormPage {
 
   data: any = [];
 
+
   constructor(
     public navCtrl: NavController,
     public viewCtrl: ViewController,
@@ -46,7 +47,6 @@ export class TreinoFormPage {
 
   ionViewDidLoad() {
     this.select();
-    console.log(this.data);
   }
 
   initForm() {
@@ -65,28 +65,43 @@ export class TreinoFormPage {
 
   doCreate(form) {
     if (this.util.checkNetwork()) {
-      const data = JSON.stringify({ mensagem: form.comentario, borg: form.borg.toString(), datahora: this.getDateTime()})
-      this.calendarioProvider.create(data).subscribe(
-        data => {
-          if (data['_body']) {
-            this.navCtrl.push(TreinoPage, {hasNewTreino: true});
-          } else {
-            this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
-          }
+      if(this.validate(form)){
+        const data = JSON.stringify({ id_serie: form.id, mensagem: form.comentario, borg: form.borg.toString(), datahora: this.getDateTime(), tempo: form.time+':00'})
+        this.calendarioProvider.create(data).subscribe(
+          data => {
+            if (data['_body']) {
+              this.util.showAlert('Atenção', 'Treino salvo.', 'Ok', true);
+              this.navCtrl.push(CalendarioPage);
+            } else {
+              this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
+            }
         })
+      }
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
   }
 
+  validate(form){
+    let mensagem = '';
+    if(!form.id){
+      mensagem += 'Selecione o treino.<br>';
+    }
+    if(!this.getDateTime()){
+      mensagem += 'Selecione a data de início.<br>';
+    }
+    if(!form.time){
+      form.time = '00:00:00';
+    }
+    if(!mensagem)
+      return true;
+    this.util.showAlert('Atenção', mensagem, 'Ok', true);
+  }
+
   getDateTime() {
-    const date = new Date();
-
-    date.setTime( date.getTime() - date.getTimezoneOffset()*60*1000 );
-
-    const datetime = date.toJSON().slice(0, 10) + ' ' + date.toJSON().slice(11, 19);
-
-    return datetime;
+    let datahora = this.form.value.data_inicio
+    datahora = datahora.replace('T',' ');
+    return datahora.replace('Z',''); 
   }
 
   setBorg(img) {

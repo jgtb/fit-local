@@ -14,10 +14,10 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
   <ion-list>
-    <ion-item *ngFor="let data of dataGrafico; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+    <ion-item *ngFor="let data of dataGrafico; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')" >
       <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>
-      <div (click)="graphic(item)" class="item-sessao" *ngFor="let item of selectPerguntas(data)">
-        <p [ngStyle]="layout.setColor('light')">{{ item?.pergunta }}</p>
+      <div (click)="graphic(item)" class="item-sessao" [ngStyle]="{opacity : item.active?1:0.5}" *ngFor="let item of selectPerguntas(data);" >
+        <p [ngStyle]="layout.setColor('light')" >{{ item?.pergunta }}</p>
       </div>
     </ion-item>
   </ion-list>

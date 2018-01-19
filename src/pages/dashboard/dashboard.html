@@ -1,10 +1,10 @@
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
 	<div class="user" (click)="goToFacebook()">
-		<img class="user-img" src="{{ userImg }}" alt="">
+		<img-loader class="user-img" src="{{ userImg }}" useImg></img-loader>
 		<ion-badge class="user-ranking" [ngStyle]="layout.setBackgroundColor('primary')">60</ion-badge>
 	</div>
 	<div class="logo">
-		<img src="{{ util.baseUrl }}/logos/{{ util.getStorage('logo') }}.png" alt="">
+		<img-loader src="{{ util.baseUrl }}/logos/{{ util.getStorage('logo') }}.png" useImg></img-loader>
 	</div>
 	<div class="menu">
 		<ion-grid>

@@ -22,7 +22,6 @@ export class CalendarioProvider {
   create(data) {
     const createURL = '/serie/mensagem';
     const url = this.util.baseUrl + createURL;
-
     return this.http.post(url, data);
   }
 

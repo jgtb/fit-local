@@ -55,13 +55,15 @@ export class GraficoPage {
     let values = [];
     let title;
 
-    for(let obj of this.data) {
+    this.data.map( (obj,i)=>{
+      obj.active = false;
       if(obj.id_pergunta === item.id_pergunta) {
-         title = obj.pergunta;
-         labels.push(obj.data);
-         values.push(parseFloat(obj.resposta.replace(',', '.')));
-      }
-    }
+        title = obj.pergunta;
+        labels.push(obj.data);
+        values.push(parseFloat(obj.resposta.replace(',', '.')));
+        obj.active = true;
+     }
+    });
 
   	this.chart = new Chart(this.chartCanvas.nativeElement, {
   		type: 'line',

@@ -17,11 +17,11 @@
             </ion-item>
             <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
               <ion-label [ngStyle]="layout.setColor('light')">Inicío</ion-label>
-              <ion-datetime format="m" formControlName="data_inicio" [ngStyle]="layout.setColor('light')"></ion-datetime>
+              <ion-datetime displayFormat="DD/MM/YYYY HH:mm" formControlName="data_inicio" [ngStyle]="layout.setColor('light')"></ion-datetime>
             </ion-item>
             <ion-item [ngStyle]="layout.setBackgroundColor('dark')">
-              <ion-label [ngStyle]="layout.setColor('light')">Tempo</ion-label>
-              <ion-datetime format="m" formControlName="time" [ngStyle]="layout.setColor('light')"></ion-datetime>
+              <ion-label [ngStyle]="layout.setColor('light')">Tempo (hh:mm)</ion-label>
+              <ion-datetime displayFormat="HH:mm" formControlName="time" hourValues="0,1,2" [ngStyle]="layout.setColor('light')"></ion-datetime>
             </ion-item>
           </ion-list>
 

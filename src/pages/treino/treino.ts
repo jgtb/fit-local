@@ -9,8 +9,6 @@ import { TreinoModalPage } from '../../pages/treino-modal/treino-modal';
 
 import { SerieProvider } from '../../providers/serie/serie';
 
-import { Observable } from 'rxjs/Rx';
-
 import { Util } from '../../util';
 import { Layout } from '../../layout';
 
@@ -30,9 +28,7 @@ export class TreinoPage {
   _done: any = [];
   _toggle: boolean = true;
 
-  subscription: any;
-  _timer = 0;
-  running = false;
+  timer: any = [];
 
   constructor(
     platform: Platform,
@@ -44,6 +40,8 @@ export class TreinoPage {
     public util: Util,
     public layout: Layout) {
       this.data = this.navParams.get('item');
+      this.timer.time=0;
+      this.timer.display = this.getSecondsAsDigitalClock(this.timer.time);
     }
 
   ionViewDidLoad() {
@@ -54,7 +52,7 @@ export class TreinoPage {
 
   setBackButtonAction(){
     this.navBar.backButtonClick = () => {
-      if (this._timer > 0) {
+      if (this.timer.time > 0) {
         const buttons = [{
           text: 'Confirmar',
           handler: () => {
@@ -77,7 +75,7 @@ export class TreinoPage {
   }
 
   create() {
-    const modal = this.modalCtrl.create(TreinoModalPage, {id_serie: this.data.id_serie, time: this.time()});
+    const modal = this.modalCtrl.create(TreinoModalPage, {id_serie: this.data.id_serie, time: this.timer.display});
     modal.present();
   }
 
@@ -125,31 +123,39 @@ export class TreinoPage {
   }
 
   start() {
-    this.running = true;
-    this.subscription = Observable.interval(1000).subscribe(data => {
-      this._timer++;
-    });
+    this.timer.start = (new Date()).getTime()/1000;
+    if(this.timer.time!=0)
+      this.timer.start -= this.timer.time;
+    this.timer.running = true;
+    this.time();
   }
 
   stop() {
-    if (this._timer > 0) {
-      this.running = false;
-      this.subscription.unsubscribe();
-    }
+    this.timer.running = false;
   }
 
   time() {
-    const date = new Date(null);
-
-    date.setSeconds(this._timer);
-
-    const result = date.toISOString().substr(11, 8);
-
-    return result;
+    setTimeout(() => {
+      if (!this.timer.running) { return; }
+      this.timer.now = (new Date()).getTime()/1000;
+      this.timer.time = this.timer.now-this.timer.start;
+      this.timer.display = this.getSecondsAsDigitalClock(this.timer.time);
+      this.time();
+    }, 1000);
   }
-
-  timer(item) {
-    this.navCtrl.push(TreinoTimerPage, { item: item });
+  
+  getSecondsAsDigitalClock(inputSeconds: number) {
+    var sec_num = parseInt(inputSeconds.toString(), 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    var hoursString = '';
+    var minutesString = '';
+    var secondsString = '';
+    hoursString = (hours < 10) ? "0" + hours : hours.toString();
+    minutesString = (minutes < 10) ? "0" + minutes : minutes.toString();
+    secondsString = (seconds < 10) ? "0" + seconds : seconds.toString();
+    return hoursString + ':' + minutesString + ':' + secondsString;
   }
 
   done(index) {
@@ -174,6 +180,10 @@ export class TreinoPage {
 
   video(item) {
     this.iab.create(item.video).show();
+  }
+
+  intervalo(item) {
+    this.navCtrl.push(TreinoTimerPage, { item: item });
   }
 
   getData() {

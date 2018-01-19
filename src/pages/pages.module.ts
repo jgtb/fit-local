@@ -32,7 +32,7 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 	],
 	declarations: [
 		LoginPage,
-    DashboardPage,
+    	DashboardPage,
 		SeriePage,
 		CalendarioPage,
 		TreinoPage,
@@ -49,8 +49,8 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 		InformacaoPage
   ],
 	entryComponents: [
-    LoginPage,
-    DashboardPage,
+		LoginPage,
+		DashboardPage,
 		SeriePage,
 		CalendarioPage,
 		TreinoPage,
