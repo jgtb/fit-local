@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import { IonicImageLoader } from 'ionic-image-loader';
 
+import { AuthProvider } from '../../providers/auth/auth';
+
 import { LoginPage } from '../../pages/login/login';
 
 import { SeriePage } from '../../pages/serie/serie';
@@ -31,6 +33,7 @@ export class DashboardPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public authProvider: AuthProvider,
     public facebook: Facebook,
     public util: Util,
     public layout: Layout) {
@@ -41,7 +44,9 @@ export class DashboardPage {
     this.userImg = this.util.getStorage('facebookId');
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    this.isActive();
+  }
 
   initMenu() {
     this.menu = [
@@ -65,10 +70,20 @@ export class DashboardPage {
   goToFacebook () {
     this.facebook.login(['public_profile', 'email']).then((res) => {
       this.facebook.api('/me?fields=name,email', []).then(res => {
-        this.userImg = 'https://graph.facebook.com/' + res.id + '/picture';
+        this.userImg = 'http://graph.facebook.com/' + res.id + '/picture';
         this.util.setStorage('facebookId', this.userImg);
       })
     });
+  }
+
+  isActive() {
+    this.authProvider.isActive().subscribe(
+      data => {
+        if (!data['_body']) {
+          this.util.setLogout();
+          this.navCtrl.setRoot(LoginPage);
+        }
+      });
   }
 
   logout() {

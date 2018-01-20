@@ -67,7 +67,7 @@ export class InformacaoPage {
   }
 
   goToDashboard() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.popToRoot();
   }
 
 }

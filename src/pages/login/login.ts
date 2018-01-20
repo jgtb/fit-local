@@ -93,7 +93,7 @@ export class LoginPage {
       data => {
         this.util.setStorage('dataAvaliacao', data);
     });
-    this.avaliacaoFormProvider.index().subscribe(
+    this.avaliacaoFormProvider.index(id_professor).subscribe(
       data => {
         this.util.setStorage('dataAvaliacaoForm', data);
     });

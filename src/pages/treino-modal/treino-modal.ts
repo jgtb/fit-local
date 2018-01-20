@@ -57,8 +57,7 @@ export class TreinoModalPage {
       this.calendarioProvider.create(data).subscribe(
         data => {
           if (data['_body']) {
-            this.util.showAlert('Atenção', 'Treino salvo.', 'Ok', true);
-            this.navCtrl.push(CalendarioPage);
+            this.navCtrl.push(CalendarioPage, {hasNewTreino: true});
           } else {
             this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
           }

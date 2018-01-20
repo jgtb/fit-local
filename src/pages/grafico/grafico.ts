@@ -92,7 +92,7 @@ export class GraficoPage {
   }
 
   goToDashboard() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.popToRoot();
   }
 
 }

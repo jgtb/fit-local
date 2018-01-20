@@ -70,8 +70,7 @@ export class TreinoFormPage {
         this.calendarioProvider.create(data).subscribe(
           data => {
             if (data['_body']) {
-              this.util.showAlert('Atenção', 'Treino salvo.', 'Ok', true);
-              this.navCtrl.push(CalendarioPage);
+              this.navCtrl.push(CalendarioPage, {hasNewTreino: true});
             } else {
               this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
             }
@@ -84,24 +83,31 @@ export class TreinoFormPage {
 
   validate(form){
     let mensagem = '';
-    if(!form.id){
-      mensagem += 'Selecione o treino.<br>';
+
+    if(!form.id) {
+      mensagem += 'Selecione o treino. <br />';
     }
-    if(!this.getDateTime()){
+
+    if(!this.getDateTime()) {
       mensagem += 'Selecione a data de início.<br>';
     }
-    if(!form.time){
+
+    if(!form.time) {
       form.time = '00:00:00';
     }
+
     if(!mensagem)
       return true;
+
     this.util.showAlert('Atenção', mensagem, 'Ok', true);
   }
 
   getDateTime() {
-    let datahora = this.form.value.data_inicio
+    let datahora = this.form.value.data_inicio;
+
     datahora = datahora.replace('T',' ');
-    return datahora.replace('Z',''); 
+
+    return datahora.replace('Z','');
   }
 
   setBorg(img) {

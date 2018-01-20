@@ -26,8 +26,8 @@ export class MyApp {
     public authProvider: AuthProvider,
     public util: Util) {
     platform.ready().then(() => {
-      this.appConfig();
       this.setRoot();
+      this.appConfig();
       statusBar.styleDefault();
       splashScreen.hide();
     });
@@ -45,27 +45,20 @@ export class MyApp {
 
   allowPushNotification(config) {
     this.oneSignal.startInit(config.oneSignalId, config.fireBaseId);
-
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
-
-    //this.oneSignal.handleNotificationReceived().subscribe(data => {
-      //alert('Received');
-    //});
-
-    //this.oneSignal.handleNotificationOpened().subscribe(data => {
-      //alert('Opened');
-    //});
-
     this.oneSignal.endInit();
   }
 
   setRoot() {
-    if (!this.util.isLogged()) {
-      this.rootPage = LoginPage;
-      return true;
-    }
-
-    this.rootPage = DashboardPage;
+    this.authProvider.isActive().subscribe(
+      data => {
+        if (!data['_body']) {
+          this.rootPage = LoginPage;
+          this.util.setLogout();
+        } else {
+          this.rootPage = DashboardPage;
+        }
+      });
   }
 
 }

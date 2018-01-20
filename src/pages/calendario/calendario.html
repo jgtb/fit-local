@@ -6,11 +6,6 @@
       </div>
     </ion-buttons>
     <ion-title>Calendário</ion-title>
-    <ion-buttons right>
-      <div (click)="create()">
-        <ion-icon class="avaliacao-add" name="add" [ngStyle]="layout.setColor('light')"></ion-icon>
-      </div>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -18,7 +13,7 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  
+
   <h2 [ngStyle]="layout.setColor('light')" class="calendar-title">{{ title }}</h2>
 
   <calendar [ngStyle]="layout.setCalendarColor('monthview')"
@@ -30,5 +25,11 @@
   (onTitleChanged)="onViewTitleChanged($event)"
   (onEventSelected)="onEventSelected($event)" step="30">
   </calendar>
+
+  <ion-fab top right>
+		<button ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('primary')" (click)="create()">
+			<ion-icon [ngStyle]="layout.setColor('light')" name="add"></ion-icon>
+		</button>
+  </ion-fab>
 
 </ion-content>

@@ -193,7 +193,7 @@ export class ReservaPage {
   }
 
   goToDashboard() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.popToRoot();
   }
 
 }

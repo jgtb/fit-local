@@ -33,6 +33,13 @@ export class AuthProvider {
     return this.http.get(url);
   }
 
+  isActive() {
+    const ativoURL = '/usuario/ativo?id=';
+    const url = this.util.baseUrl + ativoURL + this.util.getStorage('id_aluno');
+
+    return this.http.get(url);
+  }
+
   appConfig() {
     const url = 'assets/one-signal/data.json';
 

@@ -28,7 +28,7 @@ export class SeriePage {
     }
 
   ionViewDidLoad() {
-    this.select(this.data);
+    this.refreshData();
   }
 
   select(result) {
@@ -41,19 +41,23 @@ export class SeriePage {
 
   doRefresh(event) {
     if (this.util.checkNetwork()) {
-      this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
-        data => {
-          this.util.setStorage('dataSerie', data);
-          this.select(data);
-        })
+      this.refreshData();
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
     setTimeout(() => { event.complete(); }, 2000);
   }
 
+  refreshData() {
+    this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
+      data => {
+        this.util.setStorage('dataSerie', data);
+        this.select(data);
+      });
+  }
+
   goToDashboard() {
-    this.navCtrl.push(DashboardPage);
+    this.navCtrl.popToRoot();
   }
 
 }
