@@ -27,7 +27,7 @@
           <ion-card-header [ngStyle]="layout.setColor('light')">{{ item.pergunta }}</ion-card-header>
           <ion-card-content>
             <div *ngIf="isTipoPergunta(item.id_tipo_pergunta, 1)">
-              <ion-list radio-group [(ngModel)]="items[item.id_pergunta]">
+              <ion-list radio-group [(ngModel)]="item.resposta">
                 <ion-item *ngFor="let radio of selectOpcoes(item.id_pergunta); let j = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
                   <ion-label item-start>{{ radio?.opcao }}</ion-label>
                   <ion-radio item-end value="{{ radio?.id_opcao }}"></ion-radio>
@@ -36,25 +36,18 @@
             </div>
             <div *ngIf="isTipoPergunta(item.id_tipo_pergunta, 2)">
               <ion-item [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
-                <ion-textarea placeholder="Descrição..." [(ngModel)]="items[item.id_pergunta]" [ngStyle]="layout.setColor('light')"></ion-textarea>
+                <ion-textarea placeholder="Descrição..." [(ngModel)]="item.resposta" [ngStyle]="layout.setColor('light')"></ion-textarea>
               </ion-item>
             </div>
             <div *ngIf="isTipoPergunta(item.id_tipo_pergunta, 3)">
               <ion-item *ngFor="let checkbox of selectOpcoes(item.id_pergunta); let j = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
                 <ion-label item-start>{{ checkbox?.opcao }}</ion-label>
-                <ion-checkbox item-end [(ngModel)]="items[item.id_pergunta-i]"></ion-checkbox>
-              </ion-item>
-            </div>
-            <div *ngIf="isTipoPergunta(item.id_tipo_pergunta, 4)">
-              <ion-item [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
-                <button ion-button (click)="upload()" [ngStyle]="layout.setBackgroundColor('primary')">
-                  <span [ngStyle]="layout.setColor('light')">Upload</span>
-                </button>
+                <ion-checkbox item-end [(ngModel)]="item.resposta[checkbox?.id_opcao]"></ion-checkbox>
               </ion-item>
             </div>
             <div *ngIf="isTipoPergunta(item.id_tipo_pergunta, 5)">
               <ion-item [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
-                <ion-input placeholder="Descrição..." [(ngModel)]="items[item.id_pergunta]" [ngStyle]="layout.setColor('light')"></ion-input>
+                <ion-input placeholder="Descrição..." [(ngModel)]="item.resposta" [ngStyle]="layout.setColor('light')"></ion-input>
               </ion-item>
             </div>
           </ion-card-content>

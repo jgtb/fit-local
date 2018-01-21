@@ -14,7 +14,6 @@ export class AvaliacaoFormPage {
   @ViewChild('fileInp') fileInput: ElementRef;
 
   id_avaliacao: any;
-  items: any = [];
 
   data: any = [];
   dataAvaliacao: any = [];
@@ -38,7 +37,7 @@ export class AvaliacaoFormPage {
 
   selectPerguntas() {
     this.dataPergunta = this.data.filter((elem, index, arr) => elem.id_avaliacao === this.id_avaliacao && elem.id_sessao != 1 && elem.id_sessao != 2 && elem.id_sessao != 3)
-      .filter((elem, index, arr) => arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index);
+      .filter((elem, index, arr) => arr.map(obj => obj['id_pergunta']).indexOf(elem['id_pergunta']) === index && elem.id_tipo_pergunta != 4).map(obj => ({...obj, resposta: []}));
   }
 
   selectOpcoes(id_pergunta) {
@@ -47,6 +46,8 @@ export class AvaliacaoFormPage {
 
   doCreate() {
     if (this.util.checkNetwork()) {
+      const items = this.dataPergunta.map(obj => ({[obj.id_pergunta]: obj.resposta}));
+      console.log(items);
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
     }
