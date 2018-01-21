@@ -115,7 +115,6 @@ export class LoginPage {
       data => {
         this.util.setStorage('ranking', data);
       });
-    
     this.informacaoProvider.indexInformacao(id_professor).subscribe(
       data => {
         this.util.setStorage('dataInformacao', data);

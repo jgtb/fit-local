@@ -28,6 +28,8 @@ export class DashboardPage {
 
   userImg: string;
 
+  userRanking: number;
+
   menu: Array<{title: string, component: any, icon: string, class: string}>;
 
   constructor(
@@ -46,6 +48,7 @@ export class DashboardPage {
 
   ionViewDidLoad() {
     this.isActive();
+    this.userRanking();
   }
 
   initMenu() {
@@ -65,6 +68,11 @@ export class DashboardPage {
 
   openPage(component) {
     this.navCtrl.push(component);
+  }
+
+  userRanking() {
+    const items = this.util.getStorage('ranking')[1];
+    this.userRanking = items.filter(el => el.id_aluno == this.util.getStorage('id_aluno'))[0].pontos;
   }
 
   goToFacebook () {
