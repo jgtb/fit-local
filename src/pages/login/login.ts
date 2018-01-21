@@ -12,6 +12,7 @@ import { AvaliacaoFormProvider } from '../../providers/avaliacao-form/avaliacao-
 import { GraficoProvider } from '../../providers/grafico/grafico';
 import { CalendarioProvider } from '../../providers/calendario/calendario';
 import { ReservaProvider } from '../../providers/reserva/reserva';
+import { RankingProvider } from '../../providers/ranking/ranking';
 import { InformacaoProvider } from '../../providers/informacao/informacao';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
@@ -38,6 +39,7 @@ export class LoginPage {
     public informacaoProvider: InformacaoProvider,
     public calendarioProvider: CalendarioProvider,
     public reservaProvider: ReservaProvider,
+    public rankingProvider: RankingProvider,
     public graficoProvider: GraficoProvider,
     public oneSignal: OneSignal,
     public util: Util) {
@@ -84,7 +86,7 @@ export class LoginPage {
     this.util.setStorage('id_professor', id_professor);
     this.util.setStorage('facebookId', facebookId);
 
-    this.playerId(id_usuario);
+    //this.playerId(id_usuario);
     this.serieProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataSerie', data);
@@ -109,6 +111,11 @@ export class LoginPage {
       data => {
         this.util.setStorage('dataReserva', data);
     });
+    this.rankingProvider.index().subscribe(
+      data => {
+        this.util.setStorage('ranking', data);
+      });
+    
     this.informacaoProvider.indexInformacao(id_professor).subscribe(
       data => {
         this.util.setStorage('dataInformacao', data);

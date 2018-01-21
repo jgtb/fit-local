@@ -10,14 +10,39 @@
 </ion-header>
 
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-toolbar [ngStyle]="layout.setToolbarColor('ion-toolbar', 'dark', 'light')">
     <ion-segment [(ngModel)]="tab" color="secondary">
       <ion-segment-button [ngStyle]="layout.setSegmentButtonColor()" value="atual">
-        Atual
+          Atual
       </ion-segment-button>
       <ion-segment-button [ngStyle]="layout.setSegmentButtonColor()" value="anterior">
         Anterior
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
+  <div [ngSwitch]="tab">
+      <div *ngSwitchCase="'atual'">
+        <ion-list>
+          <ion-item *ngFor="let item of atual; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+            <ion-avatar><img-loader src="{{item.link_foto}}" useImg></img-loader></ion-avatar>
+            <span>{{ item?.nome }}</span>
+            <span item-end>{{ item?.pontos }}</span>
+          </ion-item>
+        </ion-list>
+      </div>
+      <div *ngSwitchCase="'anterior'">
+        <ion-list>
+            <ion-item *ngFor="let item of anterior; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+              <ion-avatar><img-loader src="{{item.link_foto}}" useImg></img-loader></ion-avatar>
+              <span>{{ item?.nome }}</span>
+              <span item-end>{{ item?.pontos }}</span>
+            </ion-item>
+          </ion-list>
+        </div>
+  </div>  
 </ion-content>
+
+

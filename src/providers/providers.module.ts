@@ -6,6 +6,7 @@ import { AvaliacaoProvider } from '../providers/avaliacao/avaliacao';
 import { AvaliacaoFormProvider } from '../providers/avaliacao-form/avaliacao-form';
 import { CalendarioProvider } from '../providers/calendario/calendario';
 import { GraficoProvider } from '../providers/grafico/grafico';
+import { RankingProvider } from '../providers/ranking/ranking';
 import { ReservaProvider } from '../providers/reserva/reserva';
 import { InformacaoProvider } from '../providers/informacao/informacao';
 
@@ -17,6 +18,7 @@ import { InformacaoProvider } from '../providers/informacao/informacao';
 		AvaliacaoFormProvider,
 		CalendarioProvider,
 		GraficoProvider,
+		RankingProvider,
 		ReservaProvider,
 		InformacaoProvider
 	]
