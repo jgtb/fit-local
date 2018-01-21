@@ -27,22 +27,24 @@
       <div *ngSwitchCase="'atual'">
         <ion-list>
           <ion-item *ngFor="let item of atual; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
-            <ion-avatar><img-loader src="{{item.link_foto}}" useImg></img-loader></ion-avatar>
-            <span>{{ item?.nome }}</span>
-            <span item-end>{{ item?.pontos }}</span>
+            <ion-avatar item-start>
+              <img-loader src="{{item.link_foto}}" useImg></img-loader>
+            </ion-avatar>
+            <h2 [ngStyle]="layout.setColor('light')">{{ item?.nome }}</h2>
+            <p [ngStyle]="layout.setColor('light')"item-end>{{ item?.pontos }}</p>
           </ion-item>
         </ion-list>
       </div>
       <div *ngSwitchCase="'anterior'">
         <ion-list>
             <ion-item *ngFor="let item of anterior; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
-              <ion-avatar><img-loader src="{{item.link_foto}}" useImg></img-loader></ion-avatar>
-              <span>{{ item?.nome }}</span>
-              <span item-end>{{ item?.pontos }}</span>
+              <ion-avatar item-start>
+                <img-loader src="{{item.link_foto}}" useImg></img-loader>
+              </ion-avatar>
+              <h2 [ngStyle]="layout.setColor('light')">{{ item?.nome }}</h2>
+              <p [ngStyle]="layout.setColor('light')"item-end>{{ item?.pontos }}</p>
             </ion-item>
           </ion-list>
         </div>
-  </div>  
+  </div>
 </ion-content>
-
-
