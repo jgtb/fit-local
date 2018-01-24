@@ -26,11 +26,10 @@ export class AvaliacaoPage {
     public util: Util,
     public layout: Layout) {
       this.data = this.util.getStorage('dataAvaliacao');
+      this.select(this.data);
     }
 
-  ionViewDidLoad() {
-    this.refreshData();
-  }
+  ionViewDidLoad() {}
 
   select(result) {
     this.data = result.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
@@ -46,19 +45,15 @@ export class AvaliacaoPage {
 
   doRefresh(event) {
     if (this.util.checkNetwork()) {
-      this.refreshData();
-    } else {
+      this.avaliacaoProvider.index(this.util.getStorage('id_aluno')).subscribe(
+        data => {
+          this.util.setStorage('dataAvaliacao', data);
+          this.select(data);
+        });
+      } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
     setTimeout(() => { event.complete(); }, 2000);
-  }
-
-  refreshData() {
-    this.avaliacaoProvider.index(this.util.getStorage('id_aluno')).subscribe(
-      data => {
-        this.util.setStorage('dataAvaliacao', data);
-        this.select(data);
-      });
   }
 
   goToDashboard() {

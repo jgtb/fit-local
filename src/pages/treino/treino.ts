@@ -53,15 +53,18 @@ export class TreinoPage {
   setBackButtonAction(){
     this.navBar.backButtonClick = () => {
       if (this.timer.time > 0) {
-        const buttons = [{
-          text: 'Confirmar',
-          handler: () => {
-            this.navCtrl.pop();
+        const buttons = [
+          {
+            text: 'Cancelar',
+            role: 'cancel'
           },
-        }, {
-          text: 'Cancelar',
-          role: 'cancel'
-        }];
+          {
+            text: 'Confirmar',
+            handler: () => {
+              this.navCtrl.pop();
+              },
+          }
+        ];
         this.util.showConfirmationAlert('Abandonar treino?', '', '', buttons, true);
       } else {
         this.navCtrl.pop();
@@ -91,15 +94,15 @@ export class TreinoPage {
     ];
     const buttons = [
       {
+        text: 'Cancelar',
+        role: 'cancel',
+      },
+      {
         text: 'Confirmar',
         handler: dataCarga => {
           this.doUpdate(item, dataCarga)
         }
-      },
-      {
-        text: 'Cancelar',
-        role: 'cancel',
-      },
+      }
     ];
     this.util.showConfirmationAlert(title, message, inputs, buttons, true);
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 
@@ -38,6 +38,7 @@ export class CalendarioPage {
     public navParams: NavParams,
     public calendarioProvider: CalendarioProvider,
     public modalCtrl: ModalController,
+    public alertCtrl: AlertController,
     public util: Util,
     public layout: Layout) {
       this.data = this.util.getStorage('dataTreino');
@@ -68,6 +69,7 @@ export class CalendarioPage {
 
   loadTreinos() {
     return this.data.map(obj => {
+      let id = obj.id;
       let title = obj.title;
       let start = obj.start;
       let end = obj.end;
@@ -82,6 +84,7 @@ export class CalendarioPage {
       let endTime = new Date(end.replace(/-/g,'/'));
 
       return {
+        id: id,
         title: title,
         startTime: startTime,
         endTime: endTime,
@@ -104,7 +107,56 @@ export class CalendarioPage {
     const title = event.title;
     const subtitle = this.getSubtitle(event);
     const button = 'Ok';
-    this.util.showAlert(title, subtitle, button , true);
+    
+    if(event.tipo=='h'){
+      const alert = this.alertCtrl.create({
+        title: title,
+        subTitle: subtitle,
+        buttons: [ {
+          text: 'Apagar',
+          handler: () => {
+            this.apagar(event);
+          }
+        },
+        {
+          text: 'Ok',
+          role: 'cancel',
+          handler: () => {}
+        }]
+      });
+      alert.present().then(data => this.layout.setAlertColor(true));
+    }
+    else{
+      this.util.showAlert(title, subtitle, button , true);
+    }
+  }
+
+  apagar(event){
+    const alert = this.alertCtrl.create({
+      title: 'Atenção',
+      subTitle: 'Deseja realmente apagar esse treino?',
+      buttons: [ {
+        text: 'Não',
+        role: 'cancel',
+        handler: () => {}
+      },
+      {
+        text: 'Sim',
+        handler: () => {
+          this.calendarioProvider.delete(event.id).subscribe(
+            data => {
+              if (data['_body']==1) {
+                this.util.showAlert('Atenção', 'Treino apagado.', 'Ok', true);
+                this.refreshData();
+              } else {
+                this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
+              }
+          });
+        }
+      }]
+    });
+    alert.present().then(data => this.layout.setAlertColor(true));
+
   }
 
   getSubtitle(event) {
@@ -133,9 +185,7 @@ export class CalendarioPage {
     const seconds = (endTime.getTime() - startTime.getTime()) / 1000;
 
     date.setSeconds(seconds);
-
     const result = date.toISOString().substr(11, 8);
-
     return result;
   }
 

@@ -29,12 +29,12 @@
       <ion-grid>
     		<ion-row>
     			<ion-col>
-    				<button type="submit" [ngStyle]="layout.setBackgroundColor('primary')" [ngStyle]="layout.setColor('light')" ion-button round small>Confirmar</button>
-    			</ion-col>
-    			<ion-col>
     				<button type="button" [ngStyle]="layout.setBackgroundColor('primary')" [ngStyle]="layout.setColor('light')" ion-button round small (click)="dismiss()">Cancelar</button>
     			</ion-col>
-    		</ion-row>
+    			<ion-col>
+							<button type="submit" [ngStyle]="layout.setBackgroundColor('primary')" [ngStyle]="layout.setColor('light')" ion-button round small>Confirmar</button>
+						</ion-col>
+					</ion-row>
     	</ion-grid>
 
     </form>

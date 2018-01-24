@@ -1,7 +1,7 @@
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
 	<div class="user" (click)="goToFacebook()">
-		<img-loader class="user-img" src="{{ userImg }}" useImg></img-loader>
-		<ion-badge class="user-ranking" [ngStyle]="layout.setBackgroundColor('primary')">{{ userRanking }}</ion-badge>
+	<img-loader class="user-img" src="{{ userImg }}" useImg></img-loader>
+	<ion-badge *ngIf="showPontos" class="user-ranking" [ngStyle]="layout.setBackgroundColor('primary')">{{ pontos }}</ion-badge>
 	</div>
 	<div class="logo">
 		<img-loader src="{{ util.baseUrl }}/logos/{{ util.getStorage('logo') }}.png" useImg></img-loader>

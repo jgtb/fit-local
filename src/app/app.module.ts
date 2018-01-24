@@ -2,12 +2,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
+import { Vibration } from '@ionic-native/vibration'
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { OneSignal } from '@ionic-native/onesignal';
 import { Facebook } from '@ionic-native/facebook';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 import { IonicImageLoader } from 'ionic-image-loader';
 import { NgCalendarModule  } from 'ionic2-calendar';
@@ -48,6 +50,8 @@ import { Layout } from '../layout';
     Facebook,
     Util,
     Layout,
+    Vibration,
+    NativeAudio,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

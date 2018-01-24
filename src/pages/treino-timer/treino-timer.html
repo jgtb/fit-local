@@ -19,14 +19,13 @@
 		      [color]="gradient ? 'url(#gradient)' : color"
 		      [background]="background"
 		      [duration]="duration"
-		      [animation]="animation"
 		      [animationDelay]="animationDelay">
 		    </round-progress>
 		</div>
 
 	    <div class="controls-wrapper">
-				<button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'danger')" round *ngIf="timer.running" (click)="restart()"><ion-icon name="refresh"></ion-icon></button>
-	      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'primary')" round *ngIf="!timer.running" (click)="start()"><ion-icon name="play"></ion-icon></button>
+				<!--<button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'danger')" round *ngIf="timer.running" (click)="restart()"><ion-icon name="refresh"></ion-icon></button>
+	      <button ion-button [ngStyle]="layout.setStripedColor(i, 'dark', 'primary')" round *ngIf="!timer.running" (click)="start()"><ion-icon name="play"></ion-icon></button>-->
 	    </div>
 
 	</div>

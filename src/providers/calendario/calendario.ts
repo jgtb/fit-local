@@ -22,6 +22,15 @@ export class CalendarioProvider {
   create(data) {
     const createURL = '/serie/mensagem';
     const url = this.util.baseUrl + createURL;
+    
+    return this.http.post(url, data);
+  }
+
+  delete(id){
+    const createURL = '/serie/apagatreino';
+    const url = this.util.baseUrl + createURL;
+    
+    const data = {id:id};
     return this.http.post(url, data);
   }
 

@@ -28,7 +28,7 @@
         <ion-list>
           <ion-item *ngFor="let item of atual; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
             <ion-avatar item-start>
-              <img-loader src="{{item.link_foto}}" useImg></img-loader>
+              <img-loader *ngIf="item.link_foto" src="{{item.link_foto}}" useImg></img-loader>
             </ion-avatar>
             <h2 [ngStyle]="layout.setColor('light')">{{ item?.nome }}</h2>
             <p [ngStyle]="layout.setColor('light')"item-end>{{ item?.pontos }}</p>
@@ -39,7 +39,7 @@
         <ion-list>
             <ion-item *ngFor="let item of anterior; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
               <ion-avatar item-start>
-                <img-loader src="{{item.link_foto}}" useImg></img-loader>
+                <img-loader *ngIf="item.link_foto" src="{{item.link_foto}}" useImg></img-loader>
               </ion-avatar>
               <h2 [ngStyle]="layout.setColor('light')">{{ item?.nome }}</h2>
               <p [ngStyle]="layout.setColor('light')"item-end>{{ item?.pontos }}</p>

@@ -8,7 +8,7 @@
     <ion-title>Gráficos</ion-title>
   </ion-navbar>
 </ion-header>
-
+  
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -23,6 +23,6 @@
   </ion-list>
 </ion-content>
 
-<ion-grid ion-fixed [ngStyle]="layout.setBackgroundColor('dark')" class="chart">
+<ion-grid [ngStyle]="layout.setBackgroundColor('dark')" class="chart" ion-fixed>
   <canvas #chart></canvas>
 </ion-grid>

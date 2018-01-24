@@ -19,5 +19,12 @@ export class RankingProvider {
     return this.http.get(url).map(res => res.json());
   }
 
+  getGrupo() {
+    const ativoURL = '/usuario/get-grupo?id_aluno=';
+    const url = this.util.baseUrl + ativoURL + this.util.getStorage('id_aluno');
+
+    return this.http.get(url);
+  }
+
 
 }

@@ -97,9 +97,9 @@ export class ReservaPage {
       if(this.canReserva(item)) {
         this.reservaProvider.checkIsReservado(item).subscribe(
           data => {
-            if (data['_body']) {
-              this.delete(item);
-            } else {
+            if (data['_body']==1) {
+              this.cancelar(item);
+            } else if (data['_body']==0){
               this.reservaProvider.checkIsLotado(item).subscribe(
                 data => {
                   if (item.vagas !== data.length) {
@@ -125,28 +125,34 @@ export class ReservaPage {
     const message = this.getMessage(item);
     const buttons = [
       {
+        text: 'Cancelar',
+        role: 'cancel',
+      },
+      {
         text: 'Confirmar',
         handler: data => {
           this.reservaProvider.create(item).subscribe(
             data => {
-              if (data['_body'])
-                this.util.showAlert('Atenção', 'Aula reservada', 'Ok', true);
+              if (data['_body']==1)
+                this.util.showAlert('Atenção', 'Aula reservada.', 'Ok', true);
+              else
+                this.util.showAlert('Atenção', 'Erro ao reservar aula.', 'Ok', true);
             }
           )
         }
-      },
-      {
-        text: 'Cancelar',
-        role: 'cancel',
       }
     ]
     this.util.showConfirmationAlert(title, message, [], buttons, true);
   }
 
-  delete(item) {
+  cancelar(item) {
     const title = item.title;
     const message = 'Deseja cancelar a reserva?';
     const buttons = [
+      {
+        text: 'Não',
+        role: 'cancel',
+      },
       {
         text: 'Sim',
         handler: data => {
@@ -154,14 +160,13 @@ export class ReservaPage {
           item.id_aluno = this.util.getStorage('id_aluno');
           this.reservaProvider.delete(item).subscribe(
             data => {
-              this.util.showAlert('Atenção', 'Reserva cancelada', 'Ok', true);
+              if(data['_body']==1)
+                this.util.showAlert('Atenção', 'Reserva cancelada.', 'Ok', true);
+              else
+                this.util.showAlert('Atenção', 'Erro ao cancelar reserva.', 'Ok', true);
             });
           }
-      },
-      {
-        text: 'Não',
-        role: 'cancel',
-      },
+      }
     ]
     this.util.showConfirmationAlert(title, message, [], buttons, true);
   }
@@ -170,7 +175,7 @@ export class ReservaPage {
     const startTime = item.startTime.toTimeString().split(' ')[0];
     const endTime = item.endTime.toTimeString().split(' ')[0];
 
-    const message = 'Deseja reservar esta aula ?' + '<br />' + startTime + ' - ' + endTime;
+    const message = 'Deseja reservar esta aula ?' + '<br />' + startTime.toString().substring(0,5) + ' - ' + endTime.toString().substring(0,5);
 
     return message;
   }

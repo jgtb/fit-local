@@ -47,7 +47,9 @@ export class RankingPage {
       this.rankingProvider.index().subscribe(
         data => {
           this.util.setStorage('ranking', data);
-        })
+          this.selectAnterior(this.util.getStorage('ranking')[0]);
+          this.selectAtual(this.util.getStorage('ranking')[1]);
+      });
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true)
     }

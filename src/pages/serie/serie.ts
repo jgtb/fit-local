@@ -25,10 +25,10 @@ export class SeriePage {
     public util: Util,
     public layout: Layout) {
       this.data = this.util.getStorage('dataSerie');
+      this.select(this.data);
     }
 
   ionViewDidLoad() {
-    this.refreshData();
   }
 
   select(result) {
@@ -41,19 +41,15 @@ export class SeriePage {
 
   doRefresh(event) {
     if (this.util.checkNetwork()) {
-      this.refreshData();
-    } else {
+      this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
+        data => {
+          this.util.setStorage('dataSerie', data);
+          this.select(data);
+        });
+      } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
     setTimeout(() => { event.complete(); }, 2000);
-  }
-
-  refreshData() {
-    this.serieProvider.index(this.util.getStorage('id_aluno')).subscribe(
-      data => {
-        this.util.setStorage('dataSerie', data);
-        this.select(data);
-      });
   }
 
   goToDashboard() {

@@ -30,14 +30,14 @@ export class ReservaProvider {
     const checkReservadoURL = '/aula/reservado?id_aula=' + data.id + '&id_aluno=' + this.util.getStorage('id_aluno');
     const url = this.util.baseUrl + checkReservadoURL;
 
-    return this.http.post(url, data);
+    return this.http.get(url, data);
   }
 
   checkIsLotado(data) {
     const checkLotadoURL = '/aula/reservas?id=';
     const url = this.util.baseUrl + checkLotadoURL + data.id;
 
-    return this.http.post(url, data).map(res => res.json());
+    return this.http.get(url, data).map(res => res.json());
   }
 
   delete(data) {
