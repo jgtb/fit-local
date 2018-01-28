@@ -3,8 +3,6 @@ import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angul
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { CalendarioPage } from '../../pages/calendario/calendario';
-
 import { CalendarioProvider } from '../../providers/calendario/calendario';
 
 import { Util } from '../../util';
@@ -56,11 +54,11 @@ export class TreinoModalPage {
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg.toString(), tempo: this.time, datahora: this.getDateTime()})
       this.calendarioProvider.create(data).subscribe(
         data => {
-          if (data['_body']) {
-            this.navCtrl.push(CalendarioPage);
-          } else {
+          if (data['_body']) 
+            this.util.showAlert('Atenção', 'Treino registrado.', 'Ok', true);
+          else
             this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
-          }
+          this.viewCtrl.dismiss();
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);

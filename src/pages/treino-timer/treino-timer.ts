@@ -72,6 +72,8 @@ export class TreinoTimerPage {
         this.nativeAudio.play('alarm');
       if(this.timer.display!=0)
         this.time();
+      if(this.timer.display<0)
+        this.navCtrl.pop();
     }, 1000);
   }
 

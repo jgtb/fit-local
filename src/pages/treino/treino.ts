@@ -6,6 +6,7 @@ import { IonicImageLoader } from 'ionic-image-loader';
 
 import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer';
 import { TreinoModalPage } from '../../pages/treino-modal/treino-modal';
+import { CalendarioPage } from '../../pages/calendario/calendario';
 
 import { SerieProvider } from '../../providers/serie/serie';
 
@@ -80,6 +81,9 @@ export class TreinoPage {
   create() {
     const modal = this.modalCtrl.create(TreinoModalPage, {id_serie: this.data.id_serie, time: this.timer.display});
     modal.present();
+    modal.onDidDismiss(data => {
+      this.navCtrl.push(CalendarioPage);
+    });
   }
 
   update(item) {

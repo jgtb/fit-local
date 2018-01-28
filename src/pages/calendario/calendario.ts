@@ -65,6 +65,9 @@ export class CalendarioPage {
   create() {
     const modal = this.modalCtrl.create(TreinoFormPage);
     modal.present();
+    modal.onDidDismiss(data => {
+      this.refreshData();
+    });
   }
 
   loadTreinos() {

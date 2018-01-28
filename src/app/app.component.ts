@@ -29,7 +29,7 @@ export class MyApp {
       this.setRoot();
       this.appConfig();
       statusBar.styleDefault();
-      splashScreen.hide();
+      //splashScreen.hide();
     });
   }
 
