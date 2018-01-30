@@ -82,7 +82,9 @@ export class TreinoPage {
     const modal = this.modalCtrl.create(TreinoModalPage, {id_serie: this.data.id_serie, time: this.timer.display});
     modal.present();
     modal.onDidDismiss(data => {
-      this.navCtrl.push(CalendarioPage);
+      if (typeof data != 'undefined') {
+        this.navCtrl.push(CalendarioPage, {hasNewTreino: true});
+      }
     });
   }
 
@@ -150,7 +152,7 @@ export class TreinoPage {
       this.time();
     }, 1000);
   }
-  
+
   getSecondsAsDigitalClock(inputSeconds: number) {
     var sec_num = parseInt(inputSeconds.toString(), 10); // don't forget the second param
     var hours   = Math.floor(sec_num / 3600);

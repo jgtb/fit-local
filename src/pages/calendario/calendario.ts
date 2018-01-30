@@ -55,7 +55,7 @@ export class CalendarioPage {
       this.util.showAlert('Atenção', 'Treino Registrado!', 'Ok', true);
       this.refreshData();
     }
-  }
+  } 
 
   select(result) {
     this.data = result;
@@ -66,7 +66,10 @@ export class CalendarioPage {
     const modal = this.modalCtrl.create(TreinoFormPage);
     modal.present();
     modal.onDidDismiss(data => {
-      this.refreshData();
+      if (typeof data != 'undefined') {
+        this.util.showAlert('Atenção', 'Treino Registrado.', 'Ok', true);
+        this.refreshData();
+      }
     });
   }
 
@@ -110,7 +113,7 @@ export class CalendarioPage {
     const title = event.title;
     const subtitle = this.getSubtitle(event);
     const button = 'Ok';
-    
+
     if(event.tipo=='h'){
       const alert = this.alertCtrl.create({
         title: title,

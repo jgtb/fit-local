@@ -54,11 +54,11 @@ export class TreinoModalPage {
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg.toString(), tempo: this.time, datahora: this.getDateTime()})
       this.calendarioProvider.create(data).subscribe(
         data => {
-          if (data['_body']) 
-            this.util.showAlert('Atenção', 'Treino registrado.', 'Ok', true);
-          else
+          if (data['_body']) {
+            this.viewCtrl.dismiss({hasNewTreino: true});
+          } else {
             this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
-          this.viewCtrl.dismiss();
+          }
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
