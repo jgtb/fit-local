@@ -1,10 +1,7 @@
 .ios, .md, .wp {
 	page-grafico {
-		.content {
-			height: 70%;
-		}
 		.logo {
-	    	width: 40px;
+	    width: 40px;
 			height: 40px;
 			margin-left: 5px;
 			border-radius: 50%;
@@ -13,7 +10,6 @@
 			background-color: transparent;
 			border-bottom: none;
 			font-size: 1.4rem;
-			
 			.sessao {
 				margin-bottom: 25px;
 			}
@@ -30,14 +26,6 @@
 					border-bottom: none;
 				}
 			}
-		}
-		.chart {
-			width: 100%;
-			height: 30%;
-			bottom: 0px;
-			margin-bottom: 0px;
-			position: fixed;
-			display: flex;
 		}
 	}
 }

@@ -8,15 +8,12 @@
     <ion-title>Gráficos</ion-title>
   </ion-navbar>
 </ion-header>
-  
+
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')">
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-grid [ngStyle]="layout.setBackgroundColor('dark')" class="chart" ion-fixed>
-    <canvas #chart></canvas>
-  </ion-grid>
-  
+
   <ion-list>
     <ion-item *ngFor="let data of dataGrafico; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')" >
       <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>
@@ -27,3 +24,8 @@
   </ion-list>
 </ion-content>
 
+<ion-footer>
+  <ion-grid [ngStyle]="layout.setBackgroundColor('dark')">
+    <canvas #chart></canvas>
+  </ion-grid>
+</ion-footer>
