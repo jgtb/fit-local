@@ -1,8 +1,8 @@
 <ion-header>
-  <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
+  <ion-navbar hideBackButton [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'danger')">
     <ion-buttons left>
       <div (click)="goToDashboard()">
-        <ion-icon class="page-icon-menu" name="menu" [ngStyle]="layout.setColor('light')"></ion-icon>
+        <ion-icon class="page-icon-menu" name="menu" [ngStyle]="layout.setColor('danger')"></ion-icon>
       </div>
     </ion-buttons>
     <ion-title>Avaliações</ion-title>
@@ -22,8 +22,8 @@
   </ion-list>
 
   <ion-fab top right>
-    <button ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('primary')" (click)="create()">
-      <ion-icon [ngStyle]="layout.setColor('light')" name="add"></ion-icon>
+    <button ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('terciary')" (click)="create()">
+      <ion-icon [ngStyle]="layout.setColor('danger')" name="add"></ion-icon>
     </button>
   </ion-fab>
 
