@@ -48,8 +48,8 @@ export class LoginPage {
 
   initForm() {
     this.data = this.formBuilder.group({
-      usuario: ['aluno', Validators.required],
-      senha: ['aluno', Validators.required]
+      usuario: ['', Validators.required],
+      senha: ['',  Validators.required]
     });
   }
 
@@ -128,6 +128,7 @@ export class LoginPage {
         this.util.setStorage('dataMensagem', data);
     });
     this.navCtrl.push(DashboardPage);
+    this.navCtrl.setRoot(DashboardPage);
   }
 
   forgotPassword() {

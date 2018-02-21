@@ -24,14 +24,15 @@ export class TreinoTimerPage {
   rounded: boolean = false
   responsive: boolean = false
   clockwise: boolean = true
-  color: string = this.layout.colors.light
-  background: string = this.layout.colors.dark
+  color: string = this.layout.colors.primary
+  background: string = this.layout.colors.darklight
   duration: number = 500
   animation: string = 'easeOutCubic'
   animationDelay: number = 0
   animations: string[] = []
   gradient: boolean = false
   realCurrent: number = 0
+  vibrate: boolean = false
 
   subscription
   running = false
@@ -47,6 +48,10 @@ export class TreinoTimerPage {
   }
 
   ionViewDidEnter() {}
+
+  ionViewWillLeave(){
+    this.vibrate = false;
+  }
 
   ionViewDidLoad() {
     this.timer.display = this.data.intervalo;
@@ -66,9 +71,9 @@ export class TreinoTimerPage {
       this.timer.now = Math.floor((new Date()).getTime()/1000);
       this.timer.time = (this.timer.now-this.timer.start);
       this.timer.display = this.data.intervalo-this.timer.time;
-      if(this.timer.display<=5)
+      if(this.timer.display<=5 && this.vibrate)
         this.vibration.vibrate(1000);
-      if(this.timer.display==3)
+      if(this.timer.display==3 && this.vibrate)
         this.nativeAudio.play('alarm');
       if(this.timer.display!=0)
         this.time();

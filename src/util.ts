@@ -9,8 +9,8 @@ import { Layout } from './layout';
 export class Util {
 
   //baseUrl = 'http://fit.nexur.com.br';
-  baseUrl = 'http://localhost/personal/web';
-  //baseUrl = 'http://homolog.nexur.com.br/web';
+  //baseUrl = 'http://localhost/personal/web';
+  baseUrl = 'http://homolog.nexur.com.br/web';
 
   logo: any;
 
@@ -30,15 +30,15 @@ export class Util {
     return JSON.parse(localStorage.getItem(key));
   }
 
-  setLogout() {
-    this.setStorage('isLogged', 'false');
-  }
-
   isLogged() {
     if (this.getStorage('isLogged') === 'true')
       return true;
 
     return false;
+  }
+
+  logout(){
+    this.setStorage('isLogged', 'false');
   }
 
   showLoading() {

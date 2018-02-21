@@ -32,8 +32,13 @@ export class DashboardPage {
   pontos: number;
 
   showPontos: boolean;
+  showRanking: boolean;
 
   menu: Array<{title: string, component: any, icon: string, class: string}>;
+
+  width: number;
+
+  height: number;
 
   constructor(
     public navCtrl: NavController,
@@ -42,18 +47,14 @@ export class DashboardPage {
     public rankingProvider: RankingProvider,
     public facebook: Facebook,
     public util: Util,
-    public layout: Layout) {
-    this.initMenu();
-  }
+    public layout: Layout) {}
 
-  ionViewDidEnter() {
-    this.userImg = this.util.getStorage('facebookId');
+  ionViewWillLeave(){
     this.doRefresh();
-    this.initMenu();
   }
 
-  ionViewDidLoad() {
-    this.isActive();
+  ionViewWillEnter(){
+    this.doRefresh();
   }
 
   initMenu() {
@@ -66,9 +67,9 @@ export class DashboardPage {
     if (this.util.getStorage('showReserva') === 'true')
       this.menu.push({ title: 'Reservas', component: ReservaPage, icon: 'ios-create', class: '' });
     
-    if (this.util.getStorage('showRanking') === 'true')
+    if (this.showRanking === true)
       this.menu.push({ title: 'Ranking', component: RankingPage, icon: 'md-podium', class: '' });
-    
+
     const classe = this.menu.length%2==0?'m-l-25p':'';
     this.menu.push({ title: 'Informações', component: InformacaoPage, icon: 'ios-information-circle', class: classe })
 
@@ -91,21 +92,27 @@ export class DashboardPage {
     this.authProvider.isActive().subscribe(
       data => {
         if (data['_body']=="") {
-          this.util.setLogout();
+          this.util.logout();
           this.navCtrl.setRoot(LoginPage);
         }
       });
   }
 
   doRefresh() {
+    this.isActive();
+    this.initMenu();
+    this.userImg = this.util.getStorage('facebookId');
+    
     this.rankingProvider.getGrupo().subscribe(
       data=>{
-        if(data['_body']==='0'){
+        if(data['_body']==='0' || data['_body']===''){
           this.showPontos = false;
+          this.showRanking = false;
           this.util.setStorage('showRanking','false');
         }
         else{
           this.showPontos = true;
+          this.showRanking = true;
           this.util.setStorage('showRanking', 'true');
           this.updatePontos();
         }
@@ -125,8 +132,8 @@ export class DashboardPage {
   }
 
   logout() {
-    this.util.setLogout();
-    this.navCtrl.push(LoginPage);
+    this.util.logout();
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

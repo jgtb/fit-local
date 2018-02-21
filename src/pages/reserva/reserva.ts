@@ -25,6 +25,7 @@ export class ReservaPage {
     locale: 'pt-BR',
     noEventsLabel: 'Nenhuma Reserva',
     currentDate: new Date(),
+    formatWeekViewDayHeader: 'EEE',
   };
 
   constructor(
@@ -32,11 +33,10 @@ export class ReservaPage {
     public navParams: NavParams,
     public reservaProvider: ReservaProvider,
     public util: Util,
-    public layout: Layout) {
-      this.data = this.util.getStorage('dataReserva');
-    }
+    public layout: Layout) {}
 
   ionViewDidLoad() {
+    this.data = this.util.getStorage('dataReserva');
     this.select(this.data);
   }
 
@@ -181,7 +181,7 @@ export class ReservaPage {
   }
 
   onViewTitleChanged(title) {
-    this.title = title.split(',')[0];
+    this.title = 'Aulas';
   }
 
   doRefresh(event) {

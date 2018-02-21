@@ -16,7 +16,7 @@ import { Util } from '../util';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = LoginPage;
+  rootPage: any = this.util.isLogged()?DashboardPage:LoginPage;
 
   constructor(
     platform: Platform,
@@ -26,10 +26,8 @@ export class MyApp {
     public authProvider: AuthProvider,
     public util: Util) {
     platform.ready().then(() => {
-      this.setRoot();
       this.appConfig();
       statusBar.styleDefault();
-      //splashScreen.hide();
     });
   }
 
@@ -47,18 +45,6 @@ export class MyApp {
     this.oneSignal.startInit(config.oneSignalId, config.fireBaseId);
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
     this.oneSignal.endInit();
-  }
-
-  setRoot() {
-    this.authProvider.isActive().subscribe(
-      data => {
-        if (!data['_body']) {
-          this.rootPage = LoginPage;
-          this.util.setLogout();
-        } else {
-          this.rootPage = DashboardPage;
-        }
-      });
   }
 
 }
