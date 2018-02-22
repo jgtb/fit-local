@@ -32,7 +32,7 @@ export class MyApp {
   }
 
   appConfig() {
-    const key = 'Moov';
+    const key = 'personal-group';
 
     this.authProvider.appConfig().subscribe(
       data => {
