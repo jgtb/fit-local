@@ -32,7 +32,7 @@ export class TreinoTimerPage {
   animations: string[] = []
   gradient: boolean = false
   realCurrent: number = 0
-  vibrate: boolean = false
+  jstimer: any
 
   subscription
   running = false
@@ -50,7 +50,7 @@ export class TreinoTimerPage {
   ionViewDidEnter() {}
 
   ionViewWillLeave(){
-    this.vibrate = false;
+    clearTimeout(this.jstimer);
   }
 
   ionViewDidLoad() {
@@ -66,19 +66,17 @@ export class TreinoTimerPage {
   }
 
   time() {
-    setTimeout(() => {
+    this.jstimer = setTimeout(() => {
       if (!this.timer.running) { return; }
       this.timer.now = Math.floor((new Date()).getTime()/1000);
       this.timer.time = (this.timer.now-this.timer.start);
       this.timer.display = this.data.intervalo-this.timer.time;
-      if(this.timer.display<=5 && this.vibrate)
+      if(this.timer.display<=5)
         this.vibration.vibrate(1000);
-      if(this.timer.display==3 && this.vibrate)
+      if(this.timer.display==3)
         this.nativeAudio.play('alarm');
-      if(this.timer.display!=0)
+      if(this.timer.display>0)
         this.time();
-      if(this.timer.display<0)
-        this.navCtrl.pop();
     }, 1000);
   }
 
