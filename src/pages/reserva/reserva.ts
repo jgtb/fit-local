@@ -46,28 +46,30 @@ export class ReservaPage {
   }
 
   loadReservas() {
-    return this.data.map(obj => {
+    if(this.data){
+      return this.data.map(obj => {
 
-      let id = obj.id,
-          title = obj.title,
-          time = obj.tempo,
-          start = obj.start,
-          end = obj.end,
-          vagas = obj.vagas;
+        let id = obj.id,
+            title = obj.title,
+            time = obj.tempo,
+            start = obj.start,
+            end = obj.end,
+            vagas = obj.vagas;
 
-      let startTime = new Date(start.replace(/-/g,'/')),
-          endTime = new Date(end.replace(/-/g,'/'));
+        let startTime = new Date(start.replace(/-/g,'/')),
+            endTime = new Date(end.replace(/-/g,'/'));
 
-      return {
-        id: id,
-        title: title,
-        startTime: startTime,
-        endTime: endTime,
-        time: time,
-        vagas: vagas,
-        allDay: false
-      }
-    });
+        return {
+          id: id,
+          title: title,
+          startTime: startTime,
+          endTime: endTime,
+          time: time,
+          vagas: vagas,
+          allDay: false
+        }
+      });
+    }
   }
 
   canReserva(item) {

@@ -15,7 +15,7 @@ export class Layout {
     dark:       '#eeeeee',      //cor de fundo 
     primary:    '#0000ff',      //cor dos botões
     secondary:  '#0000ff',      //cor da barra superior
-    terciary:   '#1A3DD6',      //cor do botão da barra superior
+    terciary:   '#0000B2',      //cor do botão da barra superior
     danger:     'white',        //cor dos ícones dos botões do menu e título
     light:      'black',        //cor do texto
     darklight:  '#ffffff'       //cor de fundo da lista
