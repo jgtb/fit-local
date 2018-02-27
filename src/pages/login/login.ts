@@ -87,7 +87,7 @@ export class LoginPage {
     this.util.setStorage('logo', id_professor);
     this.util.setStorage('id_aluno', id_aluno);
     this.util.setStorage('id_professor', id_professor);
-    this.util.setStorage('facebookId', facebookId==''?'assets/img/facebook.png':facebookId);
+    this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
 
     this.playerId(id_usuario);
 

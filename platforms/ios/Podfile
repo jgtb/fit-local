@@ -2,5 +2,5 @@
 platform :ios, '8.0'
 target 'Fit' do
 	project 'Fit.xcodeproj'
-	pod 'OneSignal', '2.6.0'
+	pod 'OneSignal', '2.7.1'
 end

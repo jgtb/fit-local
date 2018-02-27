@@ -66,7 +66,7 @@ export class DashboardPage {
 
     if (this.util.getStorage('showReserva') === 'true')
       this.menu.push({ title: 'Reservas', component: ReservaPage, icon: 'ios-create', class: '' });
-    
+
     if (this.showRanking === true)
       this.menu.push({ title: 'Ranking', component: RankingPage, icon: 'md-podium', class: '' });
 
@@ -102,7 +102,7 @@ export class DashboardPage {
     this.isActive();
     this.initMenu();
     this.userImg = this.util.getStorage('facebookId');
-    
+
     this.rankingProvider.getGrupo().subscribe(
       data=>{
         if(data['_body']==='0' || data['_body']===''){
@@ -125,15 +125,21 @@ export class DashboardPage {
       data => {
         this.util.setStorage('ranking', data);
         if(data[1].length!=0){
-          const item = data[1].find(el => el.id_aluno == this.util.getStorage('id_aluno')); 
-          this.pontos = item ? item.pontos : 0; 
+          const item = data[1].find(el => el.id_aluno == this.util.getStorage('id_aluno'));
+          this.pontos = item ? item.pontos : 0;
         }
       });
   }
 
   logout() {
-    this.util.logout();
-    this.navCtrl.setRoot(LoginPage);
+    if (this.util.checkNetwork()) {
+      this.authProvider.playerId(this.util.getStorage('id_aluno'), '').subscribe(res => {
+        this.util.logout();
+        this.navCtrl.setRoot(LoginPage);
+      });
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
+    }
   }
 
 }

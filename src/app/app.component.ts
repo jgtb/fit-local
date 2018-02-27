@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { OneSignal } from '@ionic-native/onesignal';
+import { Badge } from '@ionic-native/badge';
 
 import { AuthProvider } from '../providers/auth/auth';
 
@@ -26,6 +27,7 @@ export class MyApp {
     splashScreen: SplashScreen,
     public oneSignal: OneSignal,
     public authProvider: AuthProvider,
+    public badge: Badge,
     public util: Util) {
     platform.ready().then(() => {
       this.appConfig();
@@ -42,13 +44,16 @@ export class MyApp {
         this.allowPushNotification(config);
     });
   }
-
-
+  
   allowPushNotification(config) {
     this.oneSignal.startInit(config.oneSignalId, config.fireBaseId);
-    this.oneSignal.handleNotificationOpened().subscribe(() => { 
+    this.oneSignal.handleNotificationReceived().subscribe(() => {
+      this.badge.increase(1);
+    });
+    this.oneSignal.handleNotificationOpened().subscribe(() => {
+      this.badge.decrease(1);
       this.nav.push(InformacaoPage);
-    });   
+    });
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
     this.oneSignal.endInit();
   }
