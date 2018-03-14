@@ -1,9 +1,0 @@
-{
-    "libz.tbd": 2,
-    "WebKit.framework": 1,
-    "Foundation.framework": 1,
-    "AVFoundation.framework": 1,
-    "AudioToolbox.framework": 2,
-    "SystemConfiguration.framework": 2,
-    "CoreTelephony.framework": 1
-}
