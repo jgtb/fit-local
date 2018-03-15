@@ -19,15 +19,14 @@ export class AvaliacaoFormProvider {
     return this.http.get(url).map(res => res.json());
   }
 
-  save(data){
+  save(data) {
     const indexURL = '/avaliacao-aluno/salvar-app';
     const url = this.util.baseUrl + indexURL;
-    let headers = new Headers();
-    headers.append('authorization',this.util.getStorage('hash'));
 
-    console.log(data);
+    let headers = new Headers();
+    headers.append('Authorization', this.util.getStorage('hash'));
+
     return this.http.post(url, data, new RequestOptions({ headers: headers }));
-    
   }
 
 }

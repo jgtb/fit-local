@@ -6,6 +6,11 @@
       </div>
     </ion-buttons>
     <ion-title>Avaliações</ion-title>
+    <ion-buttons right>
+      <button ion-button icon-only class="btn-circle" (click)="create()" [ngStyle]="layout.setBackgroundColor('terciary')">
+        <ion-icon [ngStyle]="layout.setColor('danger')" name="add"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -15,16 +20,16 @@
   </ion-refresher>
 
   <ion-list>
-    <ion-item *ngFor="let item of data; let i = index;" (click)="view(item)" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
-      <span>{{ item?.descricao }}</span>
-      <span item-end>{{ item?.data }}</span>
-    </ion-item>
+    <ion-item-sliding *ngFor="let item of data; let i = index;">
+      <ion-item (click)="view(item)" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
+        <span>{{ item?.descricao }}</span>
+        <span item-end>{{ item?.data }}</span>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button (click)="delete(item)" [ngStyle]="layout.setBackgroundColor('terciary')">
+          <span [ngStyle]="layout.setColor('danger')">Apagar</span>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
-
-  <ion-fab top right>
-    <button ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('terciary')" (click)="create()">
-      <ion-icon [ngStyle]="layout.setColor('danger')" name="add"></ion-icon>
-    </button>
-  </ion-fab>
-
 </ion-content>
