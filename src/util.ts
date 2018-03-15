@@ -38,7 +38,7 @@ export class Util {
   }
 
   logout(){
-    this.setStorage('isLogged', 'false');
+    localStorage.clear()
   }
 
   showLoading() {
@@ -93,12 +93,12 @@ export class Util {
   }
 
   serialize (mixedValue) {
-    
+
     var val, key, okey
     var ktype = ''
     var vals = ''
     var count = 0
-  
+
     var _utf8Size = function (str) {
       var size = 0
       var i = 0
@@ -116,18 +116,18 @@ export class Util {
       }
       return size
     }
-  
+
     var _getType = function (inp) {
       var match
       var key
       var cons
       var types
       var type = typeof inp
-  
+
       if (type === 'object' && !inp) {
         return 'null'
       }
-  
+
       if (type === 'object') {
         if (!inp.constructor) {
           return 'object'
@@ -147,9 +147,9 @@ export class Util {
       }
       return type
     }
-  
+
     var type = _getType(mixedValue)
-  
+
     switch (type) {
       case 'function':
         val = ''
@@ -166,14 +166,14 @@ export class Util {
       case 'array':
       case 'object':
         val = 'a'
-  
+
         for (key in mixedValue) {
           if (mixedValue.hasOwnProperty(key)) {
             ktype = _getType(mixedValue[key])
             if (ktype === 'function') {
               continue
             }
-  
+
             okey = (key.match(/^[0-9]+$/) ? parseInt(key, 10) : key)
             vals += this.serialize(okey) + this.serialize(mixedValue[key])
             count++
@@ -189,7 +189,7 @@ export class Util {
     if (type !== 'object' && type !== 'array') {
       val += ';'
     }
-  
+
     return val
   }
 

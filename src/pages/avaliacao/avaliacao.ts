@@ -45,6 +45,35 @@ export class AvaliacaoPage {
     this.navCtrl.push(AvaliacaoViewPage, { item: item });
   }
 
+  delete(id) {
+    const title = 'Deseja Apagar?';
+    const message = '';
+    const buttons = [
+      {
+        text: 'Confirmar',
+        handler: data => {
+          this.doDelete(data);
+        }
+      },
+      {
+        text: 'Cancelar',
+        role: 'cancel',
+      }
+    ];
+    this.util.showConfirmationAlert(title, message, null, buttons, true);
+  }
+
+  doDelete(id) {
+    if (this.util.checkNetwork()) {
+      this.avaliacaoProvider.delete(id).subscribe(
+      data => {
+        
+      });
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+    }
+  }
+
   doRefresh(event) {
     this.refresh();
     setTimeout(() => { event.complete(); }, 2000);
@@ -54,7 +83,7 @@ export class AvaliacaoPage {
     this.navCtrl.popToRoot();
   }
 
-  refresh(){
+  refresh() {
     if (this.util.checkNetwork()) {
       this.avaliacaoProvider.index(this.util.getStorage('id_aluno')).subscribe(
       data => {
@@ -65,6 +94,6 @@ export class AvaliacaoPage {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }
   }
-  
+
 
 }

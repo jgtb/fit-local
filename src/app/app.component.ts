@@ -18,7 +18,7 @@ import { Util } from '../util';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = this.util.isLogged()?DashboardPage:LoginPage;
+  rootPage: any = this.util.isLogged() ? DashboardPage : LoginPage;
   @ViewChild(Nav) nav: Nav;
 
   constructor(
@@ -44,7 +44,7 @@ export class MyApp {
         //this.allowPushNotification(config);
     });
   }
-  
+
   allowPushNotification(config) {
     this.oneSignal.startInit(config.oneSignalId, config.fireBaseId);
     this.oneSignal.handleNotificationReceived().subscribe(() => {

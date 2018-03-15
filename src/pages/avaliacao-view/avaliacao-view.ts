@@ -35,6 +35,7 @@ export class AvaliacaoViewPage {
     this.select(this.dataAvaliacoes);
   }
 
+<<<<<<< HEAD
   select(result) { 
     this.dataAvaliacoes = result 
     .filter((elem, index, arr) => elem.id === this.data.id && elem.resposta !== ''); 
@@ -44,6 +45,16 @@ export class AvaliacaoViewPage {
     }   
 
   
+=======
+  select(result) {
+    this.dataAvaliacoes = result
+      .filter((elem, index, arr) => elem.id === this.data.id && elem.resposta !== '');
+    this.dataSessoes = this.dataAvaliacoes
+      .filter((elem, index, arr) => arr.map(obj => obj['id_sessao']).indexOf(elem['id_sessao']) === index);
+    this.data = this.dataAvaliacoes[0];
+  }
+
+>>>>>>> 18c3541fead736286aa6a9b8c466bc96ac37703c
   selectPerguntas(item) {
     return this.dataAvaliacoes.filter((elem) => elem.id_sessao === item.id_sessao && elem.resposta != "");
   }

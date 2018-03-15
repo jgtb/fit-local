@@ -19,4 +19,11 @@ export class AvaliacaoProvider {
     return this.http.get(url).map(res => res.json());
   }
 
+  delete(id_avaliacao) {
+    const indexURL = '/avaliacao-aluno/delete?id_avaliacao=';
+    const url = this.util.baseUrl + indexURL + id_avaliacao;
+
+    return this.http.get(url);
+  }
+
 }
