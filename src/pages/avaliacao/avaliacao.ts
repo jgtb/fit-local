@@ -45,19 +45,19 @@ export class AvaliacaoPage {
     this.navCtrl.push(AvaliacaoViewPage, { item: item });
   }
 
-  delete(id) {
+  delete(av) {
     const title = 'Deseja Apagar?';
     const message = '';
     const buttons = [
       {
-        text: 'Confirmar',
-        handler: data => {
-          this.doDelete(data);
-        }
-      },
-      {
         text: 'Cancelar',
         role: 'cancel',
+      },
+      {
+        text: 'Confirmar',
+        handler: data => {
+          this.doDelete(av.id);
+        }
       }
     ];
     this.util.showConfirmationAlert(title, message, null, buttons, true);
@@ -65,10 +65,15 @@ export class AvaliacaoPage {
 
   doDelete(id) {
     if (this.util.checkNetwork()) {
-      this.avaliacaoProvider.delete(id).subscribe(
+      this.avaliacaoProvider.delete({id_avaliacao_aluno:id, id_usuario:this.util.getStorage('id_usuario')}).subscribe(
       data => {
-        
-      });
+        if (data['_body']==1) {
+          this.util.showAlert('Atenção', 'Avaliação apagada.', 'Ok', true);
+          this.refresh();
+        } else {
+          this.util.showAlert('Atenção', 'Erro ao apagar. Tente mais tarde.', 'Ok', true);
+        }
+    });
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
     }

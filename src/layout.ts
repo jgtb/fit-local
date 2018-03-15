@@ -10,7 +10,6 @@ export class Layout {
     danger:     ''
   };
 
-  //#F9C736
   colors = {
     dark:       '',
     primary:    '',

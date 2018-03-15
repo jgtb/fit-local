@@ -26,8 +26,8 @@
         <span item-end>{{ item?.data }}</span>
       </ion-item>
       <ion-item-options side="right">
-        <button ion-button (click)="delete(item)" [ngStyle]="layout.setBackgroundColor('terciary')">
-          <span [ngStyle]="layout.setColor('danger')">Apagar</span>
+        <button ion-button (click)="delete(item)" style="background:red">
+          <ion-icon name="ios-trash"></ion-icon>
         </button>
       </ion-item-options>
     </ion-item-sliding>
