@@ -59,7 +59,7 @@ export class DashboardPage {
 
   initMenu() {
     this.menu = [];
-    this.menu.push({ title: 'Treinos', component: SeriePage, icon: 'ios-man', class: '' });
+    this.menu.push({ title: 'Treinos', component: SeriePage, icon: 'ios-man', class: '' }); //ion-ios-body
     this.menu.push({ title: 'Avaliações', component: AvaliacaoPage, icon: 'ios-document', class: '' });
     this.menu.push({ title: 'Gráficos', component: GraficoPage, icon: 'md-trending-up', class: '' });
     this.menu.push({ title: 'Calendário', component: CalendarioPage, icon: 'ios-calendar', class: '' });
@@ -100,7 +100,7 @@ export class DashboardPage {
 
   doRefresh() {
     this.isActive();
-    this.initMenu();
+    
     this.userImg = this.util.getStorage('facebookId');
 
     this.rankingProvider.getGrupo().subscribe(
@@ -109,12 +109,14 @@ export class DashboardPage {
           this.showPontos = false;
           this.showRanking = false;
           this.util.setStorage('showRanking','false');
+          this.initMenu();
         }
         else{
           this.showPontos = true;
           this.showRanking = true;
           this.util.setStorage('showRanking', 'true');
           this.updatePontos();
+          this.initMenu();
         }
     });
 
@@ -133,7 +135,7 @@ export class DashboardPage {
 
   logout() {
     if (this.util.checkNetwork()) {
-      this.authProvider.playerId(this.util.getStorage('id_aluno'), '').subscribe(res => {
+      this.authProvider.playerId(this.util.getStorage('id_usuario'), '').subscribe(res => {
         this.util.logout();
         this.navCtrl.setRoot(LoginPage);
       });

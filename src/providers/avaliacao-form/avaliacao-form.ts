@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Util } from '../../util';
@@ -17,6 +17,17 @@ export class AvaliacaoFormProvider {
     const url = this.util.baseUrl + indexURL + id_professor;
 
     return this.http.get(url).map(res => res.json());
+  }
+
+  save(data){
+    const indexURL = '/avaliacao-aluno/salvar-app';
+    const url = this.util.baseUrl + indexURL;
+    let headers = new Headers();
+    headers.append('authorization',this.util.getStorage('hash'));
+
+    console.log(data);
+    return this.http.post(url, data, new RequestOptions({ headers: headers }));
+    
   }
 
 }

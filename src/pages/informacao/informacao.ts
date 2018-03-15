@@ -69,6 +69,7 @@ export class InformacaoPage {
       })
     this.informacaoProvider.indexMensagem(this.util.getStorage('id_aluno')).subscribe(
       data => {
+        console.log(data);
         this.util.setStorage('dataInformacao', data);
         this.selectMensagem(data);
       })

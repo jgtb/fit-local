@@ -30,7 +30,7 @@
               <ion-list radio-group [(ngModel)]="item.resposta">
                 <ion-item *ngFor="let radio of selectOpcoes(item.id_pergunta); let j = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
                   <ion-label item-start>{{ radio?.opcao }}</ion-label>
-                  <ion-radio item-end value="{{ radio?.id_opcao }}"></ion-radio>
+                  <ion-radio item-end value="{{ radio?.opcao }}"></ion-radio>
                 </ion-item>
               </ion-list>
             </div>
@@ -42,7 +42,7 @@
             <div *ngIf="isTipoPergunta(item.id_tipo_pergunta, 3)">
               <ion-item *ngFor="let checkbox of selectOpcoes(item.id_pergunta); let j = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
                 <ion-label item-start>{{ checkbox?.opcao }}</ion-label>
-                <ion-checkbox item-end [(ngModel)]="item.resposta[checkbox?.id_opcao]"></ion-checkbox>
+                <ion-checkbox item-end [(ngModel)]="item.resposta[checkbox?.opcao]"></ion-checkbox>
               </ion-item>
             </div>
             <div *ngIf="isTipoPergunta(item.id_tipo_pergunta, 5)">
@@ -55,5 +55,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <button ion-button [ngStyle]="layout.setBackgroundColor('primary')" block round *ngIf="id_avaliacao" (click)="save()">Salvar</button>
 
 </ion-content>

@@ -32,6 +32,16 @@
 				height: 80%;
 			}
 		}
+		.logout {
+			.logout-button {
+				border-radius: 50%;
+				height: 40px;
+				width: 40px;
+				top: 15px;
+				right: 15px;
+				position: fixed;
+			}
+		}
 		ion-card {
 			margin: 0;
 			text-align: center;

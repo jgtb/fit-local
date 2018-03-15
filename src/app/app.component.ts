@@ -41,7 +41,7 @@ export class MyApp {
     this.authProvider.appConfig().subscribe(
       data => {
         const config = data.filter(elem => elem.key === key)[0];
-        this.allowPushNotification(config);
+        //this.allowPushNotification(config);
     });
   }
   

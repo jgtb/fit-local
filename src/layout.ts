@@ -4,24 +4,44 @@ import { Injectable } from '@angular/core';
 export class Layout {
 
   loginColors = {
-    secondary:  '#0000ff',
-    light:      'black',
-    darklight:  '#ffffff',
-    danger:     'white'
+    secondary:  '',
+    light:      '',
+    darklight:  '',
+    danger:     ''
   };
 
   //#F9C736
   colors = {
-    dark:       '#eeeeee',      //cor de fundo 
-    primary:    '#0000ff',      //cor dos botões
-    secondary:  '#0000ff',      //cor da barra superior
-    terciary:   '#0000B2',      //cor do botão da barra superior
-    danger:     'white',        //cor dos ícones dos botões do menu e título
-    light:      'black',        //cor do texto
-    darklight:  '#ffffff'       //cor de fundo da lista
+    dark:       '',
+    primary:    '',
+    secondary:  '',
+    terciary:   '',
+    danger:     '',
+    light:      '',
+    darklight:  '' 
   };
 
-  constructor() {}
+  constructor() {
+    const cores = localStorage.getItem('cores').replace(/"/g,'').split(',');
+
+    this.colors = {
+        dark:       cores[0],     //cor de fundo 
+        primary:    cores[1],     //cor dos botões
+        secondary:  cores[2],     //cor da barra superior
+        terciary:   cores[3],     //cor do botão da barra superior
+        danger:     cores[4],     //cor dos ícones dos botões do menu e título
+        light:      cores[5],     //cor do texto
+        darklight:  cores[6]      //cor de fundo da lista
+    }
+
+    this.loginColors = {
+          secondary:  cores[2],
+          danger:     cores[4],
+          light:      cores[5],
+          darklight:  cores[6]
+      };
+              
+  }
 
   setBackgroundColor(type) {
     const color = {

@@ -29,7 +29,9 @@ export class AvaliacaoPage {
       this.select(this.data);
     }
 
-  ionViewDidLoad() {}
+  ionViewWillEnter() {
+    this.refresh();
+  }
 
   select(result) {
     this.data = result.filter((elem, index, arr) => arr.map(obj => obj['id']).indexOf(elem['id']) === index);
@@ -44,20 +46,25 @@ export class AvaliacaoPage {
   }
 
   doRefresh(event) {
-    if (this.util.checkNetwork()) {
-      this.avaliacaoProvider.index(this.util.getStorage('id_aluno')).subscribe(
-        data => {
-          this.util.setStorage('dataAvaliacao', data);
-          this.select(data);
-        });
-      } else {
-      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
-    }
+    this.refresh();
     setTimeout(() => { event.complete(); }, 2000);
   }
 
   goToDashboard() {
     this.navCtrl.popToRoot();
   }
+
+  refresh(){
+    if (this.util.checkNetwork()) {
+      this.avaliacaoProvider.index(this.util.getStorage('id_aluno')).subscribe(
+      data => {
+        this.util.setStorage('dataAvaliacao', data);
+        this.select(data);
+      });
+    } else {
+      this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);
+    }
+  }
+  
 
 }

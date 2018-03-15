@@ -21,8 +21,8 @@
 		</ion-grid>
 	</div>
 	<ion-fab top right>
-		<button ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('primary')" (click)="logout()">
+		<button (click)="logout()" ion-fab icon-only mini [ngStyle]="layout.setBackgroundColor('primary')">
 			<ion-icon [ngStyle]="layout.setColor('danger')" name="md-log-out"></ion-icon>
 		</button>
-  </ion-fab>
+  	</ion-fab>
 </ion-content>

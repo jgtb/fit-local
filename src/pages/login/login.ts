@@ -80,16 +80,20 @@ export class LoginPage {
     const facebookId = data[6];
     const cores = data[7];
     const grupo = data[8];
+    const hash = data[9];
 
     this.util.setStorage('isLogged', 'true');
     this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'false');
     this.util.setStorage('showRanking', grupo !== 0? 'true': 'false');
     this.util.setStorage('logo', id_professor);
     this.util.setStorage('id_aluno', id_aluno);
+    this.util.setStorage('id_usuario', id_usuario);
     this.util.setStorage('id_professor', id_professor);
     this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
+    this.util.setStorage('cores', cores);
+    this.util.setStorage('hash', hash);
 
-    this.playerId(id_usuario);
+    //this.playerId(id_usuario);
 
     this.serieProvider.index(id_aluno).subscribe(
       data => {
