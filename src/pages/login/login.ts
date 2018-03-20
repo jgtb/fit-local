@@ -98,6 +98,7 @@ export class LoginPage {
     this.util.setStorage('firebase_id', firebase_id);
 
     //this.playerId(id_usuario);
+    console.log(data);
 
     this.serieProvider.index(id_aluno).subscribe(
       data => {
