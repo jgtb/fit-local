@@ -21,7 +21,9 @@ export class Layout {
   };
 
   constructor() {
-    const cores = localStorage.getItem('cores').replace(/"/g,'').split(',');
+    if(localStorage.getItem('cores')){
+      var cores = localStorage.getItem('cores').replace(/"/g,'').split(',');
+    }
 
     if (cores) {
       this.colors = {

@@ -40,10 +40,10 @@ export class AuthProvider {
     return this.http.get(url);
   }
 
-  appConfig() {
+  /*appConfig() {
     const url = 'assets/one-signal/data.json';
 
     return this.http.get(url).map(res => res.json());
-  }
+  }*/
 
 }

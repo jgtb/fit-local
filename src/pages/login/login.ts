@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { OneSignal } from '@ionic-native/onesignal';
+import { Badge } from '@ionic-native/badge';
 
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
@@ -16,6 +17,7 @@ import { RankingProvider } from '../../providers/ranking/ranking';
 import { InformacaoProvider } from '../../providers/informacao/informacao';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
+import { InformacaoPage } from '../../pages/informacao/informacao';
 
 import { Util } from '../../util';
 
@@ -42,6 +44,7 @@ export class LoginPage {
     public rankingProvider: RankingProvider,
     public graficoProvider: GraficoProvider,
     public oneSignal: OneSignal,
+    public badge: Badge,
     public util: Util) {
       this.initForm();
     }
@@ -72,6 +75,8 @@ export class LoginPage {
     }
   }
 
+
+
   doLogin(data) {
     const id_aluno = data[0];
     const id_professor = data[1];
@@ -94,12 +99,10 @@ export class LoginPage {
     this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
     this.util.setStorage('cores', cores);
     this.util.setStorage('hash', hash);
-    this.util.setStorage('app_id', app_id);
-    this.util.setStorage('firebase_id', firebase_id);
 
-    //this.playerId(id_usuario);
-    console.log(data);
-
+    this.allowPushNotification(app_id, firebase_id);
+    this.playerId(id_usuario);
+    
     this.serieProvider.index(id_aluno).subscribe(
       data => {
         this.util.setStorage('dataSerie', data);
@@ -178,6 +181,20 @@ export class LoginPage {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', false);
     }
   }
+
+  allowPushNotification(app_id,firebase_id) {
+    this.oneSignal.startInit(app_id, firebase_id);
+    this.oneSignal.handleNotificationReceived().subscribe(() => {
+      this.badge.increase(1);
+    });
+    this.oneSignal.handleNotificationOpened().subscribe(() => {
+      this.badge.decrease(1);
+      this.navCtrl.push(InformacaoPage);
+    });
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+    this.oneSignal.endInit();
+  }
+    
 
   playerId(userId) {
     this.oneSignal.getIds().then(
