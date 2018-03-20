@@ -81,7 +81,9 @@ export class LoginPage {
     const cores = data[7];
     const grupo = data[8];
     const hash = data[9];
-
+    const app_id = data[10];
+    const firebase_id = data[11];
+    
     this.util.setStorage('isLogged', 'true');
     this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'false');
     this.util.setStorage('showRanking', grupo !== 0? 'true': 'false');
@@ -92,6 +94,8 @@ export class LoginPage {
     this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
     this.util.setStorage('cores', cores);
     this.util.setStorage('hash', hash);
+    this.util.setStorage('app_id', app_id);
+    this.util.setStorage('firebase_id', firebase_id);
 
     //this.playerId(id_usuario);
 
