@@ -55,6 +55,7 @@ export class DashboardPage {
 
   ionViewWillEnter(){
     this.doRefresh();
+    this.setColors();
   }
 
   initMenu() {
@@ -96,6 +97,29 @@ export class DashboardPage {
           this.navCtrl.setRoot(LoginPage);
         }
       });
+  }
+
+  setColors(){
+    if(this.util.getStorage('cores')){
+      const cores = this.util.getStorage('cores').replace(/"/g,'').split(',')
+      this.layout.colors = {
+        dark:       cores[0],     //cor de fundo
+        primary:    cores[1],     //cor dos botões
+        secondary:  cores[2],     //cor da barra superior
+        terciary:   cores[3],     //cor do botão da barra superior
+        danger:     cores[4],     //cor dos ícones dos botões do menu e título
+        light:      cores[5],     //cor do texto
+        darklight:  cores[6]      //cor de fundo da lista
+      }
+
+      this.layout.loginColors = {
+        secondary:  cores[2],
+        danger:     cores[4],
+        light:      cores[5],
+        darklight:  cores[6]
+      };
+    }
+    
   }
 
   doRefresh() {

@@ -100,7 +100,8 @@ export class TreinoTimerPage {
       'transform': transform,
       '-moz-transform': transform,
       '-webkit-transform': transform,
-      'font-size': this.radius / 2.5 + 'px'
+      'font-size': this.radius / 2.5 + 'px',
+      'color': this.layout.colors.light
     };
 	}
 

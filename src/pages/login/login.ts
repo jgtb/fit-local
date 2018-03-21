@@ -100,11 +100,12 @@ export class LoginPage {
     this.util.setStorage('id_professor', id_professor);
     this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
     this.util.setStorage('hash', hash);
+    this.util.setStorage('cores', cores);
 
     
-    this.setColors(cores);
-    this.allowPushNotification(app_id, firebase_id);
-    this.playerId(id_usuario);
+    this.setColors(cores.replace(/"/g,'').split(','));
+    //this.allowPushNotification(app_id, firebase_id);
+    //this.playerId(id_usuario);
     
     this.serieProvider.index(id_aluno).subscribe(
       data => {
@@ -208,25 +209,22 @@ export class LoginPage {
   }
 
   setColors(cores){
-    const colors = cores.replace(/"/g,'').split(',');    
-
     this.layout.colors = {
-      dark:       colors[0],     //cor de fundo
-      primary:    colors[1],     //cor dos botões
-      secondary:  colors[2],     //cor da barra superior
-      terciary:   colors[3],     //cor do botão da barra superior
-      danger:     colors[4],     //cor dos ícones dos botões do menu e título
-      light:      colors[5],     //cor do texto
-      darklight:  colors[6]      //cor de fundo da lista
+      dark:       cores[0],     //cor de fundo
+      primary:    cores[1],     //cor dos botões
+      secondary:  cores[2],     //cor da barra superior
+      terciary:   cores[3],     //cor do botão da barra superior
+      danger:     cores[4],     //cor dos ícones dos botões do menu e título
+      light:      cores[5],     //cor do texto
+      darklight:  cores[6]      //cor de fundo da lista
     }
 
     this.layout.loginColors = {
-      secondary:  colors[2],
-      danger:     colors[4],
-      light:      colors[5],
-      darklight:  colors[6]
+      secondary:  cores[2],
+      danger:     cores[4],
+      light:      cores[5],
+      darklight:  cores[6]
     };
-    console.log(this.layout.colors);
   }
 
 }

@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
 
+import { Util } from 'util';
 @Injectable()
 export class Layout {
 
-  loginColors = {
-    secondary:  '',
-    light:      '',
-    darklight:  '',
-    danger:     ''
-  };
-
   colors = {
-    dark:       '',
-    primary:    '',
-    secondary:  '',
-    terciary:   '',
-    danger:     '',
-    light:      '',
-    darklight:  ''
-  };
-  
+    dark:       '#222222',     //cor de fundo
+    primary:    '#00664C',     //cor dos botões
+    secondary:  '#333333',     //cor da barra superior
+    terciary:   '#00664C',     //cor do botão da barra superior
+    danger:     '#ffffff',     //cor dos ícones dos botões do menu e título
+    light:      '#ffffff',     //cor do texto
+    darklight:  '#333333'      //cor de fundo da lista
+  }
+
+  loginColors = {
+    secondary:  '#333333',
+    danger:     '#ffffff',
+    light:      '#ffffff',
+    darklight:  '#333333'
+  }
 
   constructor() {
   }
