@@ -104,8 +104,8 @@ export class LoginPage {
 
     
     this.setColors(cores.replace(/"/g,'').split(','));
-    //this.allowPushNotification(app_id, firebase_id);
-    //this.playerId(id_usuario);
+    this.allowPushNotification(app_id, firebase_id);
+    this.playerId(id_usuario);
     
     this.serieProvider.index(id_aluno).subscribe(
       data => {
