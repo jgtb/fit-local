@@ -68,7 +68,7 @@ export class DashboardPage {
     if (this.util.getStorage('showReserva') === 'true')
       this.menu.push({ title: 'Reservas', component: ReservaPage, icon: 'ios-create', class: '' });
 
-    if (this.showRanking === true)
+    if (this.util.getStorage('showRanking') === 'true')
       this.menu.push({ title: 'Ranking', component: RankingPage, icon: 'md-podium', class: '' });
 
     const classe = this.menu.length%2==0?'m-l-25p':'';
@@ -124,7 +124,8 @@ export class DashboardPage {
 
   doRefresh() {
     this.isActive();
-    
+    this.initMenu();
+
     this.userImg = this.util.getStorage('facebookId');
 
     this.rankingProvider.getGrupo().subscribe(
@@ -133,17 +134,14 @@ export class DashboardPage {
           this.showPontos = false;
           this.showRanking = false;
           this.util.setStorage('showRanking','false');
-          this.initMenu();
         }
         else{
           this.showPontos = true;
           this.showRanking = true;
           this.util.setStorage('showRanking', 'true');
           this.updatePontos();
-          this.initMenu();
         }
     });
-
   }
 
   updatePontos(){
