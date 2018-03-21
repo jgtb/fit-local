@@ -19,30 +19,9 @@ export class Layout {
     light:      '',
     darklight:  ''
   };
+  
 
   constructor() {
-    if(localStorage.getItem('cores')){
-      var cores = localStorage.getItem('cores').replace(/"/g,'').split(',');
-    }
-
-    if (cores) {
-      this.colors = {
-        dark:       cores[0],     //cor de fundo
-        primary:    cores[1],     //cor dos botões
-        secondary:  cores[2],     //cor da barra superior
-        terciary:   cores[3],     //cor do botão da barra superior
-        danger:     cores[4],     //cor dos ícones dos botões do menu e título
-        light:      cores[5],     //cor do texto
-        darklight:  cores[6]      //cor de fundo da lista
-      }
-
-      this.loginColors = {
-        secondary:  cores[2],
-        danger:     cores[4],
-        light:      cores[5],
-        darklight:  cores[6]
-      };
-    }
   }
 
   setBackgroundColor(type) {

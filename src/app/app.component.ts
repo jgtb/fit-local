@@ -5,10 +5,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { DashboardPage } from '../pages/dashboard/dashboard';
-import { InformacaoPage } from '../pages/informacao/informacao';
-
-import { OneSignal } from '@ionic-native/onesignal';
-import { Badge } from '@ionic-native/badge';
 
 import { Util } from '../util';
 
@@ -23,12 +19,9 @@ export class MyApp {
     platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    public util: Util,
-    public oneSignal: OneSignal,
-    public badge: Badge) {
+    public util: Util) {
     platform.ready().then(() => {
       statusBar.styleDefault();
-      
     });
   }
 

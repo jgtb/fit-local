@@ -19,6 +19,7 @@ import { InformacaoProvider } from '../../providers/informacao/informacao';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { InformacaoPage } from '../../pages/informacao/informacao';
 
+import { Layout } from '../../layout';
 import { Util } from '../../util';
 
 @IonicPage()
@@ -45,7 +46,8 @@ export class LoginPage {
     public graficoProvider: GraficoProvider,
     public oneSignal: OneSignal,
     public badge: Badge,
-    public util: Util) {
+    public util: Util,
+    public layout: Layout) {
       this.initForm();
     }
 
@@ -97,9 +99,10 @@ export class LoginPage {
     this.util.setStorage('id_usuario', id_usuario);
     this.util.setStorage('id_professor', id_professor);
     this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
-    this.util.setStorage('cores', cores);
     this.util.setStorage('hash', hash);
 
+    
+    this.setColors(cores);
     this.allowPushNotification(app_id, firebase_id);
     this.playerId(id_usuario);
     
@@ -200,9 +203,30 @@ export class LoginPage {
     this.oneSignal.getIds().then(
       result => {
         const playerId = result.userId;
-
         this.authProvider.playerId(userId, playerId).subscribe();
       });
+  }
+
+  setColors(cores){
+    const colors = cores.replace(/"/g,'').split(',');    
+
+    this.layout.colors = {
+      dark:       colors[0],     //cor de fundo
+      primary:    colors[1],     //cor dos botões
+      secondary:  colors[2],     //cor da barra superior
+      terciary:   colors[3],     //cor do botão da barra superior
+      danger:     colors[4],     //cor dos ícones dos botões do menu e título
+      light:      colors[5],     //cor do texto
+      darklight:  colors[6]      //cor de fundo da lista
+    }
+
+    this.layout.loginColors = {
+      secondary:  colors[2],
+      danger:     colors[4],
+      light:      colors[5],
+      darklight:  colors[6]
+    };
+    console.log(this.layout.colors);
   }
 
 }
