@@ -99,7 +99,7 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-badge" spec="^0.8.7" />
     <engine name="browser" spec="^4.1.0" />
-    <engine name="android" spec="^6.2.0" />
     <plugin name="onesignal-cordova-plugin" spec="~2.2.5" />
     <engine name="ios" spec="~4.3.1" />
+    <engine name="android" spec="~6.3.0" />
 </widget>

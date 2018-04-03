@@ -13,14 +13,14 @@ export class AvaliacaoFormProvider {
     public util: Util) {}
 
   index(id_professor) {
-    const indexURL = '/avaliacao/avaliacao-app?id=';
+    const indexURL = '/fit/avaliacao-app?id=';
     const url = this.util.baseUrl + indexURL + id_professor;
 
     return this.http.get(url).map(res => res.json());
   }
 
   save(data) {
-    const indexURL = '/avaliacao-aluno/salvar-app';
+    const indexURL = '/fit/salvar-app';
     const url = this.util.baseUrl + indexURL;
 
     let headers = new Headers();

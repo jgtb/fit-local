@@ -13,21 +13,21 @@ export class CalendarioProvider {
     public util: Util) {}
 
   index(id_aluno) {
-    const indexURL = '/serie/treinos-app?id_aluno=';
+    const indexURL = '/fit/treinos-app?id_aluno=';
     const url = this.util.baseUrl + indexURL + id_aluno;
 
     return this.http.get(url).map(res => res.json());
   }
 
   create(data) {
-    const createURL = '/serie/mensagem';
+    const createURL = '/fit/mensagem';
     const url = this.util.baseUrl + createURL;
     
     return this.http.post(url, data);
   }
 
   delete(id){
-    const createURL = '/serie/apagatreino';
+    const createURL = '/fit/apagatreino';
     const url = this.util.baseUrl + createURL;
     
     const data = {id:id};

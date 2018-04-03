@@ -13,14 +13,14 @@ export class SerieProvider {
     public util: Util) {}
 
   index(id_aluno) {
-    const indexURL = '/serie/lista?id_aluno=' + id_aluno;
+    const indexURL = '/fit/treinos?id_aluno=' + id_aluno;
     const url = this.util.baseUrl + indexURL;
 
     return this.http.get(url).map(res => res.json());
   }
 
   updateCarga(data) {
-  	const updateCargaURL = '/serie/atualiza';
+  	const updateCargaURL = '/fit/atualiza';
     const url = this.util.baseUrl + updateCargaURL;
 
     return this.http.post(url, data);

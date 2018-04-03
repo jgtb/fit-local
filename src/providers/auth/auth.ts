@@ -13,37 +13,31 @@ export class AuthProvider {
     public util: Util) {}
 
   login(data) {
-    const loginURL = '/usuario/log';
+    const loginURL = '/fit/log';
     const url = this.util.baseUrl + loginURL;
 
     return this.http.post(url, data).map(res => res.json());
   }
 
   forgotPassword(data) {
-    const forgotPasswordURL = '/usuario/senha-app';
+    const forgotPasswordURL = '/fit/senha-app';
     const url = this.util.baseUrl + forgotPasswordURL;
 
     return this.http.post(url, data).map(res => res.json());
   }
 
   playerId(userId, playerId) {
-    const oneSignalURL = '/usuario/player-id?id=' + userId + '&player_id=' + playerId;
+    const oneSignalURL = '/fit/player-id?id=' + userId + '&player_id=' + playerId;
     const url = this.util.baseUrl + oneSignalURL;
 
     return this.http.get(url);
   }
 
   isActive() {
-    const ativoURL = '/usuario/ativo?id=';
+    const ativoURL = '/fit/ativo?id=';
     const url = this.util.baseUrl + ativoURL + this.util.getStorage('id_aluno');
 
     return this.http.get(url);
   }
-
-  /*appConfig() {
-    const url = 'assets/one-signal/data.json';
-
-    return this.http.get(url).map(res => res.json());
-  }*/
 
 }
