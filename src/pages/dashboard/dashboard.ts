@@ -38,7 +38,6 @@ export class DashboardPage {
 
   width: number;
   height: number;
-  time: number;
 
   constructor(
     public navCtrl: NavController,
@@ -56,7 +55,6 @@ export class DashboardPage {
   ionViewWillEnter(){
     this.doRefresh();
     this.setColors();
-    this.time = (new Date()).getTime();
   }
 
   initMenu() {

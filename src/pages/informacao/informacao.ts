@@ -20,8 +20,6 @@ export class InformacaoPage {
 
   tab: string = 'mensagem';
 
-  time: number;
-
   dataInformacao: any = [];
   dataMensagem: any = [];
 
@@ -37,7 +35,6 @@ export class InformacaoPage {
 
   ionViewWillEnter(){
     this.refreshData();
-    this.time = (new Date()).getTime();
   }
 
   selectInformacao(result) {
