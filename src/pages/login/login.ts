@@ -90,19 +90,20 @@ export class LoginPage {
     const hash = data[9];
     const app_id = data[10];
     const firebase_id = data[11];
+    const plano = data[12];
     
     this.util.setStorage('isLogged', 'true');
     this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'false');
     this.util.setStorage('showRanking', grupo !== 0? 'true': 'false');
-    this.util.setStorage('logo', id_professor);
+    
     this.util.setStorage('id_aluno', id_aluno);
     this.util.setStorage('id_usuario', id_usuario);
     this.util.setStorage('id_professor', id_professor);
     this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
     this.util.setStorage('hash', hash);
     this.util.setStorage('cores', cores);
+    plano>1?this.util.setStorage('logo', id_professor):this.util.setStorage('logo', 1);
 
-    
     this.setColors(cores.replace(/"/g,'').split(','));
     this.allowPushNotification(app_id, firebase_id);
     this.playerId(id_usuario);
