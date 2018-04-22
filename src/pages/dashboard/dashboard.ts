@@ -38,6 +38,7 @@ export class DashboardPage {
 
   width: number;
   height: number;
+  filetime: number;
 
   constructor(
     public navCtrl: NavController,
@@ -124,8 +125,16 @@ export class DashboardPage {
   doRefresh() {
     this.isActive();
     this.initMenu();
-
+    this.filetime = this.util.getStorage('filetime');
     this.userImg = this.util.getStorage('facebookId');
+    console.log(this.filetime);
+
+    this.authProvider.filetime().subscribe(
+      data=>{
+        if(data['_body']!=this.util.getStorage('filetime'))
+          this.util.setStorage('filetime',data['_body']);
+      }
+    );
 
     this.rankingProvider.getGrupo().subscribe(
       data=>{

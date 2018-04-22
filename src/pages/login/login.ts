@@ -77,8 +77,6 @@ export class LoginPage {
     }
   }
 
-
-
   doLogin(data) {
     const id_aluno = data[0];
     const id_professor = data[1];
@@ -91,6 +89,7 @@ export class LoginPage {
     const app_id = data[10];
     const firebase_id = data[11];
     const plano = data[12];
+    const filetime = data[13];
     
     this.util.setStorage('isLogged', 'true');
     this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'false');
@@ -102,6 +101,7 @@ export class LoginPage {
     this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
     this.util.setStorage('hash', hash);
     this.util.setStorage('cores', cores);
+    this.util.setStorage('filetime', filetime);
     plano>1?this.util.setStorage('logo', id_professor):this.util.setStorage('logo', 1);
 
     this.setColors(cores.replace(/"/g,'').split(','));

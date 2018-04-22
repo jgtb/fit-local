@@ -40,4 +40,12 @@ export class AuthProvider {
     return this.http.get(url);
   }
 
+  filetime(){
+    const ativoURL = '/fit/filetime?id_professor=';
+    const url = this.util.baseUrl + ativoURL + this.util.getStorage('id_professor');
+
+    return this.http.get(url);
+    
+  }
+
 }
