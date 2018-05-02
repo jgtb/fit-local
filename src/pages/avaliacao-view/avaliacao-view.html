@@ -12,12 +12,14 @@
     <ion-item *ngFor="let data of dataSessoes; let i = index;" [ngStyle]="layout.setStripedColor(i, 'dark', 'darklight')">
       <h2 class="sessao" [ngStyle]="layout.setColor('light')">{{ data?.sessao }}</h2>
       <div class="item-sessao" *ngFor="let item of selectPerguntas(data);">
-        <h4 [ngStyle]="layout.setColor('light')">{{ item?.pergunta }}</h4>
-        <div *ngIf="show(item)">
-          <p [ngStyle]="layout.setColor('light')">{{ item?.resposta }}</p>
-        </div>
-        <div *ngIf="isMultiplaEscolha(item)">
-          <p [ngStyle]="layout.setColor('light')">{{ unserializeToText(item) }}</p>
+        <div *ngIf="isAnswered(item)">
+          <h4 style="white-space:normal;" [ngStyle]="layout.setColor('light')"><b>{{ item?.pergunta }}</b></h4>
+          <div *ngIf="show(item)">
+            <p style="white-space:normal;" [ngStyle]="layout.setColor('light')">{{ item?.resposta }}</p>
+          </div>
+          <div *ngIf="isMultiplaEscolha(item)">
+            <p style="white-space:normal;" [ngStyle]="layout.setColor('light')">{{ unserializeToText(item) }}</p>
+          </div>
         </div>
         <div *ngIf="isUpload(item)" class="centered">
           <ion-grid>

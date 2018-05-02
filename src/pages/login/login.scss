@@ -13,6 +13,7 @@ page-login {
 	    z-index: 1;
     }
 		ion-content {
+			[ion-fixed] { height: 100%; width: 100%; }
 			background-color: transparent;
 			color: map-get($colors, light);
 			text-align: center;

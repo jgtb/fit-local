@@ -22,6 +22,7 @@ export class MyApp {
     public util: Util) {
     platform.ready().then(() => {
       statusBar.styleDefault();
+      splashScreen.hide();
     });
   }
 

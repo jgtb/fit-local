@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Facebook } from '@ionic-native/facebook';
@@ -21,6 +21,11 @@ import { Util } from '../../util';
 import { Layout } from '../../layout';
 
 @IonicPage()
+@NgModule({
+  imports: [
+    IonicImageLoader
+  ]
+})
 @Component({
   selector: 'page-dashboard',
   templateUrl: 'dashboard.html',
@@ -38,7 +43,6 @@ export class DashboardPage {
 
   width: number;
   height: number;
-  filetime: number;
 
   constructor(
     public navCtrl: NavController,
@@ -74,6 +78,10 @@ export class DashboardPage {
     const classe = this.menu.length%2==0?'m-l-25p':'';
     this.menu.push({ title: 'Informações', component: InformacaoPage, icon: 'ios-information-circle', class: classe })
 
+  }
+
+  logo(){
+    return this.util.baseUrl+'/logos/'+ this.util.getStorage('logo')+'.png?'+this.util.getStorage('filetime');
   }
 
   openPage(component) {
@@ -125,11 +133,9 @@ export class DashboardPage {
   doRefresh() {
     this.isActive();
     this.initMenu();
-    this.filetime = this.util.getStorage('filetime');
     this.userImg = this.util.getStorage('facebookId');
-    console.log(this.filetime);
 
-    this.authProvider.filetime().subscribe(
+    this.authProvider.filetime(this.util.getStorage('logo') ).subscribe(
       data=>{
         if(data['_body']!=this.util.getStorage('filetime'))
           this.util.setStorage('filetime',data['_body']);

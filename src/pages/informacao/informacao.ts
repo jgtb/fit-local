@@ -4,6 +4,7 @@ import { IonicImageLoader } from 'ionic-image-loader';
 
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 
+import { AuthProvider } from '../../providers/auth/auth';
 import { InformacaoProvider } from '../../providers/informacao/informacao';
 
 import { Util } from '../../util';
@@ -23,9 +24,12 @@ export class InformacaoPage {
   dataInformacao: any = [];
   dataMensagem: any = [];
 
+  filetime: number;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
+    public authProvider: AuthProvider,
     public informacaoProvider: InformacaoProvider,
     public util: Util,
     public layout: Layout) {
@@ -52,6 +56,10 @@ export class InformacaoPage {
      return false;
   }
 
+  logo(){
+    return this.util.baseUrl+'/logos/'+ this.util.getStorage('id_professor')+'.png?'+this.filetime;
+  }
+
   doRefresh(event) {
     if (this.util.checkNetwork()) {
       this.refreshData();
@@ -62,6 +70,13 @@ export class InformacaoPage {
   }
 
   refreshData(){
+    this.authProvider.filetime(this.util.getStorage('id_professor') ).subscribe(
+      data=>{
+        if(data['_body']!=this.filetime)
+          this.filetime = data['_body'];
+        console.log(this.filetime);
+      }
+    );
     this.informacaoProvider.indexInformacao(this.util.getStorage('id_professor')).subscribe(
       data => {
         this.util.setStorage('dataInformacao', data);

@@ -101,6 +101,7 @@ export class LoginPage {
     this.util.setStorage('facebookId', facebookId === null ? 'assets/img/facebook.png' : facebookId);
     this.util.setStorage('hash', hash);
     this.util.setStorage('cores', cores);
+    this.util.setStorage('plano', plano);
     this.util.setStorage('filetime', filetime);
     plano>1?this.util.setStorage('logo', id_professor):this.util.setStorage('logo', 1);
 

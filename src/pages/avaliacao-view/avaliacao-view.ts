@@ -47,6 +47,13 @@ export class AvaliacaoViewPage {
     return this.dataAvaliacoes.filter((elem) => elem.id_sessao === item.id_sessao && elem.resposta != "");
   }
 
+  isAnswered(item){
+    if(item.resposta=='' || item.resposta=='a:0:{}'){
+      return false;
+    }
+    return true;
+  }
+
   show(item) {
     if(item.id_tipo_pergunta !== '3' && item.id_tipo_pergunta !== '4')
       return true;
