@@ -3,6 +3,7 @@ import { IonicModule } from 'ionic-angular';
 import { CommonModule } from '@angular/common';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { IonicImageLoader } from 'ionic-image-loader';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 
 import { LoginPage } from '../pages/login/login';
 import { DashboardPage } from '../pages/dashboard/dashboard';
@@ -65,6 +66,9 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 		ReservaPage,
 		RankingPage,
 		InformacaoPage
-  ],
+	  ],
+	  providers: [
+		YoutubeVideoPlayer
+	  ]
 })
 export class PagesModule {}

@@ -90,7 +90,7 @@ export class LoginPage {
     const firebase_id = data[11];
     const plano = data[12];
     const filetime = data[13];
-    
+
     this.util.setStorage('isLogged', 'true');
     this.util.setStorage('showReserva', id_tipo_professor === 4 ? 'true' : 'false');
     this.util.setStorage('showRanking', grupo !== 0? 'true': 'false');
@@ -106,8 +106,8 @@ export class LoginPage {
     plano>1?this.util.setStorage('logo', id_professor):this.util.setStorage('logo', 1);
 
     this.setColors(cores.replace(/"/g,'').split(','));
-    this.allowPushNotification(app_id, firebase_id);
-    this.playerId(id_usuario);
+    //this.allowPushNotification(app_id, firebase_id);
+    //this.playerId(id_usuario);
     
     this.serieProvider.index(id_aluno).subscribe(
       data => {

@@ -48,10 +48,10 @@
                 <button type="button" [ngStyle]="layout.setBackgroundColor('primary')" [ngStyle]="layout.setColor('light')" ion-button round small (click)="dismiss()">Cancelar</button>
               </ion-col>
               <ion-col col-6>
-                  <button type="submit" [ngStyle]="layout.setBackgroundColor('primary')" [ngStyle]="layout.setColor('light')" ion-button round small>Confirmar</button>
+                  <button type="submit" [disabled]="buttonDisabled" [ngStyle]="layout.setBackgroundColor('primary')" [ngStyle]="layout.setColor('light')" ion-button round small>Confirmar</button>
                 </ion-col>
               </ion-row>
           </ion-grid>
         </form>
-      </div>
+    </div>
     </ion-content>

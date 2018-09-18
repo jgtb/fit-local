@@ -1,11 +1,6 @@
 <ion-header>
   <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'light')">
     <ion-title>Nova Avaliação</ion-title>
-    <ion-buttons right>
-      <div (click)="doCreate()">
-        <ion-icon class="avaliacao-form-add" name="create" [ngStyle]="layout.setColor('light')"></ion-icon>
-      </div>
-    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -56,6 +51,6 @@
     </ion-row>
   </ion-grid>
 
-  <button ion-button [ngStyle]="layout.setBackgroundColor('primary')" block round *ngIf="id_avaliacao" (click)="save()">Salvar</button>
+  <button ion-button [disabled]="buttonDisabled" [ngStyle]="layout.setBackgroundColor('primary')" block round *ngIf="id_avaliacao" (click)="save()">Salvar</button>
 
 </ion-content>

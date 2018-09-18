@@ -24,6 +24,14 @@ export class Layout {
   constructor() {
   }
 
+  setModalColor(bg,text){
+    const color = {
+      'background-color': this.colors[bg],
+      'color': this.colors[text]
+    }
+    return color;
+  }
+
   setBackgroundColor(type) {
     const color = {
       'background-color': this.colors[type]

@@ -1,8 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, Platform, NavController, NavParams, ModalController, Navbar} from 'ionic-angular';
 
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { IonicImageLoader } from 'ionic-image-loader';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 
 import { TreinoTimerPage } from '../../pages/treino-timer/treino-timer';
 import { TreinoModalPage } from '../../pages/treino-modal/treino-modal';
@@ -36,8 +35,8 @@ export class TreinoPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public serieProvider: SerieProvider,
-    public iab: InAppBrowser,
     public modalCtrl: ModalController,
+    public youtubeVideoPlayer: YoutubeVideoPlayer,
     public util: Util,
     public layout: Layout) {
       this.data = this.navParams.get('item');
@@ -188,7 +187,8 @@ export class TreinoPage {
   }
 
   video(item) {
-    this.iab.create(item.video).show();
+    let url = item.video;
+    this.youtubeVideoPlayer.openVideo(url.substr( url.lastIndexOf('/')+1 ));
   }
 
   intervalo(item) {

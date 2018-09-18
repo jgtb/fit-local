@@ -19,6 +19,7 @@ export class AvaliacaoFormPage {
   data: any = [];
   dataAvaliacao: any = [];
   dataPergunta: any = [];
+  buttonDisabled: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -47,6 +48,7 @@ export class AvaliacaoFormPage {
   }
 
   doCreate() {
+    
     if (this.util.checkNetwork()) {
       const items = this.dataPergunta.map(obj => ({[obj.id_pergunta]: obj.resposta}));
     } else {
@@ -63,6 +65,7 @@ export class AvaliacaoFormPage {
   }
 
   save(){
+    this.buttonDisabled = true;
     const items = this.dataPergunta.map(obj => ({ id_pergunta: obj.id_pergunta, id_tipo_pergunta: obj.id_tipo_pergunta, resposta: Array.isArray(obj.resposta) ? this.util.serialize(Object.keys(obj.resposta).filter(e => obj.resposta[e] === true)) : obj.resposta }));     
     let now = new Date();
     let proxima_avaliacao = new Date();

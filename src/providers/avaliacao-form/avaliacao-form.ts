@@ -25,7 +25,7 @@ export class AvaliacaoFormProvider {
 
     let headers = new Headers();
     headers.append('Authorization', this.util.getStorage('hash'));
-
+    console.log(headers);
     return this.http.post(url, data, new RequestOptions({ headers: headers }));
   }
 

@@ -74,7 +74,6 @@ export class InformacaoPage {
       data=>{
         if(data['_body']!=this.filetime)
           this.filetime = data['_body'];
-        console.log(this.filetime);
       }
     );
     this.informacaoProvider.indexInformacao(this.util.getStorage('id_professor')).subscribe(
@@ -84,7 +83,6 @@ export class InformacaoPage {
       })
     this.informacaoProvider.indexMensagem(this.util.getStorage('id_aluno')).subscribe(
       data => {
-        console.log(data);
         this.util.setStorage('dataInformacao', data);
         this.selectMensagem(data);
       })

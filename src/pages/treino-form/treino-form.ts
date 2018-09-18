@@ -30,7 +30,7 @@ export class TreinoFormPage {
   ];
 
   data: any = [];
-
+  buttonDisabled: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -64,6 +64,7 @@ export class TreinoFormPage {
   }
 
   doCreate(form) {
+    this.buttonDisabled = true;
     if (this.util.checkNetwork()) {
       if(this.validate(form)){
         const data = JSON.stringify({ id_serie: form.id, mensagem: form.comentario, borg: form.borg.toString(), datahora: this.getDateTime(), tempo: form.time+':00'})

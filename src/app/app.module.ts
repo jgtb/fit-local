@@ -6,11 +6,13 @@ import { Vibration } from '@ionic-native/vibration'
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Network } from '@ionic-native/network';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { OneSignal } from '@ionic-native/onesignal';
 import { Facebook } from '@ionic-native/facebook';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Badge } from '@ionic-native/badge';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { IonicImageLoader } from 'ionic-image-loader';
 import { NgCalendarModule  } from 'ionic2-calendar';
@@ -47,11 +49,13 @@ import { Layout } from '../layout';
     SplashScreen,
     Network,
     OneSignal,
-    InAppBrowser,
     Facebook,
     Util,
     Layout,
     Vibration,
+    File,
+    FileTransfer,
+    InAppBrowser,
     NativeAudio,
     Badge,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

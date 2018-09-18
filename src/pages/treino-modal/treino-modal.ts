@@ -19,6 +19,7 @@ export class TreinoModalPage {
 
   id_serie: any;
   time: any;
+  buttonDisabled: boolean = false;
 
   items: any = [
     {img: 0},
@@ -50,6 +51,7 @@ export class TreinoModalPage {
   }
 
   doCreate(form) {
+    this.buttonDisabled = true;
     if (this.util.checkNetwork()) {
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg.toString(), tempo: this.time, datahora: this.getDateTime()})
       this.calendarioProvider.create(data).subscribe(
