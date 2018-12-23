@@ -44,7 +44,7 @@ export class TreinoTimerPage {
               public nativeAudio: NativeAudio
             ) {
     this.data = this.navParams.get('item')
-    this.nativeAudio.preloadSimple('alarm', 'assets/mp3/alarm.mp3')
+    this.nativeAudio.preloadComplex('alarm', 'assets/mp3/alarm.mp3',1,2,0)
   }
 
   ionViewDidEnter() {}
@@ -73,8 +73,9 @@ export class TreinoTimerPage {
       this.timer.display = this.data.intervalo-this.timer.time;
       if(this.timer.display<=5)
         this.vibration.vibrate(1000);
-      if(this.timer.display==3)
+      if(this.timer.display==3){
         this.nativeAudio.play('alarm');
+      }
       if(this.timer.display>0)
         this.time();
     }, 1000);

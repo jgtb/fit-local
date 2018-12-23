@@ -31,7 +31,7 @@ export class TreinoPage {
   timer: any = [];
 
   constructor(
-    platform: Platform,
+    public platform: Platform,
     public navCtrl: NavController,
     public navParams: NavParams,
     public serieProvider: SerieProvider,
@@ -173,7 +173,7 @@ export class TreinoPage {
       this._done.splice(pos, 1);
       return true;
     }
-
+    
     this._done.push(index);
   }
 

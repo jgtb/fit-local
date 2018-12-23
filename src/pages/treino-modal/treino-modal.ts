@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ViewController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, ViewController, NavParams } from 'ionic-angular';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -21,6 +21,9 @@ export class TreinoModalPage {
   time: any;
   buttonDisabled: boolean = false;
 
+  loading: any;
+  loadingRunning: boolean = false;
+
   items: any = [
     {img: 0},
     {img: 1},
@@ -35,6 +38,7 @@ export class TreinoModalPage {
     public viewCtrl: ViewController,
     public navParams: NavParams,
     public formBuilder: FormBuilder,
+    public loadingCtrl: LoadingController,
     public calendarioProvider: CalendarioProvider,
     public util: Util,
     public layout: Layout) {
@@ -50,8 +54,21 @@ export class TreinoModalPage {
     });
   }
 
+  showLoading() {
+    this.loading = this.loadingCtrl.create();
+    this.loadingRunning = true;
+    this.loading.present();
+  }
+
+  endLoading() {
+    this.loadingRunning = false;
+    this.loading.dismiss();
+  }
+
+
   doCreate(form) {
     this.buttonDisabled = true;
+    this.showLoading();
     if (this.util.checkNetwork()) {
       const data = JSON.stringify({id_serie: this.id_serie, mensagem: form.comentario, borg: form.borg.toString(), tempo: this.time, datahora: this.getDateTime()})
       this.calendarioProvider.create(data).subscribe(
@@ -61,6 +78,7 @@ export class TreinoModalPage {
           } else {
             this.util.showAlert('Atenção', 'Erro ao salvar. Tente mais tarde.', 'Ok', true);
           }
+          this.endLoading();
         })
     } else {
       this.util.showAlert('Atenção', 'Internet Offline', 'Ok', true);

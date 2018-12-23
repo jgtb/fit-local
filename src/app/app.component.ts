@@ -21,6 +21,7 @@ export class MyApp {
     splashScreen: SplashScreen,
     public util: Util) {
     platform.ready().then(() => {
+      platform.registerBackButtonAction(() => {},1);      
       statusBar.styleDefault();
       splashScreen.hide();
     });

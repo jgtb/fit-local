@@ -36,7 +36,7 @@ export class AuthProvider {
   isActive() {
     const ativoURL = '/fit/ativo?id=';
     const url = this.util.baseUrl + ativoURL + this.util.getStorage('id_aluno');
-
+    //checar internet
     return this.http.get(url);
   }
 

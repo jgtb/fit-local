@@ -8,7 +8,7 @@ import { Layout } from './layout';
 @Injectable()
 export class Util {
 
-  baseUrl = 'http://fit.nexur.com.br';
+  baseUrl = 'http://api.nexur.com.br';
   //baseUrl = 'http://localhost/personal/web';
   //baseUrl = 'http://homolog.nexur.com.br/web';
 
