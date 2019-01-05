@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'danger')">
+    <ion-title>Nome do Professor</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content [ngStyle]="layout.setBackgroundColor('dark')" padding-top>
+  <ng-container *ngFor="let message of messages">
+    <div class="send chat-box" padding *ngIf="isOwner(message)" [ngStyle]="layout.setBackgroundColor('secondary')">
+      <h6>{{ message.text }}</h6>
+      <p>{{ message.sendAt }}</p>
+    </div>
+    <div class="received chat-box" padding *ngIf="!isOwner(message)" [ngStyle]="layout.setBackgroundColor('terciary')">
+      <h6>{{ message.text }}</h6>
+      <p>{{ message.sendAt }}</p>
+    </div>
+  </ng-container>
+</ion-content>
+<ion-footer class="fixed-bottom" [ngStyle]="layout.setBackgroundColor('secondary')">
+  <ion-row>
+    <ion-col col-10>
+      <ion-list no-lines>
+        <ion-item>
+          <ion-input type="text" placeholder="Digite sua mensagem..." [(ngModel)]="text"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+    <ion-col text-center col-2>
+      <ion-icon class="btn-send" name="chatbubbles" (click)="sendMessage()"></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-footer>

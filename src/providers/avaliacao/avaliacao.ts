@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 import { Util } from '../../util';
 
@@ -16,7 +16,7 @@ export class AvaliacaoProvider {
     const indexURL = '/fit/lista?id_aluno=';
     const url = this.util.baseUrl + indexURL + id_aluno;
 
-    return this.http.get(url).map(res => res.json());
+    return this.http.get(url).pipe(map((res: any) => res.json()));
   }
 
   delete(data) {
@@ -27,7 +27,7 @@ export class AvaliacaoProvider {
     headers.append('Authorization', this.util.getStorage('hash'));
 
     return this.http.post(url, data, new RequestOptions({ headers: headers }));
-    
+
   }
 
 }

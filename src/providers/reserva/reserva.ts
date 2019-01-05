@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 import { Util } from '../../util';
 
@@ -16,7 +16,7 @@ export class ReservaProvider {
     const indexURL = '/fit/aulas?id_usuario=';
     const url = this.util.baseUrl + indexURL + id_professor;
 
-    return this.http.get(url).map(res => res.json());
+    return this.http.get(url).pipe(map((res: any) => res.json()));
   }
 
   create(data) {
@@ -37,7 +37,7 @@ export class ReservaProvider {
     const checkLotadoURL = '/fit/reservas?id=';
     const url = this.util.baseUrl + checkLotadoURL + data.id;
 
-    return this.http.get(url, data).map(res => res.json());
+    return this.http.get(url, data).pipe(map((res: any) => res.json()));
   }
 
   delete(data) {

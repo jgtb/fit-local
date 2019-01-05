@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 import { Util } from '../../util';
 
@@ -16,7 +16,7 @@ export class RankingProvider {
     const indexURL = '/fit/ranking?id_aluno=';
     const url = this.util.baseUrl + indexURL + this.util.getStorage('id_aluno');
 
-    return this.http.get(url).map(res => res.json());
+    return this.http.get(url).pipe(map((res: any) => res.json()));
   }
 
   getGrupo() {

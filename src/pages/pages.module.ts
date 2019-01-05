@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { NgCalendarModule  } from 'ionic2-calendar';
 import { IonicImageLoader } from 'ionic-image-loader';
 import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { LoginPage } from '../pages/login/login';
 import { DashboardPage } from '../pages/dashboard/dashboard';
@@ -21,6 +23,14 @@ import { ReservaPage } from '../pages/reserva/reserva';
 import { RankingPage } from '../pages/ranking/ranking';
 import { InformacaoPage } from '../pages/informacao/informacao';
 
+import { ChatButtonComponent } from '../components/chat/chat-button/chat-button';
+import { ChatDetailComponent } from '../components/chat/chat-detail/chat-detail';
+
+const ComponentsModules = [
+  IonicModule.forRoot(ChatButtonComponent),
+  IonicModule.forRoot(ChatDetailComponent)
+];
+
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 @NgModule({
@@ -29,11 +39,21 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 		IonicModule,
 		RoundProgressModule,
 		NgCalendarModule,
-		IonicImageLoader
+    IonicImageLoader,
+    AngularFireModule.initializeApp({
+      apiKey: "AIzaSyDppLc8UdPWaHrCKCSwrQFM_-GF_2fwquo",
+      authDomain: "nexur-chat.firebaseapp.com",
+      databaseURL: "https://nexur-chat.firebaseio.com",
+      projectId: "nexur-chat",
+      storageBucket: "nexur-chat.appspot.com",
+      messagingSenderId: "751342688505"
+    }),
+    AngularFireDatabaseModule,
+    ComponentsModules
 	],
 	declarations: [
 		LoginPage,
-    	DashboardPage,
+    DashboardPage,
 		SeriePage,
 		CalendarioPage,
 		TreinoPage,
@@ -47,7 +67,9 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 		GraficoPage,
 		ReservaPage,
 		RankingPage,
-		InformacaoPage
+    InformacaoPage,
+    ChatButtonComponent,
+    ChatDetailComponent
   ],
 	entryComponents: [
 		LoginPage,
@@ -66,9 +88,13 @@ import { RoundProgressModule } from 'angular-svg-round-progressbar';
 		ReservaPage,
 		RankingPage,
 		InformacaoPage
-	  ],
-	  providers: [
-		YoutubeVideoPlayer
-	  ]
+  ],
+  providers: [
+    YoutubeVideoPlayer
+  ],
+  exports: [
+    ChatButtonComponent,
+    ChatDetailComponent
+  ]
 })
 export class PagesModule {}

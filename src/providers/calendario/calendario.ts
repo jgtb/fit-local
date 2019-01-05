@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 import { Util } from '../../util';
 
@@ -16,20 +16,20 @@ export class CalendarioProvider {
     const indexURL = '/fit/treinos-app?id_aluno=';
     const url = this.util.baseUrl + indexURL + id_aluno;
 
-    return this.http.get(url).map(res => res.json());
+    return this.http.get(url).pipe(map((res: any) => res.json()));
   }
 
   create(data) {
     const createURL = '/fit/mensagem';
     const url = this.util.baseUrl + createURL;
-    
+
     return this.http.post(url, data);
   }
 
   delete(id){
     const createURL = '/fit/apagatreino';
     const url = this.util.baseUrl + createURL;
-    
+
     const data = {id:id};
     return this.http.post(url, data);
   }

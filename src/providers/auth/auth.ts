@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 import { Util } from '../../util';
 
@@ -16,14 +16,14 @@ export class AuthProvider {
     const loginURL = '/fit/log';
     const url = this.util.baseUrl + loginURL;
 
-    return this.http.post(url, data).map(res => res.json());
+    return this.http.post(url, data).pipe(map((res: any) => res.json()));
   }
 
   forgotPassword(data) {
     const forgotPasswordURL = '/fit/senha-app';
     const url = this.util.baseUrl + forgotPasswordURL;
 
-    return this.http.post(url, data).map(res => res.json());
+    return this.http.post(url, data).pipe(map((res: any) => res.json()));
   }
 
   playerId(userId, playerId) {
@@ -45,7 +45,7 @@ export class AuthProvider {
     const url = this.util.baseUrl + ativoURL + id;
 
     return this.http.get(url);
-    
+
   }
 
 }

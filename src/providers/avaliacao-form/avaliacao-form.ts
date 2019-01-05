@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 import { Util } from '../../util';
 
@@ -16,7 +16,7 @@ export class AvaliacaoFormProvider {
     const indexURL = '/fit/avaliacao-app?id=';
     const url = this.util.baseUrl + indexURL + id_professor;
 
-    return this.http.get(url).map(res => res.json());
+    return this.http.get(url).pipe(map((res: any) => res.json()));
   }
 
   save(data) {

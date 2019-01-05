@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
 
 import { Util } from '../../util';
 
@@ -16,14 +16,14 @@ export class InformacaoProvider {
     const indexURL = '/fit/info?id_professor=';
     const url = this.util.baseUrl + indexURL + id_professor;
 
-    return this.http.get(url).map(res => res.json());
+    return this.http.get(url).pipe(map((res: any) => res.json()));
   }
 
   indexMensagem(id_aluno) {
     const indexURL = '/fit/mensagens?id_aluno=';
     const url = this.util.baseUrl + indexURL + id_aluno;
 
-    return this.http.get(url).map(res => res.json());
+    return this.http.get(url).pipe(map((res: any) => res.json()));
   }
 
 }
