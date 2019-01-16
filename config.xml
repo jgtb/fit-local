@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.nexur.fit" version="3.3.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.nexur.fit" version="37.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Trainer</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
@@ -92,7 +92,6 @@
     <plugin name="cordova-plugin-filepath" spec="^1.3.0" />
     <plugin name="com.moust.cordova.videoplayer" spec="https://github.com/moust/cordova-plugin-videoplayer.git" />
     <plugin name="cordova-plugin-image-picker" spec="https://github.com/abelabbesnabi/cordova-plugin-image-picker" />
-    <plugin name="cordova-plugin-document-viewer" spec="^0.9.10" />
     <plugin name="cordova-plugin-badge" spec="^0.8.7" />
     <plugin name="onesignal-cordova-plugin" spec="~2.2.5" />
     <plugin name="cordova-plugin-camera" spec="~4.0.3" />

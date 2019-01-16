@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { IonicImageLoader } from 'ionic-image-loader';
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
 
 import { AvaliacaoProvider } from '../../providers/avaliacao/avaliacao';
 
@@ -26,6 +28,9 @@ export class AvaliacaoViewPage {
     public avaliacaoProvider: AvaliacaoProvider,
     public iab: InAppBrowser,
     public util: Util,
+    public file: File,
+    public transfer: FileTransfer,
+    public platform: Platform,
     public layout: Layout) {
       this.data = this.navParams.get('item');
       this.dataAvaliacoes = this.util.getStorage('dataAvaliacao');
@@ -97,7 +102,11 @@ export class AvaliacaoViewPage {
   }
 
   link(item) {
-    this.iab.create(this.util.baseUrl + '/imgs-avaliacao/' + this.unserializeToUpload(item)).show();
+    if (this.platform.is('ios')) {
+      this.iab.create(this.util.baseUrl + '/imgs-avaliacao/' + this.unserializeToUpload(item)).show();
+    } else if (this.platform.is('android')) {
+      this.iab.create('https://docs.google.com/gview?embedded=false&url='+this.util.baseUrl + '/imgs-avaliacao/' + this.unserializeToUpload(item)).show();
+    }
   }
 
   doRefresh(event) {
