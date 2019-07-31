@@ -35,6 +35,10 @@ chat-detail {
       text-align: right;
       color: #ffffff;
     }
+    &.system {
+      color: #ffffff;
+      margin: 0 auto;
+    }
     &.contact {
       padding-left: 76px;
       img {

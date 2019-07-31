@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Util } from 'util';
 @Injectable()
 export class Layout {
 

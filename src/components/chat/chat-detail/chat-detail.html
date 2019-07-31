@@ -1,15 +1,19 @@
 <ion-header>
   <ion-navbar [ngStyle]="layout.setToolbarColor('ion-navbar', 'secondary', 'danger')">
-    <ion-title>Nome do Professor</ion-title>
+    <ion-title>Chat</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content [ngStyle]="layout.setBackgroundColor('dark')" padding-top>
   <ng-container *ngFor="let message of messages">
-    <div class="send chat-box" padding *ngIf="isOwner(message)" [ngStyle]="layout.setBackgroundColor('secondary')">
+    <div class="send chat-box" padding *ngIf="isOwner(message) && !isSystem(message)" [ngStyle]="layout.setBackgroundColor('secondary')">
       <h6>{{ message.text }}</h6>
       <p>{{ message.sendAt }}</p>
     </div>
-    <div class="received chat-box" padding *ngIf="!isOwner(message)" [ngStyle]="layout.setBackgroundColor('terciary')">
+    <div class="received chat-box" padding *ngIf="!isOwner(message) && !isSystem(message)" [ngStyle]="layout.setBackgroundColor('danger')">
+      <h6>{{ message.text }}</h6>
+      <p>{{ message.sendAt }}</p>
+    </div>
+    <div class="system chat-box" padding *ngIf="isSystem(message)" [ngStyle]="layout.setBackgroundColor('primary')">
       <h6>{{ message.text }}</h6>
       <p>{{ message.sendAt }}</p>
     </div>

@@ -8,6 +8,9 @@ import { Util } from '../../../util'
 
 import { Layout } from '../../../layout'
 
+import { uniqBy, sortBy } from 'lodash'
+import moment from 'moment'
+
 @Component({
   selector: 'chat-detail',
   templateUrl: 'chat-detail.html'
@@ -19,6 +22,7 @@ export class ChatDetailComponent {
   from: any = ''
   to: any = ''
   between: any = ''
+  betweenAll: any = ''
   text: any = ''
 
   messages: any = []
@@ -31,25 +35,34 @@ export class ChatDetailComponent {
     public layout: Layout) {}
 
   async ionViewDidLoad() {
-    this.getAllMessages()
     this.to = this.util.getStorage('id_professor')
     this.from = this.util.getStorage('id_usuario')
     this.between = `${this.to}-${this.from}`
+    this.betweenAll = `${this.to}-0`
+    this.getAllMessages(this.between)
+    this.getAllMessages(this.betweenAll)
   }
 
-  getAllMessages() {
-    const between = `${this.util.getStorage('id_professor')}-${this.util.getStorage('id_usuario')}`
+  getAllMessages(between) {
     this.angularFireDatabase
       .list(this.module, ref => ref.orderByChild('between').equalTo(between))
       .snapshotChanges()
       .subscribe((list: any) => {
-        this.messages = list.map((data: any) => ({
+        const messages = list.map((data: any) => ({
+          id: data.key,
           from: data.payload.val().from,
           to: data.payload.val().to,
           text: data.payload.val().text,
-          sendAt: `2018`
+          sendAt: `${moment(data.payload.val().sendAt).format('DD/MM/YYYY')} ás ${moment(data.payload.val().sendAt).format('h:mm')}`,
+          system: data.payload.val().system,
+          sortBy: moment(data.payload.val().sendAt).toDate()
         }))
+        this.joinMessages(messages)
       })
+  }
+
+  joinMessages(messages) {
+    this.messages = sortBy(uniqBy([ ...this.messages, ...messages ], 'id'), 'sortBy')
   }
 
   sendMessage () {
@@ -65,8 +78,11 @@ export class ChatDetailComponent {
     this.text = ''
   }
 
-  isOwner (message) {
-    return this.from === message.from
+  isOwner ({ from = '' }) {
+    return this.from.toString() === from.toString()
   }
 
+  isSystem ({ system = '' }) {
+    return system.toString() === '1'
+  }
 }

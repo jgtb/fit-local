@@ -9,7 +9,7 @@ import { Layout } from './layout';
 export class Util {
 
   baseUrl = 'http://fit.nexur.com.br';
-  //baseUrl = 'http://localhost/personal/web';
+  // baseUrl = 'http://localhost/api/web';
   //baseUrl = 'http://homolog.nexur.com.br/web';
 
   logo: any;
