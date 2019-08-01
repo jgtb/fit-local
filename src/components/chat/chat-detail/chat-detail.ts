@@ -66,6 +66,10 @@ export class ChatDetailComponent {
   }
 
   sendMessage () {
+    if (!this.text) {
+      return
+    }
+    
     const payload = {
       from: this.from,
       to: this.to,
