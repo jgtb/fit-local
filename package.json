@@ -38,7 +38,7 @@
         "@ionic-native/youtube-video-player": "^4.13.0",
         "@ionic/storage": "2.0.1",
         "angular-svg-round-progressbar": "^1.1.1",
-        "chart.js": "^2.7.2",
+        "chart.js": "^2.9.4",
         "com-badrit-base64": "^0.2.0",
         "com.moust.cordova.videoplayer": "https://github.com/moust/cordova-plugin-videoplayer.git",
         "cordova": "^8.0.0",
